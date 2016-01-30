@@ -1,0 +1,33 @@
+<navbar></navbar>
+
+<header class="hero-unit" id="banner">
+  <div class="container">
+    <h1>Calendar Editor</h1>
+    <p class="lead">Here you can edit calendar information and member list. You can also delete calendar from here.</p>
+    <img src="assets/images/yeoman.png" alt="I'm Yeoman">
+  </div>
+</header>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <h1 class="page-header">Features:</h1>
+      <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="calendar in calEditor.awesomeCalendars">
+        <li><a href="#" tooltip="{{calendar.description}}">{{calendar.title}}<button type="button" class="close" ng-click="calEditor.deleteCalendar(calendar)">&times;</button></a></li>
+      </ul>
+    </div>
+  </div>
+  <!--
+  <form class="member-form">
+    <label>Syncs in realtime across clients</label>
+    <p class="input-group">
+      <input type="text" class="form-control" placeholder="Add a new member here." ng-model="calEditor.newMember">
+      <span class="input-group-btn">
+        <button type="submit" class="btn btn-primary" ng-click="calEditor.addMember()">Add Member</button>
+      </span>
+    </p>
+  </form>
+-->
+</div>
+
+<footer></footer>
