@@ -30,20 +30,6 @@ class MainController {
     }); 
   }
 
-  addMember(){
-  if(this.memEmail && this.memName){
-   this.membersTemp.push({name: this.memName, email: this.memEmail});
-   if(this.firstEntry==0){
-   this.firstEntry = 1;
-   }
-    this.memCounter ++;
-   this.memName='';
-   this.memEmail='';
-    this.currentGroup = this.memCounter;
-   console.log(this.membersTemp);
-    }
-  }
-
   changeCollapseBtn(){
   if(this.collapseText == "Would you like to add a group?"){
   this.collapseText = "Collapse subform!";
@@ -78,10 +64,36 @@ resetAddCalFields(){
       this.Email = '';
 }
 
-deleteMember(member){
-  delete this.membersTemp[member.email];
-}
+  addMember(){
+  if(this.memEmail && this.memName){
+   this.membersTemp.push({name: this.memName, email: this.memEmail});
+   if(this.firstEntry==0){
+   this.firstEntry = 1;
+   }
+    this.memCounter ++;
+   this.memName='';
+   this.memEmail='';
+    this.currentGroup = this.memCounter;
+   console.log(this.membersTemp);
+    }
+  }
 
+deleteMember(member){
+   for (var i =0; i < this.membersTemp.length; i++){
+      if (this.membersTemp[i].email === member.email) {
+        this.membersTemp.splice(i,1);
+         this.memCounter --;
+
+         if( this.memCounter === 0){
+           this.currentGroup = "None";
+         }else{
+         this.currentGroup = this.memCounter;
+         }
+        break;
+      }
+    }
+       console.log(this.membersTemp);
+}
 
   deleteThing(thing) {
     this.$http.delete('/api/things/' + thing._id);
