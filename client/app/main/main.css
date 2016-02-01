@@ -13,7 +13,7 @@
   letter-spacing: -1px;
 }
 
-#box{
+#createCalBox, #waitScreenBox{
   border: solid 1px black;
   margin-top: 10px;
   padding-bottom: 10px;

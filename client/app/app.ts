@@ -17,4 +17,3 @@ angular.module('takeTurnsApp', [
 
     $locationProvider.html5Mode(true);
   });
-       console.log(" client app.ts ");

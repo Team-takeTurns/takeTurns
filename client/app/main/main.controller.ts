@@ -16,17 +16,19 @@ class MainController {
     this.jsonData=[];
     this.objectToSerialize=[];
     this.sendEmail = false;
+    this.mainDiv=true;
+    this.calendar;
 
     this.membersTemp=[];
 
-    $http.get('/api/things').then(response => {
+    $http.get('/api/calendars/').then(response => {
             console.log(" i  am in main.controller");
       this.awesomeThings = response.data;
-      socket.syncUpdates('thing', this.awesomeThings);
+      socket.syncUpdates('calendar', this.awesomeThings);
     });
 
     $scope.$on('$destroy', function() {
-      socket.unsyncUpdates('thing');
+      socket.unsyncUpdates('calendar');
     }); 
   }
 
@@ -40,19 +42,24 @@ class MainController {
   }
 
   addCalendar() {
-  this.jsonData=angular.toJson(this.membersTemp);
-  this.objectToSerialize={'object':this.jsonData};
  if (this.Email && this.Name) {
-      this.$http.post('/api/calendars', { admin: {role: "admin", email: this.Email}, dateCreated: new Date(), name: this.Name, description: this.Description, members: this.membersTemp,   paramSerializer: '$httpParamSerializerJQLike',});
+      this.$http.post('/api/calendars', { admin: {role: "admin", email: this.Email}, dateCreated: new Date(), name: this.Name, description: this.Description, members: this.membersTemp,   paramSerializer: '$httpParamSerializerJQLike'}).then(response => {
+      this.calendar = response.data;
+console.log(this.calendar);
+    });
+
       if(this.sendEmail){
         console.log("checked" + this.sendEmail);
         console.log("main.controller from client. function name = addCalendar()" );
         console.log("add method here to send email to all members. Also will need the list of members to whome send the email.");
         console.log(" array that holds all emails is called this.membersTemp" + this.membersTemp);
       }
-  resetAddCalFields();
+    this.resetAddCalFields();
+    this.mainDiv=false;
     }
   }
+
+
 
 resetAddCalFields(){
       this.memCounter=0;

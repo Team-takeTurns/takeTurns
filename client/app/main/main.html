@@ -8,7 +8,7 @@
   </div>
 </header>
 
-<div class="container" id="box">
+<div class="container" id="createCalBox" ng-show="main.mainDiv">
 
 <!-- form to create a calendar -->
 <form name="newCal" class="calendar-form" role="form">
@@ -80,6 +80,15 @@
    <button type="reset" class="btn btn-primary" ng-click="main.resetAddCalFields()">Clear All</button>
 </form>
 
+</div>
+
+<div class="container" id="waitScreenBox"  ng-hide="main.mainDiv">
+<h5>Your calendar {{main.calendar.name}} was created.</h5>
+<h5>Follow the link below for admin view where you can update or delete your calendar.</h5>
+<a href="http://www.w3schools.com/" target="_blank">Link will be here. also update href for 'a' tag</a>
+<h5>Send the link below to other users so they can create and view events.</h5>
+<a href="http://www.w3schools.com/" target="_blank">Link will be here. also update href for 'a' tag</a>
+<p>{{main.calendar}}</p>
 </div>
 
 <footer></footer>
