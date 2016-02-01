@@ -12,13 +12,9 @@ var CalendarSchema = new mongoose.Schema({
 });
 */
 var CalendarSchema = new mongoose.Schema({
-  admin:  {     id: String, 
-                role:String,
+  users:  [{    role:String,
                 link: String,
-                email:String}, 
-  active: {     id:String, 
-                role: String,
-                link: String},
+                email:String}], 
   members: [{   name: String, 
                 email: String
   }],              

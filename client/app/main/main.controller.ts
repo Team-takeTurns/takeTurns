@@ -18,6 +18,11 @@ class MainController {
     this.sendEmail = false;
     this.mainDiv=true;
     this.calendar;
+    this.role="";
+    this.d;
+    this.len;
+    this.adminLink;
+    this.activeLink;
 
     this.membersTemp=[];
 
@@ -43,10 +48,12 @@ class MainController {
 
   addCalendar() {
  if (this.Email && this.Name) {
-      this.$http.post('/api/calendars', { admin: {role: "admin", email: this.Email}, dateCreated: new Date(), name: this.Name, description: this.Description, members: this.membersTemp,   paramSerializer: '$httpParamSerializerJQLike'}).then(response => {
+      this.$http.post('/api/calendars', { users: [{role: "admin", email: this.Email}, {role: "active"}], dateCreated: new Date(), name: this.Name, description: this.Description, members: this.membersTemp,   paramSerializer: '$httpParamSerializerJQLike'}).then(response => {
       this.calendar = response.data;
-console.log(this.calendar);
+
+      this.updateUserLinks();
     });
+
 
       if(this.sendEmail){
         console.log("checked" + this.sendEmail);
@@ -60,6 +67,31 @@ console.log(this.calendar);
   }
 
 
+updateUserLinks(){
+    for (var d = 0, len = this.calendar.users.length; d < len; d += 1){
+        if (this.calendar.users[d].role === "admin"){
+            this.adminID = this.calendar.users[d]._id;
+        }
+    }
+    for (var d = 0, len = this.calendar.users.length; d < len; d += 1){
+        if (this.calendar.users[d].role === "active"){
+            this.activeID = this.calendar.users[d]._id;
+        }
+    }
+
+    this.adminLink = "http://localhost:9000/" + this.adminID;
+    this.activeLink = "http://localhost:9000/" + this.activeID;
+console.log("in new code adminID " + this.adminID);
+console.log("in new code activeID " + this.activeID);
+this.calendarUpdate();
+}
+
+calendarUpdate(){
+  this.$http.put('/api/calendars/'+ this.calendar._id, { users: [{role: "admin", link: this.adminLink}, {role: "active", link: this.activeLink}], paramSerializer: '$httpParamSerializerJQLike'}).then(response => {
+      this.calendar = response.data;
+console.log("response after update " + this.calendar);
+}
+}
 
 resetAddCalFields(){
       this.memCounter=0;
