@@ -82,8 +82,8 @@ Calendar.find({}).removeAsync()
                   startTime: "7:00PM", 
                   endTime: "9:00PM",
                   info: "dinner",
-                  reminder: {},
-                  guestList: {}
+                  reminder: new Date(),
+                  guestList: ["email_1@ddd.ca", "david@ddd.ca", "bob@sss.ca"]
                 }]
       });
   });

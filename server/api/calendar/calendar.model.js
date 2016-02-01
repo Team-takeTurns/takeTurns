@@ -32,7 +32,7 @@ var CalendarSchema = new mongoose.Schema({
                 endTime: String,
                 info: String,
                 reminder: Date,
-                guestList: [email:String]
+                guestList: [String]
       }]
 });
 

@@ -64,14 +64,19 @@ class MainController {
         console.log("add method here to send email to all members. Also will need the list of members to whome send the email.");
         console.log(" array that holds all emails is called this.membersTemp" + this.membersTemp);
       }
+  resetAddCalFields();
+    }
+  }
+
+resetAddCalFields(){
+      this.memCounter=0;
+      this.currentGroup = "None";
       this.sendEmail = false;
       this.membersTemp = [];
       this.Description = '';
       this.Name = '';
       this.Email = '';
-    }
-  }
-
+}
 
 deleteMember(member){
   delete this.membersTemp[member.email];
