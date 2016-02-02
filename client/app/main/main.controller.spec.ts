@@ -13,7 +13,7 @@ describe('Controller: MainController', function() {
   // Initialize the controller and a mock scope
   beforeEach(inject(function(_$httpBackend_, $controller, $rootScope) {
     $httpBackend = _$httpBackend_;
-    $httpBackend.expectGET('/api/things')
+    $httpBackend.expectGET('/api/users')
       .respond(['HTML5 Boilerplate', 'AngularJS', 'Karma', 'Express']);
 
     scope = $rootScope.$new();
@@ -23,9 +23,9 @@ describe('Controller: MainController', function() {
     });
   }));
 
-  it('should attach a list of things to the controller', function() {
+  it('should attach a list of users to the controller', function() {
     $httpBackend.flush();
-    expect(MainController.awesomeThings.length).to.equal(4);
+    expect(MainController.awesomeUsers.length).to.equal(4);
   });
 });
            console.log(" i  am in main.controller specs");

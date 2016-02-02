@@ -6,6 +6,8 @@
 'use strict';
 import Calendar from '../api/calendar/calendar.model';
 
+
+/*
 Calendar.find({}).removeAsync()
   .then(() => {
     Calendar.create({
@@ -52,3 +54,30 @@ Calendar.find({}).removeAsync()
     //  members: [{name: "gggggg", email:"ggggg@ggggg.ca"}]
     });
   });
+*/
+
+
+Calendar.find({}).removeAsync()
+  .then(() => {
+    Calendar.create({
+      members: [{name:"Sue", 
+                  email: "sue@ssss.ss"
+                },{name:"Lil", 
+                email:"lil@dddd.ca"}],
+      name:       'Development Tools',
+      description: 'Integration with popular tools such as Bower, Grunt, Babel, Karma, ' +
+                  'Mocha, JSHint, Node Inspector, Livereload, Protractor, Jade, ' +
+                  'Stylus, Sass, and Less.',
+      dateCreated: new Date(),
+      events: [{  title:"dinner", 
+                  host: "Albert", 
+                  date: new Date(),
+                  startTime: "7:00PM", 
+                  endTime: "9:00PM",
+                  info: "dinner",
+                  reminder: new Date(),
+                  guestList: ["email_1@ddd.ca", "david@ddd.ca", "bob@sss.ca"]
+                }]
+      });
+  });
+  
