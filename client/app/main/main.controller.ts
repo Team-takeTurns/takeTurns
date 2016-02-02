@@ -27,11 +27,13 @@ class MainController {
     this.activeUser;
     this.id;
     this.user;
+    this.adminEmail;
 
     this.membersTemp=[];
 
     $http.get('/api/users').then(response => {
-            console.log(" i  am in main.controller");
+
+            console.log(" window.location" +window.location.href);
       this.user = response.data;
       socket.syncUpdates('cinside get ', this.user);
     });
@@ -51,6 +53,7 @@ class MainController {
   }
 
   addCalendar() {
+  this.adminEmail = this.Email;
  if (this.Email && this.Name) {
       this.$http.post('/api/calendars', { dateCreated: new Date(), name: this.Name, description: this.Description, members: this.membersTemp,   paramSerializer: '$httpParamSerializerJQLike'}).then(response => {
       this.calendar = response.data;
@@ -69,7 +72,8 @@ class MainController {
   }
 
 createAdminUser(){
-this.$http.post('/api/users' , {role: "admin", email: this.Email, calID: this.calendar._id }).then(response => {
+console.log("this.adminEmail " + this.adminEmail);
+this.$http.post('/api/users' , {role: "admin", email: this.adminEmail, calID: this.calendar._id }).then(response => {
       this.adminUser = response.data;
       this.createAdminLink();
     });
