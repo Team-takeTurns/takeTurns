@@ -12,9 +12,6 @@ var CalendarSchema = new mongoose.Schema({
 });
 */
 var CalendarSchema = new mongoose.Schema({
-  users:  [{    role:String,
-                link: String,
-                email:String}], 
   members: [{   name: String, 
                 email: String
   }],              

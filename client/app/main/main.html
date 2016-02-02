@@ -83,12 +83,16 @@
 </div>
 
 <div class="container" id="waitScreenBox"  ng-hide="main.mainDiv">
-<h5>Your calendar {{main.calendar.name}} was created.</h5>
+<h2>Your calendar <u><b>{{main.calendar.name}}</b></u> was created.</h2>
+<br />
 <h5>Follow the link below for admin view where you can update or delete your calendar.</h5>
-<a href="http://www.w3schools.com/" target="_blank">Link will be here. also update href for 'a' tag</a>
+<a href="main.adminLink" target="_blank">{{main.adminLink}}</a>
+<br />
+<br />
 <h5>Send the link below to other users so they can create and view events.</h5>
-<a href="http://www.w3schools.com/" target="_blank">Link will be here. also update href for 'a' tag</a>
-<p>{{main.calendar}}</p>
+<a href="main.activeLink" target="_blank">{{main.activeLink}}</a>
+<br />
+<br />
 </div>
 
 <footer></footer>

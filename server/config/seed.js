@@ -60,11 +60,6 @@ Calendar.find({}).removeAsync()
 Calendar.find({}).removeAsync()
   .then(() => {
     Calendar.create({
-      users:  [{  role:"admin",
-                  link: "http://localhost:9000/calendars/11111111111111111",
-                  email: "liliya0artyukh@gmail.com"}, 
-              {   role: "active",
-                  link: "http://localhost:9000/calendars/88888888888888888"}],
       members: [{name:"Sue", 
                   email: "sue@ssss.ss"
                 },{name:"Lil", 

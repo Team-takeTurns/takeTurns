@@ -25,3 +25,21 @@
 .navbar-text {
   margin-left: 15px;
 }
+
+#detailsView{
+  border: solid 1px grey;
+  margin-top:10px;
+}
+
+
+#dayView{
+  border: solid 1px grey;
+  padding-left: 5px;
+    margin-top:10px;
+}
+
+#monthView{
+  border: solid 1px grey;
+  padding-right: 5px;
+    margin-top:10px;
+}
