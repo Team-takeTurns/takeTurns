@@ -9,4 +9,3 @@ angular.module('takeTurnsApp')
         controllerAs: 'eventViewer'
       });
   });
-        console.log(" i  am in eventViewer.ts");

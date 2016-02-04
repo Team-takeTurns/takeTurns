@@ -9,4 +9,3 @@ angular.module('takeTurnsApp')
         controllerAs: 'eventCreator'
       });
   });
-        console.log(" i  am in calEditor.ts");

@@ -28,4 +28,3 @@ describe('Controller: EventCreatorController', function() {
     expect(EventCreatorController.awesomeCalendars.length).to.equal(4);
   });
 });
-           console.log(" i  am in EventCreatorController.controller specs");

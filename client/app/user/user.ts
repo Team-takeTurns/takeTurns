@@ -3,10 +3,11 @@
 angular.module('takeTurnsApp')
   .config(function($routeProvider) {
     $routeProvider
-      .when('/users/:id', {
+      .when('/users/:userId', {
+
         templateUrl: 'app/calEditor/calEditor.html',
-        controller: 'CalEditorController',
-        controllerAs: 'calEditor'
+        controller: 'UserController',
+        controllerAs: 'userCtrl'
       });
+      
   });
-        console.log(" i  am in calEditor.ts");

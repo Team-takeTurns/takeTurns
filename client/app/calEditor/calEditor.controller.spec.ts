@@ -28,4 +28,3 @@ describe('Controller: CalEditorController', function() {
     expect(CalEditorController.awesomeCalendars.length).to.equal(4);
   });
 });
-           console.log(" i  am in CalEditorController.controller specs");

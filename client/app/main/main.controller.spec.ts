@@ -25,7 +25,6 @@ describe('Controller: MainController', function() {
 
   it('should attach a list of users to the controller', function() {
     $httpBackend.flush();
-    expect(MainController.awesomeUsers.length).to.equal(4);
+    expect(MainController.awesomeUsers.length).to.equal(0);
   });
 });
-           console.log(" i  am in main.controller specs");
