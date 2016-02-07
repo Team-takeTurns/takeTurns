@@ -13,7 +13,7 @@ class NavbarController {
     'link': '/event'
   }, {
     'title': 'View Events',
-    'link': '/calendar'
+    'link': '/calendar/:id'
   }, {
     'title': 'Week View',
     'link': '/week'
