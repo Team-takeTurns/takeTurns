@@ -27,7 +27,10 @@ module.exports = function(config) {
       'client/bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
       'client/bower_components/lodash/dist/lodash.compat.js',
       'client/bower_components/angular-socket-io/socket.js',
+      'client/bower_components/moment/moment.js',
+      'client/bower_components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.js',
       'client/bower_components/angular-mocks/angular-mocks.js',
+
       // endbower
       'node_modules/socket.io-client/socket.io.js',
       '.tmp/app/app.js',

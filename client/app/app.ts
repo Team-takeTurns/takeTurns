@@ -7,6 +7,8 @@ angular.module('takeTurnsApp', [
   'ngSanitize',
   'ngRoute',
   'btford.socket-io',
+  'ui.bootstrap',
+  'mwl.calendar'
   'ui.bootstrap'
 ])
   .config(function($routeProvider, $locationProvider) {

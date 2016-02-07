@@ -43,3 +43,9 @@
   padding-right: 5px;
     margin-top:10px;
 }
+
+div.scrollDayView {
+    width: 100%;
+    height: 600px;
+    overflow: scroll;
+}
