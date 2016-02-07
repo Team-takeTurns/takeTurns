@@ -7,13 +7,13 @@ class NavbarController {
     'link': '/'
   }, {
     'title': 'Admin Calendar',
-    'link': '/calendar'
+    'link': '/calendars/admin/:id'
   }, {
     'title': 'Add Event',
     'link': '/event'
   }, {
     'title': 'View Events',
-    'link': '/events'
+    'link': '/calendar'
   }, {
     'title': 'Week View',
     'link': '/week'

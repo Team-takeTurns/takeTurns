@@ -28,4 +28,3 @@ describe('Controller: EventViewerController', function() {
     expect(EventViewerController.awesomeEvents.length).to.equal(4);
   });
 });
-           console.log(" i  am in EventViewerController.controller specs");

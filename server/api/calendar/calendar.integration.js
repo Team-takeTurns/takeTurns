@@ -36,7 +36,7 @@ describe('Calendar API:', function() {
         .post('/api/calendars')
         .send({
           name: 'New Calendar',
-          info: 'This is the brand new calendar!!!'
+          description: 'This is the brand new calendar!!!'
         })
         .expect(201)
         .expect('Content-Type', /json/)
@@ -51,7 +51,7 @@ describe('Calendar API:', function() {
 
     it('should respond with the newly created calendar', function() {
       expect(newCalendar.name).to.equal('New Calendar');
-      expect(newCalendar.info).to.equal('This is the brand new calendar!!!');
+      expect(newCalendar.description).to.equal('This is the brand new calendar!!!');
     });
 
   });
@@ -79,7 +79,7 @@ describe('Calendar API:', function() {
 
     it('should respond with the requested calendar', function() {
       expect(calendar.name).to.equal('New Calendar');
-      expect(calendar.info).to.equal('This is the brand new calendar!!!');
+      expect(calendar.description).to.equal('This is the brand new calendar!!!');
     });
 
   });
@@ -92,7 +92,7 @@ describe('Calendar API:', function() {
         .put('/api/calendars/' + newCalendar._id)
         .send({
           name: 'Updated Calendar',
-          info: 'This is the updated calendar!!!'
+          description: 'This is the updated calendar!!!'
         })
         .expect(200)
         .expect('Content-Type', /json/)
@@ -111,7 +111,7 @@ describe('Calendar API:', function() {
 
     it('should respond with the updated calendar', function() {
       expect(updatedCalendar.name).to.equal('Updated Calendar');
-      expect(updatedCalendar.info).to.equal('This is the updated calendar!!!');
+      expect(updatedCalendar.description).to.equal('This is the updated calendar!!!');
     });
 
   });

@@ -9,4 +9,3 @@ angular.module('takeTurnsApp')
         controllerAs: 'main'
       });
   });
-        console.log(" i  am in main.ts");

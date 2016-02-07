@@ -35,8 +35,10 @@ describe('User API:', function() {
       request(app)
         .post('/api/users')
         .send({
-          name: 'New User',
-          info: 'This is the brand new user!!!'
+          role: 'admin',
+          link: 'http://localhost:9000/',
+          email:'email address here',          
+          calID: 'calendar id should be here'
         })
         .expect(201)
         .expect('Content-Type', /json/)
@@ -49,9 +51,72 @@ describe('User API:', function() {
         });
     });
 
-    it('should respond with the newly created user', function() {
-      expect(newUser.name).to.equal('New User');
-      expect(newUser.info).to.equal('This is the brand new user!!!');
+    it('should respond with the newly created user with role admin', function() {
+      expect(newUser.role).to.equal('admin');
+      expect(newUser.link).to.equal('http://localhost:9000/');
+      expect(newUser.email).to.equal('email address here');
+      expect(newUser.calID).to.equal('calendar id should be here');
+    });
+
+  });
+
+    describe('GET /api/users/:id', function() {
+    var user;
+
+    beforeEach(function(done) {
+      request(app)
+        .get('/api/users/' + newUser._id)
+        .expect(200)
+        .expect('Content-Type', /json/)
+        .end((err, res) => {
+          if (err) {
+            return done(err);
+          }
+          user = res.body;
+          done();
+        });
+    });
+
+    afterEach(function() {
+      user = {};
+    });
+
+    it('should respond with the requested admin user', function() {
+      expect(user.role).to.equal('admin');
+      expect(user.link).to.equal('http://localhost:9000/');
+       expect(user.email).to.equal('email address here');
+      expect(user.calID).to.equal('calendar id should be here');
+    });
+
+  });
+
+
+describe('POST /api/users', function() {
+    beforeEach(function(done) {
+      request(app)
+        .post('/api/users')
+        .send({
+          role: 'active',
+          link: 'http://localhost:9000/',
+          email:'',          
+          calID: 'calendar id should be here'
+        })
+        .expect(201)
+        .expect('Content-Type', /json/)
+        .end((err, res) => {
+          if (err) {
+            return done(err);
+          }
+          newUser = res.body;
+          done();
+        });
+    });
+
+    it('should respond with the newly created user with role active', function() {
+      expect(newUser.role).to.equal('active');
+      expect(newUser.link).to.equal('http://localhost:9000/');
+      expect(newUser.email).to.equal('');
+      expect(newUser.calID).to.equal('calendar id should be here');
     });
 
   });
@@ -77,44 +142,16 @@ describe('User API:', function() {
       user = {};
     });
 
-    it('should respond with the requested user', function() {
-      expect(user.name).to.equal('New User');
-      expect(user.info).to.equal('This is the brand new user!!!');
+    it('should respond with the requested active user', function() {
+      expect(user.role).to.equal('active');
+      expect(user.link).to.equal('http://localhost:9000/');
+       expect(user.email).to.equal('');
+      expect(user.calID).to.equal('calendar id should be here');
     });
 
   });
 
-  describe('PUT /api/users/:id', function() {
-    var updatedUser;
 
-    beforeEach(function(done) {
-      request(app)
-        .put('/api/users/' + newUser._id)
-        .send({
-          name: 'Updated User',
-          info: 'This is the updated user!!!'
-        })
-        .expect(200)
-        .expect('Content-Type', /json/)
-        .end(function(err, res) {
-          if (err) {
-            return done(err);
-          }
-          updatedUser = res.body;
-          done();
-        });
-    });
-
-    afterEach(function() {
-      updatedUser = {};
-    });
-
-    it('should respond with the updated user', function() {
-      expect(updatedUser.name).to.equal('Updated User');
-      expect(updatedUser.info).to.equal('This is the updated user!!!');
-    });
-
-  });
 
   describe('DELETE /api/users/:id', function() {
 

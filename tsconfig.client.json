@@ -18,6 +18,7 @@
         "client/app/eventViewer/eventViewer.ts",
         "client/app/main/main.controller.ts",
         "client/app/main/main.ts",
+        "client/app/user/user.controller.ts",
         "client/app/user/user.ts",
         "client/app/weekView/weekView.controller.ts",
         "client/app/weekView/weekView.ts",

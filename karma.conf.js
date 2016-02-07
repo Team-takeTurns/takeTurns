@@ -18,7 +18,6 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       // bower:js
-<<<<<<< HEAD
       'client/bower_components/jquery/dist/jquery.js',
       'client/bower_components/angular/angular.js',
       'client/bower_components/angular-resource/angular-resource.js',
@@ -31,8 +30,7 @@ module.exports = function(config) {
       'client/bower_components/moment/moment.js',
       'client/bower_components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.js',
       'client/bower_components/angular-mocks/angular-mocks.js',
-=======
->>>>>>> upstream/master
+
       // endbower
       'node_modules/socket.io-client/socket.io.js',
       '.tmp/app/app.js',

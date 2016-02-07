@@ -6,18 +6,42 @@ class CalEditorController {
 
   constructor($http, $scope, socket) {
     this.$http = $http;
-    this.awesomeCalendars = [];
+//----------------- liliya's vars ---------------------
+    this.calendar;
+    this.url = window.location;
+    this.user ;
+    this.calendar;
+    this.userID = this.url.toString().substr(38, 24);
+    this.deleteCal = true;
+  //------------ liliya's vars end ----------------------
 
-    $http.get('/api/calendars').then(response => {
-            console.log(" i  am in calEditor.controller");
-      this.awesomeCalendars = response.data;
-      socket.syncUpdates('calendar', this.awesomeCalendars);
+
+//------------------- liliya start: get calendar id from user ----------------------------
+  paramSerializer: '$httpParamSerializerJQLike';
+
+    $http.get('/api/users/'+ this.userID).then(response => {
+      this.user = response.data;
+      console.log(" i  am in calID" +   this.user.calID);
+      this.getCalendar();
+      socket.syncUpdates('calendar', this.calendar);
     });
+//---------------------- liliya end ----------------------------------
 
+//---------------------- auto generated end ----------------------------------
     $scope.$on('$destroy', function() {
       socket.unsyncUpdates('calendar');
     });
+    //---------------------- auto generated end ----------------------------------
   }
+
+
+//------------------------- liliya start: get calendar details -------------------------------
+  getCalendar(){
+   this.$http.get('/api/calendars/'+ this.user.calID).then(response => {
+      this.calendar = response.data;
+    });
+  }
+//---------------------- liliya end ----------------------------------
 
   addCalendar() {
     if (this.newCalendar) {

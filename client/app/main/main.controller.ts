@@ -6,7 +6,6 @@ class MainController {
 
   constructor($http, $scope, socket) {
     this.$http = $http;
-    this.awesomeUsers = [];
     this.currentGroup = "None";
     this.memCounter=0;
     this.collapseText = "Would you like to add a group?";
@@ -26,17 +25,9 @@ class MainController {
     this.adminUser;
     this.activeUser;
     this.id;
-    this.user;
     this.adminEmail;
-
     this.membersTemp=[];
 
-    $http.get('/api/users').then(response => {
-
-            console.log(" window.location" +window.location.href);
-      this.user = response.data;
-      socket.syncUpdates('cinside get ', this.user);
-    });
 
     $scope.$on('$destroy', function() {
       socket.unsyncUpdates('calendar');
@@ -72,10 +63,10 @@ class MainController {
   }
 
 createAdminUser(){
-console.log("this.adminEmail " + this.adminEmail);
 this.$http.post('/api/users' , {role: "admin", email: this.adminEmail, calID: this.calendar._id }).then(response => {
       this.adminUser = response.data;
       this.createAdminLink();
+      this.adminEmail ='';
     });
 }
 
@@ -87,13 +78,11 @@ this.$http.post('/api/users' , {role: "active", calID: this.calendar._id }).then
 }
 
 createAdminLink(){
-             this.adminLink = "http://localhost:9000/users/" + this.adminUser._id;
-             console.log("in new code adminLink " + this.adminLink);
+             this.adminLink = "http://localhost:9000/calendars/admin/" + this.adminUser._id;
              this.adminUserUpdate();
     }
 createActiveLink(){
-             this.activeLink = "http://localhost:9000/users/" + this.activeUser._id;
-             console.log("in new code activeLink " + this.activeLink);
+             this.activeLink = "http://localhost:9000/calendar/" + this.activeUser._id;
              this.activeUserUpdate();
         }
 
@@ -101,14 +90,12 @@ adminUserUpdate(){
   this.$http.put('/api/users/'+ this.adminUser._id, { link: this.adminLink}).then(response => {
       this.adminUser = response.data;
       });
-console.log("response after update " + this.adminUser.link);
 }
 
 activeUserUpdate(){
   this.$http.put('/api/users/'+ this.activeUser._id, {link: this.activeLink}).then(response => {
       this.activeUser = response.data;
       });
-console.log("response after update " + this.activeUser.link);
 }
 
 
@@ -132,7 +119,6 @@ resetAddCalFields(){
    this.memName='';
    this.memEmail='';
     this.currentGroup = this.memCounter;
-   console.log(this.membersTemp);
     }
   }
 
@@ -150,7 +136,6 @@ deleteMember(member){
         break;
       }
     }
-       console.log(this.membersTemp);
 }
 
   deleteUser(user) {

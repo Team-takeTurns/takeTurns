@@ -20,7 +20,7 @@ class EventViewerController {
     //     draggable: true,
     //     resizable: true
     //   }
-];
+//];
 
 
     $http.get('/api/events').then(response => {
