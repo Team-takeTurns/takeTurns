@@ -3,7 +3,7 @@
 angular.module('takeTurnsApp')
   .config(function($routeProvider) {
     $routeProvider
-      .when('/events', {
+      .when('/calendar/:id', {
         templateUrl: 'app/eventViewer/eventViewer.html',
         controller: 'EventViewerController',
         controllerAs: 'eventViewer'

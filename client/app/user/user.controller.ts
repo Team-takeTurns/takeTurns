@@ -7,18 +7,19 @@ class UserController {
   constructor($http, $scope, socket) {
     this.$http = $http;
     this.user ;
-    this.user = $scope.params;
+    this.calendar;
+    this.url = window.location;
+    this.userID = this.url.toString().substr(28, 24);
 
- console.log("fffffffff   this.user  = " +   $scope.user._id);
+
   paramSerializer: '$httpParamSerializerJQLike';
-   console.log("fffffffff scope = " + $scope._id);
 
 
-    $http.get('/api/users').then(response => {
-            console.log(" i  am in user.controller");
+    $http.get('/api/users/'+ this.userID).then(response => {
+      console.log(" i  am in user.controller");
       this.user = response.data;
-      console.log("fffffffff user = " + $scope);
       socket.syncUpdates('user', this.user);
+      this.getCalendar();
     });
 
     $scope.$on('$destroy', function() {
@@ -33,6 +34,14 @@ class UserController {
     }
   }
 
+  getCalendar(){
+   this.$http.get('/api/calendars/'+ this.user.calID).then(response => {
+     // window.location = "http://localhost:9000/calendar/admin"
+      this.calendar = response.data;
+      socket.syncUpdates('calendar', this.calendar);
+    });
+  }
+
   deleteUser(user) {
     this.$http.delete('/api/users/' + user._id);
   }
@@ -40,5 +49,4 @@ class UserController {
 
 angular.module('takeTurnsApp')
   .controller('UserController', UserController);
-
 })();

@@ -6,7 +6,6 @@ class MainController {
 
   constructor($http, $scope, socket) {
     this.$http = $http;
-    this.awesomeUsers = [];
     this.currentGroup = "None";
     this.memCounter=0;
     this.collapseText = "Would you like to add a group?";
@@ -26,15 +25,9 @@ class MainController {
     this.adminUser;
     this.activeUser;
     this.id;
-    this.user;
     this.adminEmail;
-
     this.membersTemp=[];
 
-    $http.get('/api/users').then(response => {
-      this.user = response.data;
-      socket.syncUpdates('cinside get ', this.user);
-    });
 
     $scope.$on('$destroy', function() {
       socket.unsyncUpdates('calendar');
@@ -70,10 +63,10 @@ class MainController {
   }
 
 createAdminUser(){
-console.log("this.adminEmail " + this.adminEmail);
 this.$http.post('/api/users' , {role: "admin", email: this.adminEmail, calID: this.calendar._id }).then(response => {
       this.adminUser = response.data;
       this.createAdminLink();
+      this.adminEmail ='';
     });
 }
 
@@ -85,11 +78,11 @@ this.$http.post('/api/users' , {role: "active", calID: this.calendar._id }).then
 }
 
 createAdminLink(){
-             this.adminLink = "http://localhost:9000/users/" + this.adminUser._id;
+             this.adminLink = "http://localhost:9000/calendars/admin/" + this.adminUser._id;
              this.adminUserUpdate();
     }
 createActiveLink(){
-             this.activeLink = "http://localhost:9000/users/" + this.activeUser._id;
+             this.activeLink = "http://localhost:9000/calendar/" + this.activeUser._id;
              this.activeUserUpdate();
         }
 
