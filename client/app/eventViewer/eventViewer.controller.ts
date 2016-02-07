@@ -22,6 +22,7 @@ class EventViewerController {
     //   }
 ];
 
+
     $http.get('/api/events').then(response => {
             console.log(" i  am in eventViewer.controller");
       this.awesomeEvents = response.data;
