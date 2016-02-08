@@ -6,6 +6,17 @@ class EventViewerController {
 
   constructor($http, $scope, socket) {
     this.$http = $http;
+    //----------------- liliya's vars ---------------------
+    this.calendar;
+    this.url = window.location;
+    this.user ;
+    this.calendar;
+    this.userID = this.url.toString().substr(31, 24);
+    console.log(" from event viewer user.id = " +   this.userID );
+    this.deleteCal = true;
+  //------------ liliya's vars end ----------------------
+
+
     this.awesomeEvents = [];
     $scope.calendarView = 'day';
     $scope.calendarDate = new Date();
@@ -23,16 +34,44 @@ class EventViewerController {
 //];
 
 
+//------------------- liliya start: get calendar id from user ----------------------------
+  paramSerializer: '$httpParamSerializerJQLike';
+
+    $http.get('/api/users/'+ this.userID).then(response => {
+      this.user = response.data;
+      console.log(" i  am in calID" +   this.user.calID);
+      this.getCalendar();
+      socket.syncUpdates('calendar', this.calendar);
+    });
+//---------------------- liliya end ----------------------------------
+
+
+/* -------------- Christine are you using this? --- if not please  delete it
     $http.get('/api/events').then(response => {
             console.log(" i  am in eventViewer.controller");
       this.awesomeEvents = response.data;
       socket.syncUpdates('event', this.awesomeEvents);
     });
+  ---------------------------------------------------------------*/
 
+
+
+  //---------------------- auto generated start ----------------------------------
     $scope.$on('$destroy', function() {
       socket.unsyncUpdates('event');
     });
+      //---------------------- auto generated end ----------------------------------
   }
+
+
+//------------------------- liliya start: get calendar details -------------------------------
+  getCalendar(){
+   this.$http.get('/api/calendars/'+ this.user.calID).then(response => {
+      this.calendar = response.data;
+    });
+  }
+//---------------------- liliya end ----------------------------------
+
 
   addEvent() {
     if (this.newEvent) {
