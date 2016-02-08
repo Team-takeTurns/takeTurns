@@ -5,7 +5,7 @@
 
 'use strict';
 import Calendar from '../api/calendar/calendar.model';
-
+import User from '../api/user/user.model';
 
 /*
 Calendar.find({}).removeAsync()
@@ -56,18 +56,34 @@ Calendar.find({}).removeAsync()
   });
 */
 
+User.find({}).removeAsync()
+  .then(() => {
+    User.create({
+     _id:"56b044743ef01300237649ca",
+     role:"active",
+     link: "http://localhost:9000/calendar/56b044743ef01300237649ca",
+     email:"", 
+     calID: "56b1e6924f07f3840f8ce556"
+      }, {
+     _id: "56b044743ef01300237649cb",
+     role:"admin",
+     link: "http://localhost:9000/calendars/admin/56b044743ef01300237649cb",
+     email:"liliya0artyukh@gmail.com", 
+     calID: "56b1e6924f07f3840f8ce556"
+      });
+  });
+  
 
 Calendar.find({}).removeAsync()
   .then(() => {
     Calendar.create({
+        _id: "56b1e6924f07f3840f8ce556",
       members: [{name:"Sue", 
                   email: "sue@ssss.ss"
                 },{name:"Lil", 
                 email:"lil@dddd.ca"}],
-      name:       'Development Tools',
-      description: 'Integration with popular tools such as Bower, Grunt, Babel, Karma, ' +
-                  'Mocha, JSHint, Node Inspector, Livereload, Protractor, Jade, ' +
-                  'Stylus, Sass, and Less.',
+      name:       'My Cal Name - Stephan',
+      description: 'This is the description for the event. TEST',
       dateCreated: new Date(),
       events: [{  title:"dinner", 
                   host: "Albert", 

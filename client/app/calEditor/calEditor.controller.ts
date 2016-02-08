@@ -27,7 +27,7 @@ class CalEditorController {
     });
 //---------------------- liliya end ----------------------------------
 
-//---------------------- auto generated end ----------------------------------
+//---------------------- auto generated start ----------------------------------
     $scope.$on('$destroy', function() {
       socket.unsyncUpdates('calendar');
     });
