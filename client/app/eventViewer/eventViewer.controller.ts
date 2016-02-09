@@ -3,7 +3,7 @@
 (function() {
 
 class EventViewerController {
-
+    
   constructor($http, $scope, socket) {
     this.$http = $http;
     //----------------- liliya's vars ---------------------
@@ -15,8 +15,10 @@ class EventViewerController {
     console.log(" from event viewer user.id = " +   this.userID );
     this.deleteCal = true;
   //------------ liliya's vars end ----------------------
-
-
+  
+  // ------------------Francis var -------------
+  this.$scope = $scope;
+  // ------------------Francis ends --------------
     this.awesomeEvents = [];
     $scope.calendarView = 'day';
     $scope.calendarDate = new Date();
@@ -68,6 +70,9 @@ class EventViewerController {
   getCalendar(){
    this.$http.get('/api/calendars/'+ this.user.calID).then(response => {
       this.calendar = response.data;
+      // ------------------Francis -------------------------
+      //this.detailsEvent();
+      // --------------------Francis ends ------------------
     });
   }
 //---------------------- liliya end ----------------------------------
@@ -83,6 +88,12 @@ class EventViewerController {
   deleteEvents(event) {
     this.$http.delete('/api/events/' + event._id);
   }
+  
+  //------------------------------Francis -----------------------------------
+  private detailsEvent():void{
+      this.$scope.selectedEvent = this.calendar.events[0];
+  }
+  //------------------------------End Francis --------------------------------
 }
 
 angular.module('takeTurnsApp')
