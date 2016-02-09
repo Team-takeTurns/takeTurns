@@ -1,31 +1,21 @@
 <navbar></navbar>
 
 <header class="hero-unit" id="banner">
-  <div class="container">
-    <h1>Event Viewer</h1>
-    <p class="lead">Here you can view events in a month view, day view and details about the event.</p>
-  </div>
+    <div class="container">
+        <h1>Event Viewer</h1>
+        <p class="lead">Here you can view events in a month view, day view and details about the event.</p>
+    </div>
 </header>
 
-<div class="container">
+<div class="container" ng-controller="EventViewerController">
 
-<div class="row">
-  <div  class="col-xs-12 col-sm-6 col-md-6 col-lg-6" >
-<div id="monthView"> 
-  <p>This div is for the month view. Alex is going to work on this view</p>
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <div id="monthView">
+                <p>This div is for the month view. Alex is going to work on this view</p>
 
-example of retrieved calenda data
-<h2>Name of calendar: {{eventViewer.calendar.name}}</h2>
-
-
-
-
-
-
-
-
-
-  
+                example of retrieved calenda data
+                <h2>Name of calendar: {{eventViewer.calendar.name}}</h2>
 
 
 
@@ -36,57 +26,134 @@ example of retrieved calenda data
 
 
 
-</div>
-  </div><!--end of column for month view -->
-
-  <div   class="col-xs-12 col-sm-6 col-md-6 col-lg-6" >
-<div id="dayView">
-  <p>This div is for the day view. Christine is going to work on this view</p>
 
 
-  
-  <h2 class="text-center">{{ calendarTitle }}</h2>
-   <div class="text-center">
-      <div class="btn-group">
 
-        <button
-        class="btn btn-primary"
-          mwl-date-modifier
-          date="calendarDate"
-          decrement="calendarView">
-          <span class ="glyphicon glyphicon-chevron-left"></span>
-        </button>
-        <button
-        class="btn btn-primary"
-          mwl-date-modifier
-          date="calendarDate"
-          set-to-today>
-          Today
-        </button>
-        <button
-        class="btn btn-primary"
-          mwl-date-modifier
-          date="calendarDate"
-          increment="calendarView">
-          <span class ="glyphicon glyphicon-chevron-right"></span>
-        </button>
-      </div>
+
+
+
+
+
+
+
+            </div>
+        </div>
+        <!--end of column for month view -->
+
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <div id="dayView">
+                <p>This div is for the day view. Christine is going to work on this view</p>
+
+
+                <h2 class="text-center">{{ calendarTitle }}</h2>
+                <div class="text-center">
+                    <div class="btn-group">
+
+                        <button 
+                        class="btn btn-primary" 
+                        mwl-date-modifier 
+                        date="calendarDate" 
+                        decrement="calendarView">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                        </button>
+                        <button 
+                        class="btn btn-primary" 
+                        mwl-date-modifier 
+                        date="calendarDate" 
+                        set-to-today>
+                            Today
+                        </button>
+                        <button 
+                        class="btn btn-primary" 
+                        mwl-date-modifier 
+                        date="calendarDate" 
+                        increment="calendarView">
+                            <span class="glyphicon glyphicon-chevron-right"></span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="scrollDayView">
+                    <mwl-calendar 
+                    view="calendarView" 
+                    view-date="calendarDate" 
+                    events="events" 
+                    view-title="calendarTitle"
+                    on-event-click="eventViewer.eventClicked(calendarEvent)"
+                    on-event-times-changed="calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
+                    edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'"
+                    delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
+                    on-edit-event-click="eventEdited(calendarEvent)"
+                    on-delete-event-click="eventDeleted(calendarEvent)"
+                    </mwl-calendar>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+        <!--end of column for day view -->
     </div>
 
-<div class = "scrollDayView">
-  <mwl-calendar
-    view="calendarView"
-    view-date="calendarDate"
-    events="events"
-    view-title="calendarTitle"
-    on-event-click="eventViewer.eventClicked(calendarEvent)"
-    on-event-times-changed="calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
-    edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'"
-    delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
-    on-edit-event-click="eventEdited(calendarEvent)"
-    on-delete-event-click="eventDeleted(calendarEvent)"
-</mwl-calendar>
-</div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div id="detailsView" ng-controller="EventViewerController">
+                <p>This div is for the event details view. Francis is going to work on this view</p>
+                example of retrieved calenda data
+                <h2>Name of calendar: {{selectedEvent.title}}</h2>
+                <br>
+                <!--Start of the Edit section-->
+                    <label>Title: </label>
+                    <input ng-model="selectedEvent.title" disabled>
+                    <br>
+                    <label>Date: </label>
+                    <input ng-model="selectedEvent.date" disabled>
+                    <br>
+                    <label>Start Time: </label>
+                    <input ng-model="selectedEvent.startTime" disabled>
+                    <br>
+                    <label>End Time: </label>
+                    <input ng-model="selectedEvent.endTime" disabled>
+                    <br>
+                    <label>Host: </label>
+                    <input ng-model="selectedEvent.host" disabled>
+                    <br>
+                    <label>Description: </label>
+                    <br>
+                    <button class="btn btn-primary">EDIT</button>
 
 
 
@@ -115,58 +182,10 @@ example of retrieved calenda data
 
 
 
-
-
-
-
-
-
-
-
-</div>
-  </div><!--end of column for day view -->
-</div>
-
-<div class="row">
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-<div  id="detailsView" >
-  <p>This div is for the event details view. Francis is going to work on this view</p>
-example of retrieved calenda data
-<h2>Name of calendar: {{eventViewer.calendar.name}}</h2>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-</div>    
-  </div><!--end of column for event details view -->
-</div>
+            </div>
+        </div>
+        <!--end of column for event details view -->
+    </div>
 
 </div>
 <footer></footer>
