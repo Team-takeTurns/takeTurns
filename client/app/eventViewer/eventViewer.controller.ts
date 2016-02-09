@@ -6,25 +6,22 @@
 
         constructor($http, $scope, socket) {
             this.$http = $http;
-            //----------------- liliya's vars ---------------------
+            //----------------- Global vars ---------------------
             this.calendar;
             this.url = window.location;
             this.user;
-            this.calendar;
-            this.calendarDate;
             this.userID = this.url.toString().substr(31, 24);
             console.log(" from event viewer user.id = " + this.userID);
             this.deleteCal = true;
-            
-            //------------ liliya's vars end ----------------------
-            // ------------------Francis var -------------
-            this.$scope = $scope;
-            this.$scope.events = [];
-            // ------------------Francis ends --------------
-            this.awesomeEvents = [];
-            $scope.calendarView = 'day';
-            $scope.calendarDate = new Date();
 
+            this.$scope = $scope;
+            this.$scope.slot = this.calendar;
+
+            $scope.events = [];
+            this.awesomeEvents = [];
+
+            //----------------- Global vars END---------------------
+            
             //------------------- liliya start: get calendar id from user ----------------------------
             paramSerializer: '$httpParamSerializerJQLike';
 
@@ -34,18 +31,7 @@
                 this.getCalendar();
                 socket.syncUpdates('calendar', this.calendar);
             });
-            //---------------------- liliya end ----------------------------------
-
-
-            /* -------------- Christine are you using this? --- if not please  delete it
-                $http.get('/api/events').then(response => {
-                        console.log(" i  am in eventViewer.controller");
-                  this.awesomeEvents = response.data;
-                  socket.syncUpdates('event', this.awesomeEvents);
-                });
-              ---------------------------------------------------------------*/
-
-
+            //---------------------- liliya end ---------------------------------
 
             //---------------------- auto generated start ----------------------------------
             $scope.$on('$destroy', function() {
@@ -54,75 +40,53 @@
             //---------------------- auto generated end ----------------------------------
         }
 
-
-        //------------------------- liliya start: get calendar details -------------------------------
         getCalendar() {
             this.$http.get('/api/calendars/' + this.user.calID).then(response => {
                 this.calendar = response.data;
-                // ------------------Francis -------------------------
-                //this.detailsEvent();
-                // --------------------Francis ends ------------------
                 this.dayEvents();
+
             });
         }
-        //---------------------- liliya end ----------------------------------
 
+        dayEvents() {
+            for (var i in this.calendar.events) {
+                var calEvent = this.calendar.events[i].date;
+                var startTime = new Date(calEvent.substring(0, 10) + "T" + this.calendar.events[i].startTime);
+                var endTime = new Date(calEvent.substring(0, 10) + "T" + this.calendar.events[i].endTime);
 
-        addEvent() {
-            if (this.newEvent) {
-                this.$http.post('/api/events', { name: this.newEvent });
-                this.newEvent = '';
-            }
-        }
+                // Required to set the calenday months or day
+                this.$scope.calendarView = 'day';
+                this.$scope.calendarDate = new Date();
 
-        deleteEvents(event) {
-            this.$http.delete('/api/events/' + event._id);
-        }
+                console.log("ID:" + this.calendar.events[i]._id);
+                this.$scope.events[i] =
+                    {
+                        title: this.calendar.events[i].title,
+                        startsAt: new Date(moment(startTime).format()),
+                        endsAt: new Date(moment(endTime).format()),
+                        eventId: this.calendar.events[i]._id
+                    };
+            } // End The for loop
+        } // End dayEvents method
         
-        //---------------------------Francis Event Details Methods -------------------------
+        // detailsEvents methods
         private detailsEvent(dayTitle) {
 
             for (var dayEvent in this.calendar.events) {
-                if (this.calendar.events[dayEvent].title == dayTitle) {
+                if (this.calendar.events[dayEvent]._id == dayTitle) {
                     this.$scope.selectedEvent = this.calendar.events[dayEvent];
                 }
             }
 
         }
-        //---------------------------Francis ends Event Details Methods----------------------
-        
-        //-------------------------------Christine Task ---------------------------------
-        dayEvents() {
-            console.log("dayEvents is called");
-            for (var i in this.calendar.events) {
-                var a = this.calendar.events[i].date;
-                var b = new Date(a.substring(0, 10) + "T" + this.calendar.events[i].startTime);
-                var c = new Date(a.substring(0, 10) + "T" + this.calendar.events[i].endTime);
-                
-                // Required to set the calenday months or day
-                this.$scope.calendarView = 'day';
-                this.$scope.calendarDate = new Date();
 
-                this.$scope.events[i] =
-
-                    {
-                        title: this.calendar.events[i].title,
-                        type: 'warning',
-                        startsAt: new Date(moment(b).format()),
-                        endsAt: new Date(moment(c).format()),
-                        draggable: true,
-                        resizable: true
-                    };
-            } // End The for loop
-        } // End dayEvents method
-        
         eventClicked(events) {
-            console.log("You clicked: " + events.title);
-            this.detailsEvent(events.title);
+            console.log("You clicked: " + events.eventId);
+            this.detailsEvent(events.eventId);
         }
-        //-------------------------------End Christine Task ----------------------------------------
     }
-
+    
+    
     angular.module('takeTurnsApp')
         .controller('EventViewerController', EventViewerController);
 })();
