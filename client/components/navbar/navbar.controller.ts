@@ -5,18 +5,6 @@ class NavbarController {
   menu = [{
     'title': 'Home',
     'link': '/'
-  }, {
-    'title': 'Admin Calendar',
-    'link': '/calendars/admin/:id'
-  }, {
-    'title': 'Add Event',
-    'link': '/event'
-  }, {
-    'title': 'View Events',
-    'link': '/calendar/:id'
-  }, {
-    'title': 'Week View',
-    'link': '/week'
   }];
 
   isCollapsed = true;

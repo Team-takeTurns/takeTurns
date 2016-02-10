@@ -9,4 +9,3 @@ angular.module('takeTurnsApp')
         controllerAs: 'weekView'
       });
   });
-        console.log(" i  am in weekView.ts");

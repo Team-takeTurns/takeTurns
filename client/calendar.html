@@ -75,7 +75,10 @@
     <!-- endbuild -->
     <!-- build:js({.tmp,client}) app/app.js -->
       <script src="app/app.js"></script>
-      <script src="components/footer/footer.directive.js"></script>
+      <script src="components/navbarCal/navbarCal.controller.js"></script>
+      <script src="components/navbarCal/navbarCal.directive.js"></script>
+      <!-- injector:js -->
+      <script src="app/weekView/weekView.controller.js"></script>
       <script src="app/calEditor/calEditor.controller.js"></script>
       <script src="app/eventCreator/eventCreator.controller.js"></script>
       <script src="app/eventCreator/eventCreator.js"></script>
@@ -85,18 +88,15 @@
       <script src="app/main/main.js"></script>
       <script src="app/user/user.controller.js"></script>
       <script src="app/user/user.js"></script>
-      <script src="app/weekView/weekView.controller.js"></script>
-      <script src="app/weekView/weekView.js"></script>
       <script src="app/calEditor/calEditor.js"></script>
+      <script src="app/weekView/weekView.js"></script>
+      <script src="components/footer/footer.directive.js"></script>
       <script src="components/modal/modal.service.js"></script>
-            <!-- temporarily removed navbar - decide later if keeping it
-      <script src="components/navbar/navbar.controller.js"></script>
-      <script src="components/navbar/navbar.directive.js"></script>
-      -->
       <script src="components/socket/socket.service.js"></script>
       <script src="components/util/util.module.js"></script>
       <script src="components/util/util.service.js"></script>
       <script src="app/app.constant.js"></script>
+      <!-- endinjector -->
     <!-- endbuild -->
   </body>
 </html>

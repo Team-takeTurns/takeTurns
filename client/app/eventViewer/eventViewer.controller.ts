@@ -4,16 +4,20 @@
 
 class EventViewerController {
 
-  constructor($http, $scope, socket) {
+  constructor($http, $scope, socket, $rootScope) {
     this.$http = $http;
     //----------------- liliya's vars ---------------------
-    this.calendar;
     this.url = window.location;
-    this.user ;
     this.calendar;
-    this.userID = this.url.toString().substr(31, 24);
-    console.log(" from event viewer user.id = " +   this.userID );
-    this.deleteCal = true;
+    this.user ;
+    if(! $rootScope.userIDglobal ){
+      $rootScope.userIDglobal ;
+    }
+    if(! $rootScope.userRole){
+      this.userIDtemp = this.url.toString().substr(31, 24);
+    }else if ( $rootScope.userRole === "admin"){
+      this.userIDtemp = this.url.toString().substr(32, 24);
+    }
   //------------ liliya's vars end ----------------------
 
 
@@ -37,9 +41,15 @@ class EventViewerController {
 //------------------- liliya start: get calendar id from user ----------------------------
   paramSerializer: '$httpParamSerializerJQLike';
 
-    $http.get('/api/users/'+ this.userID).then(response => {
+if (!this.userIDtemp){
+  console.log("do nothing" );
+  window.location = window.location + "/" +  $rootScope.userIDglobal;
+}else{
+      $rootScope.userIDglobal  = this.userIDtemp ;
+}
+
+    $http.get('/api/users/'+ $rootScope.userIDglobal).then(response => {
       this.user = response.data;
-      console.log(" i  am in calID" +   this.user.calID);
       this.getCalendar();
       socket.syncUpdates('calendar', this.calendar);
     });

@@ -4,12 +4,11 @@
 
 class weekViewController {
 
-  constructor($http, $scope, socket) {
+  constructor($http, $scope, socket, $rootScope) {
     this.$http = $http;
     this.awesomeEvents = [];
 
     $http.get('/api/events').then(response => {
-            console.log(" i  am in eventViewer.controller");
       this.awesomeEvents = response.data;
       socket.syncUpdates('event', this.awesomeEvents);
     });
