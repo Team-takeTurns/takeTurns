@@ -49,42 +49,23 @@
                 <div class="text-center">
                     <div class="btn-group">
 
-                        <button 
-                        class="btn btn-primary" 
-                        mwl-date-modifier 
-                        date="calendarDate" 
-                        decrement="calendarView">
+                        <button class="btn btn-primary" mwl-date-modifier date="calendarDate" decrement="calendarView">
                             <span class="glyphicon glyphicon-chevron-left"></span>
                         </button>
-                        <button 
-                        class="btn btn-primary" 
-                        mwl-date-modifier 
-                        date="calendarDate" 
-                        set-to-today>
+                        <button class="btn btn-primary" mwl-date-modifier date="calendarDate" set-to-today>
                             Today
                         </button>
-                        <button 
-                        class="btn btn-primary" 
-                        mwl-date-modifier 
-                        date="calendarDate" 
-                        increment="calendarView">
+                        <button class="btn btn-primary" mwl-date-modifier date="calendarDate" increment="calendarView">
                             <span class="glyphicon glyphicon-chevron-right"></span>
                         </button>
                     </div>
                 </div>
 
                 <div class="scrollDayView">
-                    <mwl-calendar 
-                    view="calendarView" 
-                    view-date="calendarDate" 
-                    events="events" 
-                    view-title="calendarTitle"
-                    on-event-click="eventViewer.eventClicked(calendarEvent)"
+                    <mwl-calendar view="calendarView" view-date="calendarDate" events="events" view-title="calendarTitle" on-event-click="eventViewer.eventClicked(calendarEvent)"
                     on-event-times-changed="calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
-                    edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'"
-                    delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
-                    on-edit-event-click="eventEdited(calendarEvent)"
-                    on-delete-event-click="eventDeleted(calendarEvent)"
+                    edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'" delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
+                    on-edit-event-click="eventEdited(calendarEvent)" on-delete-event-click="eventDeleted(calendarEvent)"
                     </mwl-calendar>
                 </div>
 
@@ -135,25 +116,41 @@
                 example of retrieved calenda data
                 <h2>Name of calendar: {{selectedEvent.title}}</h2>
                 <br>
+                <div class="row">
+                <div  class="col-md col-md-offset-10">
+                <button class="btn btn-primary" ng-click="updBttn=true" ng-hide="updBttn">DELETE</button>
+                </div>
+                </div>
                 <!--Start of the Edit section-->
+                <fieldset class="form-group">
                     <label>Title: </label>
-                    <input ng-model="selectedEvent.title" disabled>
-                    <br>
+                    <input class="form-control" ng-model="selectedEvent.title" disabled>
+                </fieldset>
+                <fieldset class="form-group">
                     <label>Date: </label>
-                    <input ng-model="selectedEvent.date" disabled>
-                    <br>
+                    <input class="form-control" ng-model="selectedEvent.date" disabled>
+                </fieldset>
+                <fieldset class="form-group">
                     <label>Start Time: </label>
-                    <input ng-model="selectedEvent.startTime" disabled>
-                    <br>
+                    <input class="form-control" ng-model="selectedEvent.startTime" disabled >
+                </fieldset>
+                <fieldset class="form-group">
                     <label>End Time: </label>
-                    <input ng-model="selectedEvent.endTime" disabled>
-                    <br>
+                    <input class="form-control" ng-model="selectedEvent.endTime" disabled>
+                </fieldset>
+                <fieldset class="form-group">
                     <label>Host: </label>
-                    <input ng-model="selectedEvent.host" disabled>
-                    <br>
+                    <input class="form-control" ng-model="selectedEvent.host" disabled>
+                </fieldset>
+                <fieldset class="form-group">
                     <label>Description: </label>
-                    <br>
-                    <button class="btn btn-primary">EDIT</button>
+                    <textarea class="form-control" id="" cols="30" rows="10" disabled></textarea>
+                </fieldset>
+                <br>
+                <div ng-init="updBttn=true">
+                <button class="btn btn-primary" ng-click="updBttn=false">EDIT</button>
+                <button class="btn btn-primary" ng-click="updBttn=true" ng-hide="updBttn">UPDATE</button>
+                </div>
 
 
 
