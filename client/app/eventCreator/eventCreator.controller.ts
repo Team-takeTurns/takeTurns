@@ -4,12 +4,16 @@
 
 class EventCreatorController {
 
-  constructor($http, $scope, socket) {
+  constructor($http, $scope, socket,  $rootScope) {
     this.$http = $http;
     this.awesomeCalendars = [];
+//----------------- liliya's vars ---------------------
+    this.calendar;
+    this.user ;
+  //------------ liliya's vars end ----------------------
+
 
     $http.get('/api/calendars').then(response => {
-            console.log(" i  am in calEditor.controller");
       this.awesomeCalendars = response.data;
       socket.syncUpdates('calendar', this.awesomeCalendars);
     });

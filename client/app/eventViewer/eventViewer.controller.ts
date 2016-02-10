@@ -2,58 +2,68 @@
 
 (function() {
 
-    class EventViewerController {
+class EventViewerController {
 
-        constructor($http, $scope, socket) {
-            this.$http = $http;
-            //----------------- Global vars ---------------------
-            this.calendar;
-            this.url = window.location;
-            this.user;
-            this.userID = this.url.toString().substr(31, 24);
-            console.log(" from event viewer user.id = " + this.userID);
-            this.deleteCal = true;
-
+  constructor($http, $scope, socket, $rootScope) {
+    this.$http = $http;
+    //----------------- Global vars ---------------------
+    this.calendar;
+    this.url = window.location;
+    this.user ;
+        //----------------- Liliya's code ---------------------
+    if(! $rootScope.userIDglobal ){
+	$rootScope.userIDglobal ;
+    }
+    if(! $rootScope.userRole){
+      this.userIDtemp = this.url.toString().substr(31, 24);
+    }else if ( $rootScope.userRole === "admin"){
+      this.userIDtemp = this.url.toString().substr(32, 24);
+    }
+  //------------ liliya's vars end ----------------------
             this.$scope = $scope;
             this.$scope.slot = this.calendar;
-
             $scope.events = [];
             this.awesomeEvents = [];
 
             //----------------- Global vars END---------------------
             
-            //------------------- liliya start: get calendar id from user ----------------------------
-            paramSerializer: '$httpParamSerializerJQLike';
+//------------------- liliya start: get calendar id from user ----------------------------
+  paramSerializer: '$httpParamSerializerJQLike';
 
-            $http.get('/api/users/' + this.userID).then(response => {
-                this.user = response.data;
-                console.log(" i  am in calID" + this.user.calID);
-                this.getCalendar();
-                socket.syncUpdates('calendar', this.calendar);
-            });
+if (!this.userIDtemp){
+  console.log("do nothing" );
+  window.location = window.location + "/" +  $rootScope.userIDglobal;
+}else{
+      $rootScope.userIDglobal  = this.userIDtemp ;
+}
+    $http.get('/api/users/'+ $rootScope.userIDglobal).then(response => {
+      this.user = response.data;
+      this.getCalendar();
+      socket.syncUpdates('calendar', this.calendar);
+    });
             //---------------------- liliya end ---------------------------------
 
-            //---------------------- auto generated start ----------------------------------
-            $scope.$on('$destroy', function() {
-                socket.unsyncUpdates('event');
-            });
-            //---------------------- auto generated end ----------------------------------
-        }
+  //---------------------- auto generated start ----------------------------------
+    $scope.$on('$destroy', function() {
+      socket.unsyncUpdates('event');
+    });
+      //---------------------- auto generated end ----------------------------------
+  }
 
-        getCalendar() {
-            this.$http.get('/api/calendars/' + this.user.calID).then(response => {
-                this.calendar = response.data;
+//------------------------- liliya start: get calendar details -------------------------------
+  getCalendar(){
+   this.$http.get('/api/calendars/'+ this.user.calID).then(response => {
+      this.calendar = response.data;
                 this.dayEvents();
-
-            });
-        }
+    });
+  }
+//---------------------- liliya end ----------------------------------
 
         dayEvents() {
             for (var i in this.calendar.events) {
                 var calEvent = this.calendar.events[i].date;
                 var startTime = new Date(calEvent.substring(0, 10) + "T" + this.calendar.events[i].startTime);
                 var endTime = new Date(calEvent.substring(0, 10) + "T" + this.calendar.events[i].endTime);
-
                 // Required to set the calenday months or day
                 this.$scope.calendarView = 'day';
                 this.$scope.calendarDate = new Date();
@@ -84,6 +94,8 @@
             console.log("You clicked: " + events.eventId);
             this.detailsEvent(events.eventId);
         }
+
+
     }
     
     
