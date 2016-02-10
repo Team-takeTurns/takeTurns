@@ -9,7 +9,7 @@ class NavbarAdminController {
 
   //start-non-standard
   menu = [{
-    'title': 'Go to Calendar Events'
+    'title': 'Go to Calendar Events',
     'link': '/calendar'
   }];
 
@@ -18,7 +18,6 @@ class NavbarAdminController {
 
   isActive(route) {
     return route === this.$location.path();
-    console.log(" location path = "$location.path());
   }
 }
 
