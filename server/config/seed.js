@@ -67,7 +67,7 @@ User.find({}).removeAsync()
       }, {
      _id: "56b044743ef01300237649cb",
      role:"admin",
-     link: "http://localhost:9000/calendars/admin/56b044743ef01300237649cb",
+     link: "http://localhost:9000/admin/56b044743ef01300237649cb",
      email:"liliya0artyukh@gmail.com", 
      calID: "56b1e6924f07f3840f8ce556"
       });

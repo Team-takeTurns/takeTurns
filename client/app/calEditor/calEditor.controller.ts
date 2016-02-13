@@ -11,10 +11,20 @@ class CalEditorController {
     $rootScope.adminLink;
     $rootScope.userRole;
     this.calendar;
+    this.message;
+    this.adminEmail;
+    this.calName;
+    this.calDescription;
+    this.membersTemp=[];
+    this.memberName;
+    this.memberEmail;
     this.url = window.location;
+    this.collapseText = "Would you like to add a member?";
     this.user ;
     this.userIDtemp = this.url.toString().substr(28, 24);
-    this.deleteCal = true;
+    this.editCal = true;
+    this.deleteFalse = true;
+     this.memCounter;
   //------------ liliya's vars end ----------------------
 
 
@@ -26,6 +36,7 @@ if (!this.userIDtemp){
   window.location = window.location + "/" +  $rootScope.userIDglobal;
 }else{
       $rootScope.userIDglobal  = this.userIDtemp ;
+      console.log("$rootScope.userIDglobal 555 = " + $rootScope.userIDglobal);
 }
     $http.get('/api/users/'+ $rootScope.userIDglobal).then(response => {
       this.user = response.data;
@@ -52,6 +63,7 @@ if (!this.userIDtemp){
   getCalendar(){
    this.$http.get('/api/calendars/'+ this.user.calID).then(response => {
       this.calendar = response.data;
+       this.memCounter = this.calendar.members.length;
     });
   }
 //---------------------- liliya end ----------------------------------
@@ -63,9 +75,71 @@ if (!this.userIDtemp){
     }
   }
 
-  deleteCalendar(calendar) {
-    this.$http.delete('/api/calendars/' + calendar._id);
+editCalendar(){
+    this.adminEmail = this.user.email;
+    this.calName = this.calendar.name;
+    this.calDescription = this.calendar.description;
+    this.membersTemp = this.calendar.members;
+    this.memberName;
+    this.memberEmail;
+    this.editCal = false;
+}
+
+  deleteCalendar() {
+    this.$http.delete('/api/calendars/' + this.user.calID);
+     this.message = "You have successfully deleted the calendar. \n\nPlease disregard the links that were given to you. \n\nTo create new calendar follow this link.";
+    this.deleteFalse = false;
   }
+
+cancelUpdate(){
+     this.editCal = true;
+}
+
+ updateCalendar() {
+      this.$http.put('/api/calendars/' + this.user.calID, { name: this.calName, description: this.calDescription,   paramSerializer: '$httpParamSerializerJQLike'}).then(response => {
+      this.calendar = response.data;
+      this.updateAdminUser();
+       this.message = "";
+    });
+  }//members: this.membersTemp, 
+
+
+updateAdminUser(){
+console.log("$rootScope.userIDglobal = " + this.$rootScope.userIDglobal);
+ this.$http.put('/api/users/' + this.$rootScope.userIDglobal, {email: this.adminEmail}).then(response => {
+      this.user = response.data;
+          });
+}
+
+deleteMember(member){
+   for (var i =0; i < this.membersTemp.length; i++){
+      if (this.membersTemp[i].email === member.email) {
+        this.membersTemp.splice(i,1);
+         this.memCounter --;
+
+         if( this.memCounter === 0){
+           this.currentGroup = "None";
+         }else{
+         this.currentGroup = this.memCounter;
+         }
+        break;
+      }
+    }
+}
+
+ addMember(){
+  if(this.memberEmail && this.memberName){
+   this.membersTemp.push({name: this.memberName, email: this.memberEmail});
+   if(this.firstEntry==0){
+   this.firstEntry = 1;
+   }
+    this.memCounter ++;
+   this.memberName='';
+   this.memberEmail='';
+    this.currentGroup = this.memCounter;
+    }
+  }
+
 }
 
 angular.module('takeTurnsApp')

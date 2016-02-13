@@ -78,7 +78,7 @@ this.$http.post('/api/users' , {role: "active", calID: this.calendar._id }).then
 }
 
 createAdminLink(){
-             this.adminLink = "http://localhost:9000/calendars/admin/" + this.adminUser._id;
+             this.adminLink = "http://localhost:9000/admin/" + this.adminUser._id;
              this.adminUserUpdate();
     }
 createActiveLink(){
