@@ -96,7 +96,6 @@ if (!this.userIDtemp){
         }
 
 
-<<<<<<< HEAD
     dayEvents() {
         if(this.calendar.events.length == 0){
             this.$scope.calendarView = 'month';
@@ -109,7 +108,7 @@ if (!this.userIDtemp){
             var startTime = new Date(calEvent.substring(0, 10) + "T" + this.calendar.events[i].startTime);
             var endTime = new Date(calEvent.substring(0, 10) + "T" + this.calendar.events[i].endTime);
                 
-            // Required to set the calenday months or day
+            // Required to set the calendar months or day
             this.$scope.calendarView = 'month';
             this.$scope.calendarDate = new Date();
             
@@ -124,8 +123,6 @@ if (!this.userIDtemp){
         }
         } // End The for loop
     } // End dayEvents method
-=======
->>>>>>> upstream/master
     }
     
     
