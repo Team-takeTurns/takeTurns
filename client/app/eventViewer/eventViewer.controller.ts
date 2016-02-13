@@ -96,6 +96,33 @@ if (!this.userIDtemp){
         }
 
 
+    dayEvents() {
+        if(this.calendar.events.length == 0){
+            this.$scope.calendarView = 'month';
+            this.$scope.calendarDate = new Date();
+            console.log("HELLO ITS ME");
+        }
+        else{
+        for (var i in this.calendar.events) {
+            var calEvent = this.calendar.events[i].date;
+            var startTime = new Date(calEvent.substring(0, 10) + "T" + this.calendar.events[i].startTime);
+            var endTime = new Date(calEvent.substring(0, 10) + "T" + this.calendar.events[i].endTime);
+                
+            // Required to set the calendar months or day
+            this.$scope.calendarView = 'month';
+            this.$scope.calendarDate = new Date();
+            
+            console.log("ID:" + this.calendar.events[i]._id);
+            this.$scope.events[i] =
+                {
+                    title: this.calendar.events[i].title,
+                    startsAt: new Date(moment(startTime).format()),
+                    endsAt: new Date(moment(endTime).format()),
+                    eventId: this.calendar.events[i]._id
+                };
+        }
+        } // End The for loop
+    } // End dayEvents method
     }
     
     
