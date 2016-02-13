@@ -7,5 +7,10 @@ angular.module('takeTurnsApp')
         templateUrl: 'app/eventViewer/eventViewer.html',
         controller: 'EventViewerController',
         controllerAs: 'eventViewer'
+      })
+      .when('/calendar', {
+        templateUrl: 'app/eventViewer/eventViewer.html',
+        controller: 'EventViewerController',
+        controllerAs: 'eventViewer'
       });
   });

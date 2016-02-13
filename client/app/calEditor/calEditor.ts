@@ -3,9 +3,9 @@
 angular.module('takeTurnsApp')
   .config(function($routeProvider) {
     $routeProvider
-      .when('/calendars/admin/:id', {
+      .when('/admin/:id', {
         templateUrl: 'app/calEditor/calEditor.html',
         controller: 'CalEditorController',
         controllerAs: 'calEditor'
-      });
+      })
   });
