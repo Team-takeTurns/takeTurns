@@ -98,7 +98,7 @@ if (!this.userIDtemp){
 
     dayEvents() {
         if(this.calendar.events.length == 0){
-            this.$scope.calendarView = 'month';
+            this.$scope.calendarView = 'day';
             this.$scope.calendarDate = new Date();
             console.log("HELLO ITS ME");
         }
@@ -109,7 +109,7 @@ if (!this.userIDtemp){
             var endTime = new Date(calEvent.substring(0, 10) + "T" + this.calendar.events[i].endTime);
                 
             // Required to set the calendar months or day
-            this.$scope.calendarView = 'month';
+            this.$scope.calendarView = 'day';
             this.$scope.calendarDate = new Date();
             
             console.log("ID:" + this.calendar.events[i]._id);
