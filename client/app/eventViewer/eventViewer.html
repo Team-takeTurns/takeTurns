@@ -114,13 +114,23 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <!--Event Detail View section-->
             <section ng-show="eventViewer.showEventDetailView">
-                <h1>{{selectedEvent.title}}</h1>
-                <label>DATE: {{selectedEvent.date}}</label>
-                <label>START TIME: {{selectedEvent.startTime}}</label>
-                <label>END TIME: {{selectedEvent.endTime}}</label>
-                <label>HOST: {{selectdEvent.host}}</label>
-                <label>DESCRIPTION:</label>
-                {{selectedEvent.info}}
+                <h1>{{eventViewer.selectedEvent.title}}</h1>
+                <div>
+                    <label>DATE: </label> {{eventViewer.selectedEvent.date}}
+                </div>
+                <div>
+                    <label>START TIME: </label> {{eventViewer.selectedEvent.startTime}}
+                </div>
+                <div>
+                    <label>END TIME: </label> {{eventViewer.selectedEvent.endTime}}
+                </div>
+                <div>
+                    <label>HOST: </label> {{eventViewer.selectedEvent.host}}
+                </div>
+                <div>
+                    <label>DESCRIPTION:</label>
+                    <br> {{eventViewer.selectedEvent.info}}
+                </div>
                 <div>
                     <button class="btn btn-primary" ng-click="eventViewer.switchEventDetailView(0)">EDIT</button>
                 </div>
@@ -128,33 +138,32 @@
 
             <!--This section is the Form to edit the event details-->
             <section id="detailsView" ng-hide="eventViewer.showEventDetailForm">
-                <h2>Name of calendar: {{selectedEvent.title}}</h2>
+                <h1>{{eventViewer.calendar.name}}</h1>
                 <br>
-                <div class="row">
-                    <div class="col-md col-md-offset-10">
-                        <button class="btn btn-primary" ng-click="eventViewer.switchEventDetailView(1)">DELETE</button>
-                    </div>
+
+                <div class="col-md col-md-offset-11">
+                    <button class="btn btn-primary" ng-click="eventViewer.switchEventDetailView(1)">DELETE</button>
                 </div>
                 <!--Start of the Edit section-->
                 <fieldset class="form-group">
                     <label>Title: </label>
-                    <input class="form-control" ng-model="selectedEvent.title">
+                    <input class="form-control" ng-model="eventViewer.selectedEvent.title">
                 </fieldset>
                 <fieldset class="form-group">
                     <label>Date: </label>
-                    <input class="form-control" ng-model="selectedEvent.date">
+                    <input class="form-control" ng-model="eventViewer.selectedEvent.date">
                 </fieldset>
                 <fieldset class="form-group">
                     <label>Start Time: </label>
-                    <input class="form-control" ng-model="selectedEvent.startTime">
+                    <input class="form-control" ng-model="eventViewer.selectedEvent.startTime">
                 </fieldset>
                 <fieldset class="form-group">
                     <label>End Time: </label>
-                    <input class="form-control" ng-model="selectedEvent.endTime">
+                    <input class="form-control" ng-model="eventViewer.selectedEvent.endTime">
                 </fieldset>
                 <fieldset class="form-group">
                     <label>Host: </label>
-                    <input class="form-control" ng-model="selectedEvent.host">
+                    <input class="form-control" ng-model="eventViewer.selectedEvent.host">
                 </fieldset>
                 <fieldset class="form-group">
                     <label>Description: </label>

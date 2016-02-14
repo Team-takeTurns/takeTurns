@@ -10,6 +10,7 @@
             this.calendar;
             this.url = window.location;
             this.user;
+            this.selectedEvent;
             this.showEventDetailView = true;
             this.showEventDetailForm = true;
 
@@ -58,6 +59,7 @@
             this.$http.get('/api/calendars/' + this.user.calID).then(response => {
                 this.calendar = response.data;
                 this.dayEvents();
+                this.detailsEvent(this.calendar.events[0]._id);
             });
         }
         //---------------------- liliya end ----------------------------------
@@ -87,7 +89,7 @@
 
             for (var dayEvent in this.calendar.events) {
                 if (this.calendar.events[dayEvent]._id == dayTitle) {
-                    this.$scope.selectedEvent = this.calendar.events[dayEvent];
+                    this.selectedEvent = this.calendar.events[dayEvent];
                 }
             }
 
@@ -95,12 +97,11 @@
         
         // Listen for the Event Clicked
         eventClicked(events) {
-            console.log("You clicked: " + events.eventId);
             this.detailsEvent(events.eventId);
         }
         
         // Change the view of the event details
-        public switchEventDetailView(buttonClicked:number) {
+        public switchEventDetailView(buttonClicked: number) {
 
             switch (buttonClicked) {
                 case 0:
@@ -110,8 +111,6 @@
                 case 1:
                     this.showEventDetailView = true;
                     this.showEventDetailForm = true;
-                    break;
-                default:
                     break;
             }
         }
