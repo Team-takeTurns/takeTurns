@@ -109,79 +109,65 @@
         <!--end of column for day view -->
     </div>
 
+    <!--Event Details Form -->
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <div id="detailsView" ng-controller="EventViewerController">
-                <p>This div is for the event details view. Francis is going to work on this view</p>
-                example of retrieved calenda data
+            <!--Event Detail View section-->
+            <section ng-show="eventViewer.showEventDetailView">
+                <h1>{{selectedEvent.title}}</h1>
+                <label>DATE: {{selectedEvent.date}}</label>
+                <label>START TIME: {{selectedEvent.startTime}}</label>
+                <label>END TIME: {{selectedEvent.endTime}}</label>
+                <label>HOST: {{selectdEvent.host}}</label>
+                <label>DESCRIPTION:</label>
+                {{selectedEvent.info}}
+                <div>
+                    <button class="btn btn-primary" ng-click="eventViewer.switchEventDetailView(0)">EDIT</button>
+                </div>
+            </section>
+
+            <!--This section is the Form to edit the event details-->
+            <section id="detailsView" ng-hide="eventViewer.showEventDetailForm">
                 <h2>Name of calendar: {{selectedEvent.title}}</h2>
                 <br>
                 <div class="row">
-                <div  class="col-md col-md-offset-10">
-                <button class="btn btn-primary" ng-click="updBttn=true" ng-hide="updBttn">DELETE</button>
-                </div>
+                    <div class="col-md col-md-offset-10">
+                        <button class="btn btn-primary" ng-click="eventViewer.switchEventDetailView(1)">DELETE</button>
+                    </div>
                 </div>
                 <!--Start of the Edit section-->
                 <fieldset class="form-group">
                     <label>Title: </label>
-                    <input class="form-control" ng-model="selectedEvent.title" disabled>
+                    <input class="form-control" ng-model="selectedEvent.title">
                 </fieldset>
                 <fieldset class="form-group">
                     <label>Date: </label>
-                    <input class="form-control" ng-model="selectedEvent.date" disabled>
+                    <input class="form-control" ng-model="selectedEvent.date">
                 </fieldset>
                 <fieldset class="form-group">
                     <label>Start Time: </label>
-                    <input class="form-control" ng-model="selectedEvent.startTime" disabled >
+                    <input class="form-control" ng-model="selectedEvent.startTime">
                 </fieldset>
                 <fieldset class="form-group">
                     <label>End Time: </label>
-                    <input class="form-control" ng-model="selectedEvent.endTime" disabled>
+                    <input class="form-control" ng-model="selectedEvent.endTime">
                 </fieldset>
                 <fieldset class="form-group">
                     <label>Host: </label>
-                    <input class="form-control" ng-model="selectedEvent.host" disabled>
+                    <input class="form-control" ng-model="selectedEvent.host">
                 </fieldset>
                 <fieldset class="form-group">
                     <label>Description: </label>
-                    <textarea class="form-control" id="" cols="30" rows="10" disabled></textarea>
+                    <textarea class="form-control" id="" cols="30" rows="10"></textarea>
                 </fieldset>
                 <br>
                 <div ng-init="updBttn=true">
-                <button class="btn btn-primary" ng-click="updBttn=false">EDIT</button>
-                <button class="btn btn-primary" ng-click="updBttn=true" ng-hide="updBttn">UPDATE</button>
+                    <button class="btn btn-primary" ng-click="eventViewer.switchEventDetailView(1)">UPDATE</button>
+                    <button class="btn btn-primary" ng-click="eventViewer.switchEventDetailView(1)">CANCEL</button>
                 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            </div>
+            </section>
+            <!--end of column for event details view -->
         </div>
-        <!--end of column for event details view -->
     </div>
 
 </div>
