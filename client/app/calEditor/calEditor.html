@@ -41,7 +41,7 @@
   </div>
 </div>
 </div>
-<!-- form to display the calendar END -->
+<!-- form to display view the calendar END -->
 
 
 <!-- form to edit and delete the calendar -->
@@ -77,7 +77,7 @@
 <!-- scrollable view of current memebrs -->
 <div class="row">
     <div class="col-lg-12">
-      <h4 class="page-header">Current Group Members: {{calEditor.memCounter}}</h4>
+      <label  class="page-header">Current Group Members:</label> {{calEditor.memCounter}}
       <div class="scroll">
       <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="member in calEditor.membersTemp| orderBy:'name'">
         <li>{{member.name}} ( <span style="color:blue">{{member.email}}</span> )<button type="button" class="close" ng-click="calEditor.deleteMember(member)">&times;</button></a></li>

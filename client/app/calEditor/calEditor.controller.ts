@@ -7,7 +7,9 @@ class CalEditorController {
   constructor($http, $scope, socket,  $rootScope) {
     this.$http = $http;
 //----------------- liliya's vars ---------------------
-    $rootScope.userIDglobal ;
+ if(! $rootScope.userIDglobal ){
+  $rootScope.userIDglobal ;
+    }
     $rootScope.adminLink;
     $rootScope.userRole;
     this.calendar;
@@ -24,7 +26,8 @@ class CalEditorController {
     this.userIDtemp = this.url.toString().substr(28, 24);
     this.editCal = true;
     this.deleteFalse = true;
-     this.memCounter;
+    this.memCounter;
+    this.newMembers=[];
   //------------ liliya's vars end ----------------------
 
 
@@ -96,19 +99,22 @@ cancelUpdate(){
 }
 
  updateCalendar() {
-      this.$http.put('/api/calendars/' + this.user.calID, { name: this.calName, description: this.calDescription,   paramSerializer: '$httpParamSerializerJQLike'}).then(response => {
+      this.$http.put('/api/calendars/' + this.user.calID, { name: this.calName, description: this.calDescription, members: this.newMembers,   paramSerializer: '$httpParamSerializerJQLike'}).then(response => {
       this.calendar = response.data;
-      this.updateAdminUser();
-       this.message = "";
+       this.updateAdminUser();
+       this.message = "You have successfully edited the calendar.";
+          this.deleteFalse = false;
     });
   }//members: this.membersTemp, 
 
 
 updateAdminUser(){
-console.log("$rootScope.userIDglobal = " + this.$rootScope.userIDglobal);
- this.$http.put('/api/users/' + this.$rootScope.userIDglobal, {email: this.adminEmail}).then(response => {
+console.log("$rootScope.userIDglobal 888 = " + this.user._id);
+if(this.adminEmail){
+ this.$http.put('/api/users/' + this.user._id, {email: this.adminEmail}).then(response => {
       this.user = response.data;
           });
+}
 }
 
 deleteMember(member){
@@ -116,7 +122,6 @@ deleteMember(member){
       if (this.membersTemp[i].email === member.email) {
         this.membersTemp.splice(i,1);
          this.memCounter --;
-
          if( this.memCounter === 0){
            this.currentGroup = "None";
          }else{
@@ -130,6 +135,7 @@ deleteMember(member){
  addMember(){
   if(this.memberEmail && this.memberName){
    this.membersTemp.push({name: this.memberName, email: this.memberEmail});
+   this.newMembers.push({name: this.memberName, email: this.memberEmail});
    if(this.firstEntry==0){
    this.firstEntry = 1;
    }
