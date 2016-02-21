@@ -110,8 +110,8 @@
     </div>
 
     <!--Event Details Form -->
-    <div id="evenDet" class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div id="detailsView" class="row">
+        <div id="evenDet" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <!--Event Detail View section-->
             <section ng-show="eventViewer.showEventDetailView">
                 <h1>{{eventViewer.selectedEvent.title}}</h1>
@@ -137,7 +137,7 @@
             </section>
 
             <!--This section is the Form to edit the event details-->
-            <section id="detailsView" ng-hide="eventViewer.showEventDetailForm">
+            <section  ng-hide="eventViewer.showEventDetailForm">
                 <h1>{{eventViewer.calendar.name}}</h1>
                 <br>
 
