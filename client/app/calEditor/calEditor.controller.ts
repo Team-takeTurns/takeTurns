@@ -6,7 +6,7 @@ class CalEditorController {
 
   constructor($http, $scope, socket,  $rootScope) {
     this.$http = $http;
-//----------------- liliya's vars ---------------------
+    //check if $rootScope.userIDglobal is defined else define it
  if(! $rootScope.userIDglobal ){
   $rootScope.userIDglobal ;
     }
@@ -27,13 +27,11 @@ class CalEditorController {
     this.editCal = true;
     this.deleteFalse = true;
     this.memCounter;
-    this.newMembers=[];
-  //------------ liliya's vars end ----------------------
+    this.addMembers=[];
 
 
-//------------------- liliya start: get calendar id from user ----------------------------
+//get calendar id from user ----------------------------
   paramSerializer: '$httpParamSerializerJQLike';
-
 if (!this.userIDtemp){
   console.log("do nothing" );
   window.location = window.location + "/" +  $rootScope.userIDglobal;
@@ -41,18 +39,21 @@ if (!this.userIDtemp){
       $rootScope.userIDglobal  = this.userIDtemp ;
       console.log("$rootScope.userIDglobal 555 = " + $rootScope.userIDglobal);
 }
+
+//send request to BE to get user and then call function to get calendar 
     $http.get('/api/users/'+ $rootScope.userIDglobal).then(response => {
       this.user = response.data;
       if(this.user.role === "admin"){
       $rootScope.userRole = "admin";
       $rootScope.adminLink = this.user.link.toString().substr(31, 31);
+      //get calendar from BE
       this.getCalendar();
       }else{
       console.log("display ERROR here search for: Liliya1111 in calEditor.controller");
       }
       socket.syncUpdates('calendar', this.calendar);
     });
-//---------------------- liliya end ----------------------------------
+
 
 //---------------------- auto generated start ----------------------------------
     $scope.$on('$destroy', function() {
@@ -62,22 +63,25 @@ if (!this.userIDtemp){
   }
 
 
-//------------------------- liliya start: get calendar details -------------------------------
+// send request to get calendar from BE -------------------------------
   getCalendar(){
    this.$http.get('/api/calendars/'+ this.user.calID).then(response => {
       this.calendar = response.data;
        this.memCounter = this.calendar.members.length;
     });
   }
-//---------------------- liliya end ----------------------------------
 
+/*
+//send request to BE to create new calendar
   addCalendar() {
     if (this.newCalendar) {
       this.$http.post('/api/calendars', { name: this.newCalendar });
       this.newCalendar = '';
     }
   }
+*/
 
+// assigning and defining some variables 
 editCalendar(){
     this.adminEmail = this.user.email;
     this.calName = this.calendar.name;
@@ -88,16 +92,20 @@ editCalendar(){
     this.editCal = false;
 }
 
+
+//send request to BE to delete calendar
   deleteCalendar() {
     this.$http.delete('/api/calendars/' + this.user.calID);
      this.message = "You have successfully deleted the calendar. \n\nPlease disregard the links that were given to you. \n\nTo create new calendar follow this link.";
     this.deleteFalse = false;
   }
 
+//cancel update - go back to view calendar
 cancelUpdate(){
      this.editCal = true;
 }
 
+//send request to BE to update calendar details
  updateCalendar() {
       this.$http.put('/api/calendars/' + this.user.calID, { name: this.calName, description: this.calDescription, members: this.newMembers,   paramSerializer: '$httpParamSerializerJQLike'}).then(response => {
       this.calendar = response.data;
@@ -107,7 +115,7 @@ cancelUpdate(){
     });
   }//members: this.membersTemp, 
 
-
+//update admin email
 updateAdminUser(){
 console.log("$rootScope.userIDglobal 888 = " + this.user._id);
 if(this.adminEmail){
@@ -117,6 +125,7 @@ if(this.adminEmail){
 }
 }
 
+//delete members from temporary 
 deleteMember(member){
    for (var i =0; i < this.membersTemp.length; i++){
       if (this.membersTemp[i].email === member.email) {
@@ -132,6 +141,7 @@ deleteMember(member){
     }
 }
 
+//adding new members
  addMember(){
   if(this.memberEmail && this.memberName){
    this.membersTemp.push({name: this.memberName, email: this.memberEmail});

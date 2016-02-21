@@ -157,7 +157,7 @@ export function destroy(req, res) {
 
 
 // Updates an existing Calendar in the DB
-export function updateEvent(req, res) {
+export function deleteEvent(req, res) {
   if (req.body._id) {
     delete req.body._id;
   }

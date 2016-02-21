@@ -55,7 +55,7 @@ if (!$rootScope.userIDglobal){
 
   deleteEvent(event) {
   this.eventID = event._id;
-    this.$http.patch('/api/calendars/' + this.calendar._id +"/events/"+ this.eventID).then(response => {
+    this.$http.patch('/api/calendars/' + this.calendar._id +"/deleteEvent/"+ this.eventID).then(response => {
       this.calendar = response.data;
     });
 }
