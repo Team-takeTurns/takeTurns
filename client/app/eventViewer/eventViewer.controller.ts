@@ -14,7 +14,7 @@
             this.showEventDetailView = true;
             this.showEventDetailForm = true;
 
-            //----------------- Liliya's code ---------------------
+            //check if $rootScope.userIDglobal is undefined then define it else  
             if (!$rootScope.userIDglobal) {
                 $rootScope.userIDglobal;
             }
@@ -23,7 +23,6 @@
             } else if ($rootScope.userRole === "admin") {
                 this.userIDtemp = this.url.toString().substr(32, 24);
             }
-            //------------ liliya's vars end ----------------------
             this.$scope = $scope;
             this.$scope.slot = this.calendar;
             $scope.events = [];
@@ -31,7 +30,7 @@
 
             //----------------- Global vars END---------------------
             
-            //------------------- liliya start: get calendar id from user ----------------------------
+            //get calendar id from user ----------------------------
             paramSerializer: '$httpParamSerializerJQLike';
 
             if (!this.userIDtemp) {
@@ -45,16 +44,16 @@
                 this.getCalendar();
                 socket.syncUpdates('calendar', this.calendar);
             });
-            //---------------------- liliya end ---------------------------------
+           
 
-            //---------------------- auto generated start ----------------------------------
+            //auto generated start ----------------------------------
             $scope.$on('$destroy', function() {
-                socket.unsyncUpdates('event');
+                socket.unsyncUpdates('calendar');
             });
-            //---------------------- auto generated end ----------------------------------
+            //auto generated end ----------------------------------
         }
 
-        //------------------------- liliya start: get calendar details -------------------------------
+        // get calendar details -------------------------------
         getCalendar() {
             this.$http.get('/api/calendars/' + this.user.calID).then(response => {
                 this.calendar = response.data;
@@ -62,7 +61,7 @@
                 this.detailsEvent(this.calendar.events[0]._id);
             });
         }
-        //---------------------- liliya end ----------------------------------
+        
 
         // dayEvents() {
         //     for (var i in this.calendar.events) {
@@ -114,6 +113,22 @@
                     break;
             }
         }
+
+//code to delete an event
+            deleteEvent(){
+            //change view
+                this.showEventDetailView = true;
+                this.showEventDetailForm = true;
+            //testing - debuging
+                console.log("event Id   " +  this.selectedEvent._id);
+                console.log("event Id  outside if " + this.calendar._id); 
+            //send request to delete event
+                this.$http.patch('/api/calendars/' + this.calendar._id +"/DeleteEvent/"+ this.selectedEvent._id).then(response => {
+                  this.calendar = response.data;
+                  window.location.reload(true);
+                });
+            }
+
 
         dayEvents() {
             if (this.calendar.events.length == 0) {

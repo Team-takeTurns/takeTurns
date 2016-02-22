@@ -8,16 +8,16 @@
 </header>
 
 <div class="container">
-  <!--
+  
   <div class="row">
     <div class="col-lg-12">
-      <h1 class="page-header">Features:</h1>
-      <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="calendar in eventCreator.awesomeCalendars">
-        <li><a href="#" tooltip="{{calendar.description}}">{{calendar.title}}<button type="button" class="close" ng-click="eventCreator.deleteCalendar(calendar)">&times;</button></a></li>
+      <h1 class="page-header">{{eventCreator.calendar.name}}:</h1>
+      <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="event in eventCreator.calendar.events">
+        <li><a href="#" ng-click="eventCreator.editEvent()" tooltip="{{event.host}}">{{event.title}}<button type="button" class="close" ng-click="eventCreator.deleteEvent(event)">&times;</button></a></li>
       </ul>
     </div>
   </div>
--->
+
 
   <form class="event-form">
     <label>Syncs in realtime across clients</label>

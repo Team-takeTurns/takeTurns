@@ -1,10 +1,10 @@
 /**
  * Using Rails-like standard naming convention for endpoints.
- * GET     /api/events              ->  index
- * POST    /api/events              ->  create
- * GET     /api/events/:id          ->  show
- * PUT     /api/events/:id          ->  update
- * DELETE  /api/events/:id          ->  destroy
+ * GET     /api/members              ->  index
+ * POST    /api/members              ->  create
+ * GET     /api/members/:id          ->  show
+ * PUT     /api/members/:id          ->  update
+ * DELETE  /api/members/:id          ->  destroy
  */
 
 'use strict';
@@ -59,43 +59,43 @@ function handleError(res, statusCode) {
   };
 }
 
-// Gets a list of Calendars
+// Gets a list of Members
 export function index(req, res) {
-  Calendar.findAsync()
+  Member.findAsync()
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-// Gets a single Calendar from the DB
+// Gets a single Member from the DB
 export function show(req, res) {
-  Calendar.findByIdAsync(req.params.id)
+  Member.findByIdAsync(req.params.id)
     .then(handleEntityNotFound(res))
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-// Creates a new Calendar in the DB
+// Creates a new Member in the DB
 export function create(req, res) {
-  Calendar.createAsync(req.body)
+  Member.createAsync(req.body)
     .then(respondWithResult(res, 201))
     .catch(handleError(res));
 }
 
-// Updates an existing Calendar in the DB
+// Updates an existing Member in the DB
 export function update(req, res) {
   if (req.body._id) {
     delete req.body._id;
   }
-  Calendar.findByIdAsync(req.params.id)
+  Member.findByIdAsync(req.params.id)
     .then(handleEntityNotFound(res))
     .then(saveUpdates(req.body))
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-// Deletes a Calendar from the DB
+// Deletes a Member from the DB
 export function destroy(req, res) {
-  Calendar.findByIdAsync(req.params.id)
+  Member.findByIdAsync(req.params.id)
     .then(handleEntityNotFound(res))
     .then(removeEntity(res))
     .catch(handleError(res));
