@@ -28,6 +28,7 @@ class CalEditorController {
     this.deleteFalse = true;
     this.memCounter;
     this.addMembers=[];
+    this.delMembers=[];
 
 
 //get calendar id from user ----------------------------
@@ -96,7 +97,7 @@ editCalendar(){
 //send request to BE to delete calendar
   deleteCalendar() {
     this.$http.delete('/api/calendars/' + this.user.calID);
-     this.message = "You have successfully deleted the calendar. \n\nPlease disregard the links that were given to you. \n\nTo create new calendar follow this link.";
+     this.message = "You have successfully deleted the calendar. \n\nPlease disregard the links that were given to you.";
     this.deleteFalse = false;
   }
 
@@ -107,11 +108,13 @@ cancelUpdate(){
 
 //send request to BE to update calendar details
  updateCalendar() {
-      this.$http.put('/api/calendars/' + this.user.calID, { name: this.calName, description: this.calDescription, members: this.newMembers,   paramSerializer: '$httpParamSerializerJQLike'}).then(response => {
+      this.$http.put('/api/calendars/' + this.user.calID, { name: this.calName, description: this.calDescription, paramSerializer: '$httpParamSerializerJQLike'}).then(response => {
       this.calendar = response.data;
-       this.updateAdminUser();
+      this.updateAdminUser();
        this.message = "You have successfully edited the calendar.";
-          this.deleteFalse = false;
+            alert(this.message);
+          //this.deleteFalse = false; //opens another window to display the message
+              this.editCal = true; // goes back to the calendar details view
     });
   }//members: this.membersTemp, 
 
@@ -119,10 +122,24 @@ cancelUpdate(){
 updateAdminUser(){
 console.log("$rootScope.userIDglobal 888 = " + this.user._id);
 if(this.adminEmail){
- this.$http.put('/api/users/' + this.user._id, {email: this.adminEmail}).then(response => {
+      this.$http.put('/api/users/' + this.user._id, {email: this.adminEmail}).then(response => {
       this.user = response.data;
-          });
+      this.updateMembers();
+  });
 }
+}
+
+
+
+
+//send request to BE to delete multiple events - temporarily here for testing - later code to be used to delete members
+  updateMembers() {
+  console.log(" i am in updateMembers method");
+ this.delMembers = [ '56ca72353876946c0c49b391', '56ca72353876946c0c49b390'];
+ this.addMembers = [{ name:"Jay", _id:"56ca72353876946c0c49b335", email: "jay@jjjjj.jj"}];
+    this.$http.patch('/api/calendars/updateMembers/' + this.calendar._id , {delMembers: this.delMembers, addMembers: this.addMembers}).then(response => {
+      this.calendar = response.data;
+    });
 }
 
 //delete members from temporary 
@@ -145,7 +162,7 @@ deleteMember(member){
  addMember(){
   if(this.memberEmail && this.memberName){
    this.membersTemp.push({name: this.memberName, email: this.memberEmail});
-   this.newMembers.push({name: this.memberName, email: this.memberEmail});
+  this.addMembers.push({name: this.memberName, email: this.memberEmail});
    if(this.firstEntry==0){
    this.firstEntry = 1;
    }
