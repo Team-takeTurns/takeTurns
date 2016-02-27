@@ -228,7 +228,7 @@ function getCalendarIds(res) {
       .then(getEvents(res))
       .catch(handleError(res));
     }
-    resetVarsForDeleteOldEvents();
+    resetVarsForDeleteOldEvents(); 
     }
   };
 }
