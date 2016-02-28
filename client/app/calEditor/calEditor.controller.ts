@@ -29,7 +29,7 @@ class CalEditorController {
     this.memCounter;
     this.addMembers=[];
     this.delMembers=[];
-
+    this.goodDate = new Date();
 
 //get calendar id from user ----------------------------
   paramSerializer: '$httpParamSerializerJQLike';
@@ -134,9 +134,16 @@ if(this.adminEmail){
 
 //send request to BE to delete multiple events - temporarily here for testing - later code to be used to delete members
   updateMembers() {
-  console.log(" i am in updateMembers method");
- this.delMembers = [ '56ca72353876946c0c49b391', '56ca72353876946c0c49b390'];
+  console.log(" i am in updateMembers method 1111111");
+ this.delMembers = ["56ca72353876946c0c49b391","56ca72353876946c0c49b390"];
  this.addMembers = [{ name:"Jay", _id:"56ca72353876946c0c49b335", email: "jay@jjjjj.jj"}];
+   console.log(" i am in updateMembers method 22222");
+      console.log(" i am in updateMembers method this.calendar._id " + this.calendar._id);
+         console.log(" i am in updateMembers method 33333");
+          console.log(" i am in updateMembers method this.delMembers " + JSON.stringify(this.delMembers));
+                   console.log(" i am in updateMembers method 4444444");
+                             console.log(" i am in updateMembers method this.addMembers " + this.addMembers);
+                                  console.log(" i am in updateMembers method 555555555555");
     this.$http.patch('/api/calendars/updateMembers/' + this.calendar._id , {delMembers: this.delMembers, addMembers: this.addMembers}).then(response => {
       this.calendar = response.data;
     });
@@ -173,6 +180,11 @@ this.delMembers.add();
     this.currentGroup = this.memCounter;
     }
   }
+
+convertDate(isoDate){
+  this.goodDate = Date(isoDate);
+  return this.goodDate;
+}
 
 }
 

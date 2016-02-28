@@ -149,39 +149,41 @@
                     <h1>{{eventViewer.calendar.name}}</h1>
                     <br>
 
-                    <div class="col-md col-md-offset-11">
-                        <button class="btn btn-primary" ng-click="eventViewer.deleteEvent()">DELETE</button>
-                    </div>
-                    <!--Start of the Edit section-->
-                    <fieldset class="form-group">
-                        <label>Title: </label>
-                        <input class="form-control" ng-model="eventViewer.selectedEvent.title">
-                    </fieldset>
-                    <fieldset class="form-group">
-                        <label>Date: </label>
-                        <input class="form-control" ng-model="eventViewer.selectedEvent.date">
-                    </fieldset>
-                    <fieldset class="form-group">
-                        <label>Start Time: </label>
-                        <input class="form-control" ng-model="eventViewer.selectedEvent.startTime">
-                    </fieldset>
-                    <fieldset class="form-group">
-                        <label>End Time: </label>
-                        <input class="form-control" ng-model="eventViewer.selectedEvent.endTime">
-                    </fieldset>
-                    <fieldset class="form-group">
-                        <label>Host: </label>
-                        <input class="form-control" ng-model="eventViewer.selectedEvent.host">
-                    </fieldset>
-                    <fieldset class="form-group">
-                        <label>Description: </label>
-                        <textarea class="form-control" id="" cols="30" rows="10"></textarea>
-                    </fieldset>
-                    <br>
-                    <div ng-init="updBttn=true">
-                        <button class="btn btn-primary" ng-click="eventViewer.updateEvent()" ng-click="eventViewer.switchEventDetailView(1)">UPDATE</button>
-                        <button class="btn btn-primary" ng-click="eventViewer.cancelEdit()" ng-click="eventViewer.switchEventDetailView(1)">CANCEL</button>
-                    </div>
+
+                <div class="col-md col-md-offset-11">
+                    <button class="btn btn-primary" ng-click="eventViewer.deleteEvent()">DELETE</button>
+                </div>
+                <!--Start of the Edit section-->
+                <fieldset class="form-group">
+                    <label>Title: </label>
+                    <input class="form-control" ng-model="eventViewer.selectedEvent.title">
+                </fieldset>
+                <fieldset class="form-group">
+                    <label>Date: </label>
+                    <input class="form-control" ng-model="eventViewer.selectedEvent.date">
+                </fieldset>
+                <fieldset class="form-group">
+                    <label>Start Time: </label>
+                    <input class="form-control" ng-model="eventViewer.selectedEvent.startTime">
+                </fieldset>
+                <fieldset class="form-group">
+                    <label>End Time: </label>
+                    <input class="form-control" ng-model="eventViewer.selectedEvent.endTime">
+                </fieldset>
+                <fieldset class="form-group">
+                    <label>Host: </label>
+                    <input class="form-control" ng-model="eventViewer.selectedEvent.host">
+                </fieldset>
+                <fieldset class="form-group">
+                    <label>Description: </label>
+                    <textarea class="form-control" ng-model="eventViewer.selectedEvent.info" id="" cols="30" rows="10"></textarea>
+                </fieldset>
+                <br>
+                <div ng-init="updBttn=true">
+                    <button class="btn btn-primary"  ng-click="eventViewer.updateEvent()" ng-click="eventViewer.switchEventDetailView(1)">UPDATE</button>
+                    <button class="btn btn-primary"  ng-click="eventViewer.cancelEdit()" ng-click="eventViewer.switchEventDetailView(1)">CANCEL</button>
+                </div>
+
                 </form>
             </section>
             <!--end of column for event details view -->
