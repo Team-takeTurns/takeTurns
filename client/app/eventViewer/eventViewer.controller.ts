@@ -125,7 +125,8 @@
             //send request to delete event
                 this.$http.patch('/api/calendars/' + this.calendar._id +"/DeleteEvent/"+ this.selectedEvent._id).then(response => {
                   this.calendar = response.data;
-                  window.location.reload(true);
+                  alert('event deleted successfully');
+                  //window.location.reload(true);
                 });
             }
 
