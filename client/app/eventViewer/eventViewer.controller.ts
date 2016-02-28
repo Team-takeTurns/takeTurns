@@ -13,6 +13,7 @@
             this.selectedEvent;
             this.showEventDetailView = true;
             this.showEventDetailForm = true;
+            this.message;
 
             //check if $rootScope.userIDglobal is undefined then define it else  
             if (!$rootScope.userIDglobal) {
@@ -123,9 +124,11 @@
                 console.log("event Id   " +  this.selectedEvent._id);
                 console.log("event Id  outside if " + this.calendar._id); 
             //send request to delete event
-                this.$http.patch('/api/calendars/' + this.calendar._id +"/DeleteEvent/"+ this.selectedEvent._id).then(response => {
-                  this.calendar = response.data;
-                  alert('event deleted successfully');
+               this.$http.patch('/api/calendars/' + this.calendar._id +"/DeleteEvent/"+ this.selectedEvent._id).then(response => {
+              //this.$http.patch('/api/calendars/' + "56b1e6924f07f3840f8ce556" +"/DeleteEvent/"+ "56d2a6889cd26ad42860051e").then(response => {
+                 //this.calendar = response.data;
+                 // this.message('Event deleted');
+                  alert('Event successfully deleted from calendar at ' + Date.now());
                   //window.location.reload(true);
                 });
             }
