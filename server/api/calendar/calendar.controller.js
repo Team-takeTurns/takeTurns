@@ -170,7 +170,15 @@ export function updateEvent(req, res){
     if (req.body._id) {
     delete req.body._id;
   }
-console.log(" 00000000000======== req.params.calId " + req.params.calId);
+Calendar.updateAsync( { _id: req.params.calId, 
+  events: { "$elemMatch": { _id: req.body.eventId }}}, 
+  {$set: {"events.$.title": req.body.title ,
+          "events.$.date": req.body.date,
+          "events.$.host": req.body.host,
+          "events.$.startTime": req.body.startTime,
+          "events.$.endTime": req.body.endTime,
+          "events.$.info": req.body.info}})
+    .then(checkIfModified(req.params.calId, req.body.eventId, res));
 }
 
 //Updating event END ----------------------------------------

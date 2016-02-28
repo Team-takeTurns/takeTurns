@@ -2,7 +2,6 @@
 
 (function() {
 
-<<<<<<< HEAD
     class weekViewController {
 
         constructor($http, $scope, socket, $rootScope) {

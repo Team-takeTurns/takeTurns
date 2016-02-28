@@ -165,10 +165,10 @@
         } // End dayEvents method
 
         updateEvent(){
-console.log(" gggggggggggggggg this.calendar._id  " + this.calendar._id);
-
-         this.$http.put('/api/calendars/updateEvent/' + this.calendar._id, { _id: this.selectedEvent._id, title: this.selectedEvent.title, host: this.selectedEvent.host, date: this.selectedEvent.date, startTime: this.selectedEvent.startTime, endTime: this.selectedEvent.endTime, info: this.selectedEvent.info, paramSerializer: '$httpParamSerializerJQLike'}).then(response => {
+         this.$http.put('/api/calendars/updateEvent/' + this.calendar._id, { eventId: this.selectedEvent._id, title: this.selectedEvent.title, host: this.selectedEvent.host, date: this.selectedEvent.date, startTime: this.selectedEvent.startTime, endTime: this.selectedEvent.endTime, info: this.selectedEvent.info, paramSerializer: '$httpParamSerializerJQLike'}).then(response => {
+               console.log("9999999999999999999999999999999");
               this.calendar = response.data;
+
               this.message = "You have successfully edited the event.";
               alert(this.message);
                 this.showEventDetailView = true;
