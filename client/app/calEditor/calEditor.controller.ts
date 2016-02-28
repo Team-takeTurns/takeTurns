@@ -111,10 +111,11 @@ cancelUpdate(){
       this.$http.put('/api/calendars/' + this.user.calID, { name: this.calName, description: this.calDescription, paramSerializer: '$httpParamSerializerJQLike'}).then(response => {
       this.calendar = response.data;
       this.updateAdminUser();
-       this.message = "You have successfully edited the calendar.";
-            alert(this.message);
-          //this.deleteFalse = false; //opens another window to display the message
-              this.editCal = true; // goes back to the calendar details view
+      this.updateMembers();
+      this.message = "You have successfully edited the calendar.";
+      alert(this.message);
+      //this.deleteFalse = false; //opens another window to display the message
+      this.editCal = true; // goes back to the calendar details view
     });
   }//members: this.membersTemp, 
 
@@ -124,7 +125,6 @@ console.log("$rootScope.userIDglobal 888 = " + this.user._id);
 if(this.adminEmail){
       this.$http.put('/api/users/' + this.user._id, {email: this.adminEmail}).then(response => {
       this.user = response.data;
-      this.updateMembers();
   });
 }
 }
@@ -144,6 +144,7 @@ if(this.adminEmail){
 
 //delete members from temporary 
 deleteMember(member){
+this.delMembers.add();
    for (var i =0; i < this.membersTemp.length; i++){
       if (this.membersTemp[i].email === member.email) {
         this.membersTemp.splice(i,1);
@@ -162,7 +163,7 @@ deleteMember(member){
  addMember(){
   if(this.memberEmail && this.memberName){
    this.membersTemp.push({name: this.memberName, email: this.memberEmail});
-  this.addMembers.push({name: this.memberName, email: this.memberEmail});
+   this.addMembers.push({name: this.memberName, email: this.memberEmail});
    if(this.firstEntry==0){
    this.firstEntry = 1;
    }
