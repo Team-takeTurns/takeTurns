@@ -177,14 +177,19 @@ export function updateMembers(req, res) {
 
 function removeMembers(calId, body, res){
 var endArray = 0;
-  for (var i = 0; i < body.delMembers.length; i++) { 
-    if(i === (body.delMembers.length-1)){
-      endArray = 1;
-    }
-Calendar.updateAsync({_id: calId}, {$pull: {events: {_id: body.delMembers[i]}}} )
+//   for (var i = 0; i < body.delMembers.length; i++) { 
+//     if(i === (body.delMembers.length-1)){
+//       endArray = 1;
+//     }
+// Calendar.updateAsync({_id: calId}, {$pull: {events: {_id: body.delMembers[i]}}} )
+//     .then(checkIfModified(calId, body.delMembers[i], res))
+//     .catch(handleError(res));
+// }
+
+
+Calendar.updateAsync({_id: calId}, {$pull: {members: {_id: {"$in": [body.delMembers]}}}} )
     .then(checkIfModified(calId, body.delMembers[i], res))
     .catch(handleError(res));
-}
 }
 
 
@@ -228,7 +233,7 @@ function getCalendarIds(res) {
       .then(getEvents(res))
       .catch(handleError(res));
     }
-    resetVarsForDeleteOldEvents(); 
+    resetVarsForDeleteOldEvents();
     }
   };
 }
