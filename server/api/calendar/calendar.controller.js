@@ -165,17 +165,28 @@ export function deleteEvent(req, res) {
    removeEvent( req.params.calId, req.params.eventId, res);
 }
 
+//Updateing event START---------------------------------------------------
+export function updateEvent(req, res){
+    if (req.body._id) {
+    delete req.body._id;
+  }
+console.log(" 00000000000======== req.params.calId " + req.params.calId);
+}
 
-// Updates an existing Calendar in the DB
+//Updating event END ----------------------------------------
+
+// Updates an existing Calendar in the DB-----------------------------------------
 export function updateMembers(req, res) {
   if (req.body._id) {
     delete req.body._id;
   }
-   removeMembers( req.params.calId, req.body,  res);
+  console.log(" req.params.calId " +  req.params.calId );
+   removeMembers( req.params.calId, req.body.delMembers,  res);
+   //addMembers( req.params.calId, req.body.addMembers,  res);
 }
 
 
-function removeMembers(calId, body, res){
+function removeMembers(calId, delMembers, res){
 var endArray = 0;
 //   for (var i = 0; i < body.delMembers.length; i++) { 
 //     if(i === (body.delMembers.length-1)){
@@ -185,14 +196,19 @@ var endArray = 0;
 //     .then(checkIfModified(calId, body.delMembers[i], res))
 //     .catch(handleError(res));
 // }
-
-
-Calendar.updateAsync({_id: calId}, {$pull: {members: {_id: {"$in": [body.delMembers]}}}} )
-    .then(checkIfModified(calId, body.delMembers[i], res))
+var membersToDelete = JSON.stringify(delMembers);
+console.log(" body.delMembers " + JSON.stringify(delMembers));
+Calendar.updateAsync({_id: calId}, {$pull: {members: {_id: {"$in":  delMembers}}}} )
+    .then(checkIfModified(calId, delMembers, res))
     .catch(handleError(res));
 }
 
-
+function addMembers(calID, addMambers, res){
+console.log(" body.addMambers " + JSON.stringify(addMambers));
+Calendar.updateAsync({_id: calId}, {$push: {members: {_id: {}}}} )
+    .then(checkIfModified(calId, addMambers, res))
+    .catch(handleError(res));
+}
 // -------------------- time trigered events ----------------------------------
 // ------------------- 1 - delete old events logic start -----------------------
 //event triggered by time to delete extra records in the database
@@ -256,4 +272,8 @@ var deductMiliseconds = (1000 * 3600 * 24 * (months * 30));
 var dateInMiliseconds = ((new Date().getTime())- deductMiliseconds);
 return (new Date(dateInMiliseconds)).toISOString();
 }
-// ------------------- 1 - delete old events logic start -----------------------
+// ------------------- 1 - delete old events logic end -----------------------
+// ------------------- 2 - delete old empty calendars logic start -----------------------
+// ------------------- 2 - delete old empty calendars logic end -----------------------
+// ------------------- 3 - delete old unused calendars logic start -----------------------
+// ------------------- 3 - delete old unused calendars logic end -----------------------
