@@ -1,14 +1,14 @@
 <navbar></navbar>
 
 <header class="hero-unit" id="banner">
-  <div class="container">
-    <h1>Week View</h1>
-    <p class="lead">Here you can view events in a week view and details about the event.</p>
-  </div>
+    <div class="container">
+        <h1>Week View</h1>
+        <p class="lead">Here you can view events in a week view and details about the event.</p>
+    </div>
 </header>
 
 <div class="container">
-  <!--
+    <!--
   <div class="row">
     <div class="col-lg-12">
       <h1 class="page-header">Features:</h1>
@@ -19,15 +19,29 @@
   </div>
 -->
 
-  <form class="event-form">
-    <label>{{weekView.calendar.name}}</label>
-    <p class="input-group">
-      <input type="text" class="form-control" placeholder="Add a new event here." ng-model="weekView.newEvent">
-      <span class="input-group-btn">
-        <button type="submit" class="btn btn-primary" ng-click="weekView.addEvent()">Add Event</button>
-      </span>
-    </p>
-  </form>
+
+    <h2 class="text-center">{{ calendarTitle }}</h2>
+    <div class="text-center">
+        <div class="btn-group">
+
+            <button class="btn btn-primary" mwl-date-modifier date="calendarDate" decrement="calendarView">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </button>
+            <button class="btn btn-primary" mwl-date-modifier date="calendarDate" set-to-today>
+                Today
+            </button>
+            <button class="btn btn-primary" mwl-date-modifier date="calendarDate" increment="calendarView">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+            </button>
+        </div>
+    </div>
+
+    <div class="scrollDayView">
+        <mwl-calendar view="calendarView" view-date="calendarDate" events="events" view-title="calendarTitle" on-event-click="eventViewer.eventClicked(calendarEvent)"
+        on-event-times-changed="calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
+        edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'" delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
+        on-edit-event-click="eventEdited(calendarEvent)" on-delete-event-click="eventDeleted(calendarEvent)" </mwl-calendar>
+    </div>
 
 </div>
 
