@@ -2,7 +2,7 @@
 
 <header class="hero-unit" id="banner">
     <div class="container">
-        <h1>Event Viewer</h1>
+        <h1> {{eventViewer.calendar.name}}</h1>
         <p class="lead">Here you can view events in a month view, day view and details about the event.</p>
     </div>
 </header>
@@ -12,36 +12,42 @@
     <div class="row">
         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
             <div id="monthView">
+                <h4 class="titleLbl">Month View</h4>
                 <p>This div is for the month view. Alex is going to work on this view</p>
 
                 example of retrieved calenda data
                 <h2>Name of calendar: {{eventViewer.calendar.name}}</h2>
 
+                <h2 class="text-center">{{ calendarTitle }}</h2>
+                <div class="text-center">
+                    <div class="btn-group">
 
+                        <button class="btn btn-primary" mwl-date-modifier date="calendarDateMonth" decrement="calendarViewMonth">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                        </button>
+                        <button class="btn btn-primary" mwl-date-modifier date="calendarDateMonth" set-to-today>
+                            Today
+                        </button>
+                        <button class="btn btn-primary" mwl-date-modifier date="calendarDateMonth" increment="calendarViewMonth">
+                            <span class="glyphicon glyphicon-chevron-right"></span>
+                        </button>
+                    </div>
+                </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                <div class="scrollMonthView">
+                    <mwl-calendar view="calendarViewMonth" view-date="calendarDateMonth" events="events" view-title="calendarTitle" on-event-click="eventViewer.eventClicked(calendarEvent)"
+                    on-event-times-changed="calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
+                    edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'" delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
+                    on-edit-event-click="eventEdited(calendarEvent)" on-delete-event-click="eventDeleted(calendarEvent)"
+                    </mwl-calendar>
+                </div>
             </div>
         </div>
         <!--end of column for month view -->
 
         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
             <div id="dayView">
+                <h4 class="titleLbl">Day View</h4>
                 <p>This div is for the day view. Christine is going to work on this view</p>
 
 
@@ -49,20 +55,20 @@
                 <div class="text-center">
                     <div class="btn-group">
 
-                        <button class="btn btn-primary" mwl-date-modifier date="calendarDate" decrement="calendarView">
+                        <button class="btn btn-primary" mwl-date-modifier date="calendarDateDay" decrement="calendarView">
                             <span class="glyphicon glyphicon-chevron-left"></span>
                         </button>
-                        <button class="btn btn-primary" mwl-date-modifier date="calendarDate" set-to-today>
+                        <button class="btn btn-primary" mwl-date-modifier date="calendarDateDay" set-to-today>
                             Today
                         </button>
-                        <button class="btn btn-primary" mwl-date-modifier date="calendarDate" increment="calendarView">
+                        <button class="btn btn-primary" mwl-date-modifier date="calendarDateDay" increment="calendarView">
                             <span class="glyphicon glyphicon-chevron-right"></span>
                         </button>
                     </div>
                 </div>
 
                 <div class="scrollDayView">
-                    <mwl-calendar view="calendarView" view-date="calendarDate" events="events" view-title="calendarTitle" on-event-click="eventViewer.eventClicked(calendarEvent)"
+                    <mwl-calendar view="calendarView" view-date="calendarDateDay" events="events" view-title="calendarTitle" on-event-click="eventViewer.eventClicked(calendarEvent)"
                     on-event-times-changed="calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
                     edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'" delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
                     on-edit-event-click="eventEdited(calendarEvent)" on-delete-event-click="eventDeleted(calendarEvent)"
@@ -109,79 +115,79 @@
         <!--end of column for day view -->
     </div>
 
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <div id="detailsView" ng-controller="EventViewerController">
-                <p>This div is for the event details view. Francis is going to work on this view</p>
-                example of retrieved calenda data
-                <h2>Name of calendar: {{selectedEvent.title}}</h2>
-                <br>
-                <div class="row">
-                <div  class="col-md col-md-offset-10">
-                <button class="btn btn-primary" ng-click="updBttn=true" ng-hide="updBttn">DELETE</button>
+    <!--Event Details Form -->
+    <div id="detailsView" class="row">
+        <div id="evenDet" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <!--Event Detail View section-->
+            <section ng-show="eventViewer.showEventDetailView">
+                <h4 class="titleLbl">Event Details</h4>
+                <h1>{{eventViewer.selectedEvent.title}}</h1>
+                <div>
+                    <label>DATE: </label> {{eventViewer.selectedEvent.date}}
                 </div>
+                <div>
+                    <label>START TIME: </label> {{eventViewer.selectedEvent.startTime}}
+                </div>
+                <div>
+                    <label>END TIME: </label> {{eventViewer.selectedEvent.endTime}}
+                </div>
+                <div>
+                    <label>HOST: </label> {{eventViewer.selectedEvent.host}}
+                </div>
+                <div>
+                    <label>DESCRIPTION:</label>
+                    <br> {{eventViewer.selectedEvent.info}}
+                </div>
+                <div>
+                    <button class="btn btn-primary" ng-click="eventViewer.switchEventDetailView(0)">EDIT</button>
+                </div>
+            </section>
+
+            <!--This section is the Form to edit the event details-->
+            <section ng-hide="eventViewer.showEventDetailForm">
+                <form name="newCal" class="calendar-form" role="form">
+                    <h1>{{eventViewer.calendar.name}}</h1>
+                    <br>
+
+
+                <div class="col-md col-md-offset-11">
+                    <button class="btn btn-primary" ng-click="eventViewer.deleteEvent()">DELETE</button>
                 </div>
                 <!--Start of the Edit section-->
                 <fieldset class="form-group">
                     <label>Title: </label>
-                    <input class="form-control" ng-model="selectedEvent.title" disabled>
+                    <input class="form-control" ng-model="eventViewer.selectedEvent.title">
                 </fieldset>
                 <fieldset class="form-group">
                     <label>Date: </label>
-                    <input class="form-control" ng-model="selectedEvent.date" disabled>
+                    <input class="form-control" ng-model="eventViewer.selectedEvent.date">
                 </fieldset>
                 <fieldset class="form-group">
                     <label>Start Time: </label>
-                    <input class="form-control" ng-model="selectedEvent.startTime" disabled >
+                    <input class="form-control" ng-model="eventViewer.selectedEvent.startTime">
                 </fieldset>
                 <fieldset class="form-group">
                     <label>End Time: </label>
-                    <input class="form-control" ng-model="selectedEvent.endTime" disabled>
+                    <input class="form-control" ng-model="eventViewer.selectedEvent.endTime">
                 </fieldset>
                 <fieldset class="form-group">
                     <label>Host: </label>
-                    <input class="form-control" ng-model="selectedEvent.host" disabled>
+                    <input class="form-control" ng-model="eventViewer.selectedEvent.host">
                 </fieldset>
                 <fieldset class="form-group">
                     <label>Description: </label>
-                    <textarea class="form-control" id="" cols="30" rows="10" disabled></textarea>
+                    <textarea class="form-control" ng-model="eventViewer.selectedEvent.info" id="" cols="30" rows="10"></textarea>
                 </fieldset>
                 <br>
                 <div ng-init="updBttn=true">
-                <button class="btn btn-primary" ng-click="updBttn=false">EDIT</button>
-                <button class="btn btn-primary" ng-click="updBttn=true" ng-hide="updBttn">UPDATE</button>
+                    <button class="btn btn-primary"  ng-click="eventViewer.updateEvent()" ng-click="eventViewer.switchEventDetailView(1)">UPDATE</button>
+                    <button class="btn btn-primary"  ng-click="eventViewer.cancelEdit()" ng-click="eventViewer.switchEventDetailView(1)">CANCEL</button>
                 </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            </div>
+                </form>
+            </section>
+            <!--end of column for event details view -->
         </div>
-        <!--end of column for event details view -->
     </div>
 
 </div>
