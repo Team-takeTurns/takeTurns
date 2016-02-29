@@ -135,8 +135,6 @@ if(this.adminEmail){
 //send request to BE to delete multiple events - temporarily here for testing - later code to be used to delete members
   updateMembers() {
   console.log(" i am in updateMembers method 1111111");
- this.delMembers = ["56ca72353876946c0c49b391","56ca72353876946c0c49b390"];
- this.addMembers = [{ name:"Jay", _id:"56ca72353876946c0c49b335", email: "jay@jjjjj.jj"}];
    console.log(" i am in updateMembers method 22222");
       console.log(" i am in updateMembers method this.calendar._id " + this.calendar._id);
          console.log(" i am in updateMembers method 33333");
@@ -170,7 +168,10 @@ this.delMembers.add();
  addMember(){
   if(this.memberEmail && this.memberName){
    this.membersTemp.push({name: this.memberName, email: this.memberEmail});
-   this.addMembers.push({name: this.memberName, email: this.memberEmail});
+   console.log("this.addMembers.length " + this.addMembers.length)
+   for(var i = 0; i < this.addMembers.length; i++){
+      this.addMembers.push({name: this.memberName, email: this.memberEmail});
+   }
    if(this.firstEntry==0){
    this.firstEntry = 1;
    }
