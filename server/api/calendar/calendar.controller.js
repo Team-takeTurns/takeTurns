@@ -11,6 +11,7 @@
 
 import _ from 'lodash';
 import Calendar from './calendar.model';
+var sendResult = 1;
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -24,20 +25,22 @@ function respondWithResult(res, statusCode) {
 }
 
 //code for removing event-----------------------------------
-function removeEvent(calId, eventId, res){
+function removeEvent(calId, eventId, res, sendResult){
    Calendar.updateAsync({_id: calId}, {$pull: {events: {_id: eventId}}} )
-    .then(checkIfModified(calId, eventId, res))
+    .then(checkIfModified(calId, eventId, res, sendResult))
     .catch(handleError(res));
 }
 
-function checkIfModified(calId, eventId, res){
+function checkIfModified(calId, eventId, res, sendResult){
          return function(entity) {
           console.log(" entity modified? "+ JSON.stringify(entity));
         if(entity.nModified===0){
            res.status(404).end();
            return null;
         }else{
+          if(sendResult === 1){
           getRemovedEventCal(calId, eventId, res);
+        }
         return entity;
       }
   };
@@ -162,7 +165,8 @@ export function deleteEvent(req, res) {
   if (req.body._id) {
     delete req.body._id;
   }
-   removeEvent( req.params.calId, req.params.eventId, res);
+  sendResult = 1;
+   removeEvent( req.params.calId, req.params.eventId, res, sendResult);
 }
 
 //Updateing event START---------------------------------------------------
@@ -170,6 +174,7 @@ export function updateEvent(req, res){
     if (req.body._id) {
     delete req.body._id;
   }
+  sendResult = 1;
 Calendar.updateAsync( { _id: req.params.calId, 
   events: { "$elemMatch": { _id: req.body.eventId }}}, 
   {$set: {"events.$.title": req.body.title ,
@@ -178,7 +183,7 @@ Calendar.updateAsync( { _id: req.params.calId,
           "events.$.startTime": req.body.startTime,
           "events.$.endTime": req.body.endTime,
           "events.$.info": req.body.info}})
-    .then(checkIfModified(req.params.calId, req.body.eventId, res));
+    .then(checkIfModified(req.params.calId, req.body.eventId, res, sendResult));
 }
 
 //Updating event END ----------------------------------------
@@ -188,33 +193,30 @@ export function updateMembers(req, res) {
   if (req.body._id) {
     delete req.body._id;
   }
-  console.log(" req.params.calId " +  req.params.calId );
-   removeMembers( req.params.calId, req.body.delMembers,  res);
-   //addMembers( req.params.calId, req.body.addMembers,  res);
+    console.log("555555555555555555 " + req.body.addMembers);
+  if (req.body.addMembers == undefined){
+sendResult = 1;
+}else {
+  sendResult = 0;
+}
+   removeMembers( req.params.calId, req.body.delMembers, res, sendResult);
+   if (sendResult===0){
+   addMembers( req.params.calId, req.body.addMembers,  res);
+ }
 }
 
 
-function removeMembers(calId, delMembers, res){
-var endArray = 0;
-//   for (var i = 0; i < body.delMembers.length; i++) { 
-//     if(i === (body.delMembers.length-1)){
-//       endArray = 1;
-//     }
-// Calendar.updateAsync({_id: calId}, {$pull: {events: {_id: body.delMembers[i]}}} )
-//     .then(checkIfModified(calId, body.delMembers[i], res))
-//     .catch(handleError(res));
-// }
-var membersToDelete = JSON.stringify(delMembers);
-console.log(" body.delMembers " + JSON.stringify(delMembers));
+function removeMembers(calId, delMembers, res, sendResult){
 Calendar.updateAsync({_id: calId}, {$pull: {members: {_id: {"$in":  delMembers}}}} )
-    .then(checkIfModified(calId, delMembers, res))
+    .then(checkIfModified(calId, delMembers, res, sendResult))
     .catch(handleError(res));
 }
 
-function addMembers(calID, addMambers, res){
-console.log(" body.addMambers " + JSON.stringify(addMambers));
-Calendar.updateAsync({_id: calId}, {$push: {members: {_id: {}}}} )
-    .then(checkIfModified(calId, addMambers, res))
+function addMembers(calId, addMembers, res){
+  sendResult = 1;
+console.log(" body.addMembers.name " + JSON.stringify(addMembers));
+Calendar.updateAsync({_id: calId}, {$addToSet: {members: {$each:  addMembers }}} )
+    .then(checkIfModified(calId, addMembers, res, sendResult))
     .catch(handleError(res));
 }
 // -------------------- time trigered events ----------------------------------
