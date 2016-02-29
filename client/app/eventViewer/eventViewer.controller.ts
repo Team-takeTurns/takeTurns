@@ -137,6 +137,16 @@
             console.log("event Id   " + this.selectedEvent._id);
             console.log("event Id  outside if " + this.calendar._id); 
             //send request to delete event
+<<<<<<< HEAD
+              // this.$http.patch('/api/calendars/' + this.calendar._id +"/DeleteEvent/"+ this.selectedEvent._id).then(response => {
+              this.$http.patch('/api/calendars/' + "56b1e6924f07f3840f8ce514" +"/DeleteEvent/"+ "56c931132a65e1c81f986c14").then(response => {
+                 //this.calendar = response.data;
+                 // this.message('Event deleted');
+                  alert('Event successfully deleted from calendar at ' + Date());
+                  //window.location.reload(true);
+                });
+            }
+=======
 
             this.$http.patch('/api/calendars/' + this.calendar._id + "/DeleteEvent/" + this.selectedEvent._id).then(response => {
                 //this.$http.patch('/api/calendars/' + "56b1e6924f07f3840f8ce556" +"/DeleteEvent/"+ "56d2a6889cd26ad42860051e").then(response => {
@@ -146,7 +156,7 @@
                 //window.location.reload(true);
             });
         }
-
+>>>>>>> upstream/master
 
         dayEvents() {
             if (this.calendar.events.length == 0) {
