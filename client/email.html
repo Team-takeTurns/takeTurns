@@ -1,0 +1,55 @@
+<html>
+    <head>
+        <title>Send e-mail invitation</title>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script>// <![CDATA[]]
+            $(document).ready(function(){
+	var from,to,subject,text;
+	$("#send_email").click(function(){		
+		to=$("#to").val();
+		subject=$("#subject").val();
+		text=$("#content").val();
+		$("#message").text("Sending E-mail...Please wait");
+		$.get("http://localhost:3000/send",{to:to,subject:subject,text:text},function(data){
+		if(data=="sent")
+		{
+                            window.location.href="alert.message('message sent')";
+                        }
+                    });
+                });
+            });
+        </script>
+        <style>
+            
+            #container{
+                margin-top: 100px;
+                margin-left:100px;
+            }
+            #to,#subject,#content{
+                font-family: "Arial";
+                font-size:20px;
+                width:600px;
+            }
+            h1{
+                font-family: "Arial";
+                font-size:40px;
+            }
+            #send_email{
+                font-family: "Arial";
+                font-size:15px;
+            }
+            #mesage{font-size: 16px;}
+        </style>
+    </head>
+    <body>
+        <div id="container">
+            <h1>Send invitation</h1>
+            <input id="to" type="text" placeholder="Enter e-mail recpients" />
+            <input id="subject" type="text" placeholder="Subject" />
+            <textarea id="content" cols="50" rows="7">**generated from server-Link is gonna go here**</textarea>
+            <button id="send_email">Send</button>
+            <span id="message"></span>
+          </div>  
+        
+    </body>
+</html>
