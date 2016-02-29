@@ -11,6 +11,7 @@
 
 import _ from 'lodash';
 import Calendar from './calendar.model';
+var sendResult = 1;
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -24,19 +25,22 @@ function respondWithResult(res, statusCode) {
 }
 
 //code for removing event-----------------------------------
-function removeEvent(calId, eventId, res){
+function removeEvent(calId, eventId, res, sendResult){
    Calendar.updateAsync({_id: calId}, {$pull: {events: {_id: eventId}}} )
-    .then(checkIfModified(calId, eventId, res))
+    .then(checkIfModified(calId, eventId, res, sendResult))
     .catch(handleError(res));
 }
 
-function checkIfModified(calId, eventId, res){
+function checkIfModified(calId, eventId, res, sendResult){
          return function(entity) {
+          console.log(" entity modified? "+ JSON.stringify(entity));
         if(entity.nModified===0){
            res.status(404).end();
            return null;
         }else{
+          if(sendResult === 1){
           getRemovedEventCal(calId, eventId, res);
+        }
         return entity;
       }
   };
@@ -106,7 +110,7 @@ function handleError(res, statusCode) {
   statusCode = statusCode || 500;
 
   return function(err) {
-             console.log("3" + err);
+             console.log("3 myError " + err);
     res.status(statusCode).send(err);
   };
 }
@@ -157,11 +161,129 @@ export function destroy(req, res) {
 
 
 // Updates an existing Calendar in the DB
-export function updateEvent(req, res) {
+export function deleteEvent(req, res) {
   if (req.body._id) {
     delete req.body._id;
   }
-   removeEvent( req.params.calId, req.params.eventId, res);
+  sendResult = 1;
+   removeEvent( req.params.calId, req.params.eventId, res, sendResult);
+}
+
+//Updateing event START---------------------------------------------------
+export function updateEvent(req, res){
+    if (req.body._id) {
+    delete req.body._id;
+  }
+  sendResult = 1;
+Calendar.updateAsync( { _id: req.params.calId, 
+  events: { "$elemMatch": { _id: req.body.eventId }}}, 
+  {$set: {"events.$.title": req.body.title ,
+          "events.$.date": req.body.date,
+          "events.$.host": req.body.host,
+          "events.$.startTime": req.body.startTime,
+          "events.$.endTime": req.body.endTime,
+          "events.$.info": req.body.info}})
+    .then(checkIfModified(req.params.calId, req.body.eventId, res, sendResult));
+}
+
+//Updating event END ----------------------------------------
+
+// Updates an existing Calendar in the DB-----------------------------------------
+export function updateMembers(req, res) {
+  if (req.body._id) {
+    delete req.body._id;
+  }
+    console.log("555555555555555555 " + req.body.addMembers);
+  if (req.body.addMembers == undefined){
+sendResult = 1;
+}else {
+  sendResult = 0;
+}
+   removeMembers( req.params.calId, req.body.delMembers, res, sendResult);
+   if (sendResult===0){
+   addMembers( req.params.calId, req.body.addMembers,  res);
+ }
 }
 
 
+function removeMembers(calId, delMembers, res, sendResult){
+Calendar.updateAsync({_id: calId}, {$pull: {members: {_id: {"$in":  delMembers}}}} )
+    .then(checkIfModified(calId, delMembers, res, sendResult))
+    .catch(handleError(res));
+}
+
+function addMembers(calId, addMembers, res){
+  sendResult = 1;
+console.log(" body.addMembers.name " + JSON.stringify(addMembers));
+Calendar.updateAsync({_id: calId}, {$addToSet: {members: {$each:  addMembers }}} )
+    .then(checkIfModified(calId, addMembers, res, sendResult))
+    .catch(handleError(res));
+}
+// -------------------- time trigered events ----------------------------------
+// ------------------- 1 - delete old events logic start -----------------------
+//event triggered by time to delete extra records in the database
+var events = {};
+var calendarIds = [];
+var intervalPeriod = 10000;//3600000
+var deleteOldEventsInterval = setInterval(myTimer, intervalPeriod);
+var counter = 0;
+var day;
+var hour;
+var monthsInput = 1;
+var isoDateToCheckAgainst = getIsoDateToDeleteOldEvents(monthsInput);
+function myTimer() {
+ var d = new Date();
+    var res;
+    counter++;
+    day = d.getDay();
+    hour = d.getHours();
+    if(day === day){// (day === 7){
+      if(hour >= hour && hour < hour + 5 ){ //(time > 2 && time < 5 ){
+      Calendar.find({"events.date": {$lte: isoDateToCheckAgainst}}, {$limit: 1})
+       .then(getCalendarIds(res))
+       .catch(handleError(res));
+      }
+    }
+}
+
+function getCalendarIds(res) {
+  return function(entity) {
+    //populate array of calendar Ids
+    if (entity) {
+        for (var i = 0; i < entity.length; i++) { 
+          calendarIds.push(entity[i]._id);
+    }
+    //loop through calendars and delete events older than set date
+    for(var i = 0; i < calendarIds.length; i++){
+      Calendar.updateAsync({_id: calendarIds[i]},  {$pull : {events: {date: {$lte: isoDateToCheckAgainst}}}} )
+      .then(getEvents(res))
+      .catch(handleError(res));
+    }
+    resetVarsForDeleteOldEvents();
+    }
+  };
+}
+
+function  resetVarsForDeleteOldEvents(){
+calendarIds=[];
+}
+
+//this method is only for viewing if the response from task to delete events is completed with nModified1
+function getEvents(res) {
+  return function(entity) {
+    if (entity) {
+          //console.log( " ============ events ============ "  + JSON.stringify(entity));//uncomment this line for testing
+    }
+  };
+}
+
+function getIsoDateToDeleteOldEvents(months){
+var deductMiliseconds = (1000 * 3600 * 24 * (months * 30));
+var dateInMiliseconds = ((new Date().getTime())- deductMiliseconds);
+return (new Date(dateInMiliseconds)).toISOString();
+}
+// ------------------- 1 - delete old events logic end -----------------------
+// ------------------- 2 - delete old empty calendars logic start -----------------------
+// ------------------- 2 - delete old empty calendars logic end -----------------------
+// ------------------- 3 - delete old unused calendars logic start -----------------------
+// ------------------- 3 - delete old unused calendars logic end -----------------------

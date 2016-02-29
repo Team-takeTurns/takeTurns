@@ -13,8 +13,9 @@
             this.selectedEvent;
             this.showEventDetailView = true;
             this.showEventDetailForm = true;
+            this.message;
 
-            //----------------- Liliya's code ---------------------
+            //check if $rootScope.userIDglobal is undefined then define it else  
             if (!$rootScope.userIDglobal) {
                 $rootScope.userIDglobal;
             }
@@ -23,7 +24,6 @@
             } else if ($rootScope.userRole === "admin") {
                 this.userIDtemp = this.url.toString().substr(32, 24);
             }
-            //------------ liliya's vars end ----------------------
             this.$scope = $scope;
             this.$scope.slot = this.calendar;
             $scope.events = [];
@@ -31,7 +31,7 @@
 
             //----------------- Global vars END---------------------
             
-            //------------------- liliya start: get calendar id from user ----------------------------
+            //get calendar id from user ----------------------------
             paramSerializer: '$httpParamSerializerJQLike';
 
             if (!this.userIDtemp) {
@@ -45,24 +45,25 @@
                 this.getCalendar();
                 socket.syncUpdates('calendar', this.calendar);
             });
-            //---------------------- liliya end ---------------------------------
+           
 
-            //---------------------- auto generated start ----------------------------------
+            //auto generated start ----------------------------------
             $scope.$on('$destroy', function() {
-                socket.unsyncUpdates('event');
+                socket.unsyncUpdates('calendar');
             });
-            //---------------------- auto generated end ----------------------------------
+            //auto generated end ----------------------------------
         }
 
-        //------------------------- liliya start: get calendar details -------------------------------
+        // get calendar details -------------------------------
         getCalendar() {
             this.$http.get('/api/calendars/' + this.user.calID).then(response => {
                 this.calendar = response.data;
                 this.dayEvents();
+                this.monthEvents();
                 this.detailsEvent(this.calendar.events[0]._id);
             });
         }
-        //---------------------- liliya end ----------------------------------
+        
 
         // dayEvents() {
         //     for (var i in this.calendar.events) {
@@ -115,10 +116,30 @@
             }
         }
 
+        //code to delete an event
+        deleteEvent() {
+            //change view
+            this.showEventDetailView = true;
+            this.showEventDetailForm = true;
+            //testing - debuging
+            console.log("event Id   " + this.selectedEvent._id);
+            console.log("event Id  outside if " + this.calendar._id); 
+            //send request to delete event
+
+               this.$http.patch('/api/calendars/' + this.calendar._id +"/DeleteEvent/"+ this.selectedEvent._id).then(response => {
+              //this.$http.patch('/api/calendars/' + "56b1e6924f07f3840f8ce556" +"/DeleteEvent/"+ "56d2a6889cd26ad42860051e").then(response => {
+                 //this.calendar = response.data;
+                 // this.message('Event deleted');
+                  alert('Event successfully deleted from calendar at ' + new Date());
+                  //window.location.reload(true);
+                });
+            }
+
+
         dayEvents() {
             if (this.calendar.events.length == 0) {
                 this.$scope.calendarView = 'day';
-                this.$scope.calendarDate = new Date();
+                this.$scope.calendarDateDay = new Date();
                 console.log("HELLO ITS ME");
             }
             else {
@@ -129,7 +150,7 @@
                 
                     // Required to set the calendar months or day
                     this.$scope.calendarView = 'day';
-                    this.$scope.calendarDate = new Date();
+                    this.$scope.calendarDateDay = new Date();
 
                     console.log("ID:" + this.calendar.events[i]._id);
                     this.$scope.events[i] =
@@ -142,6 +163,54 @@
                 }
             } // End The for loop
         } // End dayEvents method
+
+        updateEvent(){
+         this.$http.put('/api/calendars/updateEvent/' + this.calendar._id, { eventId: this.selectedEvent._id, title: this.selectedEvent.title, host: this.selectedEvent.host, date: this.selectedEvent.date, startTime: this.selectedEvent.startTime, endTime: this.selectedEvent.endTime, info: this.selectedEvent.info, paramSerializer: '$httpParamSerializerJQLike'}).then(response => {
+               console.log("9999999999999999999999999999999");
+              this.calendar = response.data;
+
+              this.message = "You have successfully edited the event.";
+              alert(this.message);
+                this.showEventDetailView = true;
+                this.showEventDetailForm = true;
+            });
+        }
+    
+
+
+            cancelEdit(){
+                    this.showEventDetailView = true;
+                    this.showEventDetailForm = true;
+        }
+    
+      
+        
+        monthEvents() {
+            if (this.calendar.events.length == 0) {
+                this.$scope.calendarViewMonth = 'month';
+                this.$scope.calendarDateMonth = new Date();
+                console.log("HELLO ITS THE MONTH VIEW");
+            }
+            else {
+                for (var i in this.calendar.events) {
+                    var calEvent = this.calendar.events[i].date;
+                    var startTime = new Date(calEvent.substring(0, 10) + "T" + this.calendar.events[i].startTime);
+                    var endTime = new Date(calEvent.substring(0, 10) + "T" + this.calendar.events[i].endTime);
+                
+                    // Required to set the calendar months or day
+                    this.$scope.calendarViewMonth = 'month';
+                    this.$scope.calendarDateMonth = new Date();
+                    this.$scope.events[i] =
+                        {
+                            title: this.calendar.events[i].title,
+                            startsAt: new Date(moment(startTime).format()),
+                            endsAt: new Date(moment(endTime).format()),
+                            eventId: this.calendar.events[i]._id
+                        };
+                }
+            } // End The for loop
+        } // End monthEvents method
+
     }
 
 
