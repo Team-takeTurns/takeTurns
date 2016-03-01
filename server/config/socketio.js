@@ -18,8 +18,6 @@ function onConnect(socket) {
 
   // Insert sockets below
   require('../api/email/email.socket').register(socket);
-  require('../api/member/member.socket').register(socket);
-  require('../api/event/event.socket').register(socket);
   require('../api/calendar/calendar.socket').register(socket);
   require('../api/user/user.socket').register(socket);
 
