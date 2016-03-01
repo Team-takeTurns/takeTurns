@@ -3,40 +3,40 @@
 var app = require('../..');
 import request from 'supertest';
 
-var newMember;
+var newEmail;
 
-describe('Member API:', function() {
+describe('Email API:', function() {
 
-  describe('GET /api/members', function() {
-    var members;
+  describe('GET /api/emails', function() {
+    var emails;
 
     beforeEach(function(done) {
       request(app)
-        .get('/api/members')
+        .get('/api/emails')
         .expect(200)
         .expect('Content-Type', /json/)
         .end((err, res) => {
           if (err) {
             return done(err);
           }
-          members = res.body;
+          emails = res.body;
           done();
         });
     });
 
     it('should respond with JSON array', function() {
-      expect(members).to.be.instanceOf(Array);
+      expect(emails).to.be.instanceOf(Array);
     });
 
   });
 
-  describe('POST /api/members', function() {
+  describe('POST /api/emails', function() {
     beforeEach(function(done) {
       request(app)
-        .post('/api/members')
+        .post('/api/emails')
         .send({
-          name: 'New Member',
-          info: 'This is the brand new member!!!'
+          name: 'New Email',
+          info: 'This is the brand new email!!!'
         })
         .expect(201)
         .expect('Content-Type', /json/)
@@ -44,55 +44,55 @@ describe('Member API:', function() {
           if (err) {
             return done(err);
           }
-          newMember = res.body;
+          newEmail = res.body;
           done();
         });
     });
 
-    it('should respond with the newly created member', function() {
-      expect(newMember.name).to.equal('New Member');
-      expect(newMember.info).to.equal('This is the brand new member!!!');
+    it('should respond with the newly created email', function() {
+      expect(newEmail.name).to.equal('New Email');
+      expect(newEmail.info).to.equal('This is the brand new email!!!');
     });
 
   });
 
-  describe('GET /api/members/:id', function() {
-    var member;
+  describe('GET /api/emails/:id', function() {
+    var email;
 
     beforeEach(function(done) {
       request(app)
-        .get('/api/members/' + newMember._id)
+        .get('/api/emails/' + newEmail._id)
         .expect(200)
         .expect('Content-Type', /json/)
         .end((err, res) => {
           if (err) {
             return done(err);
           }
-          member = res.body;
+          email = res.body;
           done();
         });
     });
 
     afterEach(function() {
-      member = {};
+      email = {};
     });
 
-    it('should respond with the requested member', function() {
-      expect(member.name).to.equal('New Member');
-      expect(member.info).to.equal('This is the brand new member!!!');
+    it('should respond with the requested email', function() {
+      expect(email.name).to.equal('New Email');
+      expect(email.info).to.equal('This is the brand new email!!!');
     });
 
   });
 
-  describe('PUT /api/members/:id', function() {
-    var updatedMember;
+  describe('PUT /api/emails/:id', function() {
+    var updatedEmail;
 
     beforeEach(function(done) {
       request(app)
-        .put('/api/members/' + newMember._id)
+        .put('/api/emails/' + newEmail._id)
         .send({
-          name: 'Updated Member',
-          info: 'This is the updated member!!!'
+          name: 'Updated Email',
+          info: 'This is the updated email!!!'
         })
         .expect(200)
         .expect('Content-Type', /json/)
@@ -100,27 +100,27 @@ describe('Member API:', function() {
           if (err) {
             return done(err);
           }
-          updatedMember = res.body;
+          updatedEmail = res.body;
           done();
         });
     });
 
     afterEach(function() {
-      updatedMember = {};
+      updatedEmail = {};
     });
 
-    it('should respond with the updated member', function() {
-      expect(updatedMember.name).to.equal('Updated Member');
-      expect(updatedMember.info).to.equal('This is the updated member!!!');
+    it('should respond with the updated email', function() {
+      expect(updatedEmail.name).to.equal('Updated Email');
+      expect(updatedEmail.info).to.equal('This is the updated email!!!');
     });
 
   });
 
-  describe('DELETE /api/members/:id', function() {
+  describe('DELETE /api/emails/:id', function() {
 
     it('should respond with 204 on successful removal', function(done) {
       request(app)
-        .delete('/api/members/' + newMember._id)
+        .delete('/api/emails/' + newEmail._id)
         .expect(204)
         .end((err, res) => {
           if (err) {
@@ -130,9 +130,9 @@ describe('Member API:', function() {
         });
     });
 
-    it('should respond with 404 when member does not exist', function(done) {
+    it('should respond with 404 when email does not exist', function(done) {
       request(app)
-        .delete('/api/members/' + newMember._id)
+        .delete('/api/emails/' + newEmail._id)
         .expect(404)
         .end((err, res) => {
           if (err) {
