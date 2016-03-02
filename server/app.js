@@ -9,8 +9,7 @@ import mongoose from 'mongoose';
 mongoose.Promise = require('bluebird');
 import config from './config/environment';
 import http from 'http';
-import nodemailer from 'nodemailer';
-import smtpTransport from 'nodemailer-smtp-transport';
+
 
 // Connect to MongoDB
 mongoose.connect(config.mongo.uri, config.mongo.options);
@@ -33,17 +32,7 @@ require('./config/socketio')(socketio);
 require('./config/express')(app);
 require('./routes')(app);
 
-//get user account
-var options={
-    service:'gmail',
-    auth:{
-        user:'testact0123@gmail.com',
-        pass:'pass0123'
-    }
-};
 
-/*configure smtp server*/
-var transporter=nodemailer.createTransport(smtpTransport(options));
 
 // Start server
 function startServer() {
