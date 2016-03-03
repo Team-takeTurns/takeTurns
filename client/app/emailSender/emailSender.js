@@ -5,6 +5,7 @@ angular.module('takeTurnsApp')
     $routeProvider
       .when('/emailSender', {
         templateUrl: 'app/emailSender/emailSender.html',
-        controller: 'EmailSenderCtrl'
+        controller: 'EmailSenderCtrl',
+        controllerAs: 'emailSender'
       });
   });

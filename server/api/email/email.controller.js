@@ -9,46 +9,28 @@
 
 'use strict';
 
-import _ from 'lodash';
-import Email from './email.model';
+import nodemailer from 'nodemailer';
+import smtpTransport from 'nodemailer-smtp-transport';
 
+//get email user account
+var options={
+    service:'gmail',
+    auth:{
+        user:'testact0123@gmail.com',
+        pass:'pass0123'
+    }
+};
+
+/*configure smtp server*/
+var transporter=nodemailer.createTransport(smtpTransport(options));
+
+  
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
   return function(entity) {
     if (entity) {
       res.status(statusCode).json(entity);
     }
-  };
-}
-
-function saveUpdates(updates) {
-  return function(entity) {
-    var updated = _.merge(entity, updates);
-    return updated.saveAsync()
-      .spread(updated => {
-        return updated;
-      });
-  };
-}
-
-function removeEntity(res) {
-  return function(entity) {
-    if (entity) {
-      return entity.removeAsync()
-        .then(() => {
-          res.status(204).end();
-        });
-    }
-  };
-}
-
-function handleEntityNotFound(res) {
-  return function(entity) {
-    if (!entity) {
-      res.status(404).end();
-      return null;
-    }
-    return entity;
   };
 }
 
@@ -59,44 +41,40 @@ function handleError(res, statusCode) {
   };
 }
 
-// Gets a list of Emails
-export function index(req, res) {
-  Email.findAsync()
-    .then(respondWithResult(res))
-    .catch(handleError(res));
-}
-
-// Gets a single Email from the DB
-export function show(req, res) {
-  Email.findByIdAsync(req.params.id)
-    .then(handleEntityNotFound(res))
-    .then(respondWithResult(res))
-    .catch(handleError(res));
-}
-
-// Creates a new Email in the DB
-export function create(req, res) {
-  Email.createAsync(req.body)
-    .then(respondWithResult(res, 201))
-    .catch(handleError(res));
-}
-
-// Updates an existing Email in the DB
-export function update(req, res) {
-  if (req.body._id) {
+// sends Email --------------------------------------------this is not parsing data in request - request is empty for some reason
+export function sendEmail(req, res) {
+    if (req.body._id) {
     delete req.body._id;
   }
-  Email.findByIdAsync(req.params.id)
-    .then(handleEntityNotFound(res))
-    .then(saveUpdates(req.body))
-    .then(respondWithResult(res))
-    .catch(handleError(res));
+  console.log("888888888888888888888888888888 inside BE controller 888888888888888");
+
+   console.log(" req.body " + JSON.stringify(req.body));
+      console.log(" req.body.to " + JSON.stringify(req.body.to));
+         console.log(" req.body.emailBody " + JSON.stringify(req.body.emailBody));
+            console.log(" req.body.subject " + JSON.stringify(req.body.subject));
+     console.log(" req.query.to " + JSON.stringify(req.query.to));
+ var mailOptions={
+        from:'takeTurns Web App <testact0123@gmail.com>',
+        // to :req.query.to,
+        // subject: req.body.subject,
+        // text:req.body.emailBody
+        to : " Liliya0artyukh@gmail.com",
+        subject: "Testing from server side",
+        text:"req.body.emailBody"
+    }
+    console.log(mailOptions);
+
+    transporter.sendMail(mailOptions,function(error,response){
+        if (error){
+            console.log(error);
+            res.end("error");
+        }else{
+            console.log("Message sent: "+response.message);
+            res.end("sent");    
+        }
+    });
+  // Email.findAsync()
+  //   .then(respondWithResult(res))
+  //   .catch(handleError(res));
 }
 
-// Deletes a Email from the DB
-export function destroy(req, res) {
-  Email.findByIdAsync(req.params.id)
-    .then(handleEntityNotFound(res))
-    .then(removeEntity(res))
-    .catch(handleError(res));
-}
