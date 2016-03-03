@@ -1,15 +1,15 @@
 /**
- * Member model events
+ * Email model events
  */
 
 'use strict';
 
 import {EventEmitter} from 'events';
-var Member = require('./member.model');
-var MemberEvents = new EventEmitter();
+var Email = require('./email.model');
+var EmailEvents = new EventEmitter();
 
 // Set max event listeners (0 == unlimited)
-MemberEvents.setMaxListeners(0);
+EmailEvents.setMaxListeners(0);
 
 // Model events
 var events = {
@@ -20,14 +20,14 @@ var events = {
 // Register the event emitter to the model events
 for (var e in events) {
   var event = events[e];
-  Member.schema.post(e, emitEvent(event));
+  Email.schema.post(e, emitEvent(event));
 }
 
 function emitEvent(event) {
   return function(doc) {
-    MemberEvents.emit(event + ':' + doc._id, doc);
-    MemberEvents.emit(event, doc);
+    EmailEvents.emit(event + ':' + doc._id, doc);
+    EmailEvents.emit(event, doc);
   }
 }
 
-export default MemberEvents;
+export default EmailEvents;
