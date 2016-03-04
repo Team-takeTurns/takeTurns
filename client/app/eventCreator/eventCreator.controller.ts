@@ -105,5 +105,4 @@
 
     angular.module('takeTurnsApp')
         .controller('EventCreatorController', EventCreatorController);
-
 })();
