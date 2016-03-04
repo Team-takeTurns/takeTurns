@@ -131,8 +131,8 @@ export function show(req, res) {
 
 // Creates a new Calendar in the DB
 export function create(req, res) {
-    console.log("req.body from create = " + JSON.stringify(req.body));
-  Calendar.createAsync(req.body)
+  console.log("req.body from create = " + JSON.stringify(req.body));
+  Calendar.saveAsync({_id: req.params.calId, events}, req.body)
     .then(respondWithResult(res, 201))
     .catch(handleError(res));
 }
