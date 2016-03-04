@@ -1,0 +1,27 @@
+{
+    "compilerOptions": {
+        "sourceMap": true,
+        "rootDir": "./client",
+        "outDir": ".tmp/test"
+    },
+    "filesGlob": [
+        "client/{app,components}/**/*.{spec,mock}.ts",
+        "client/test_typings/**/*.d.ts"
+    ],
+    "files": [
+        "client/app/calEditor/calEditor.controller.spec.ts",
+        "client/app/eventCreator/eventCreator.controller.spec.ts",
+        "client/app/eventViewer/eventViewer.controller.spec.ts",
+        "client/app/main/main.controller.spec.ts",
+        "client/app/weekView/weekView.controller.spec.ts",
+        "client/components/socket/socket.mock.ts",
+        "client/test_typings/angular-protractor/angular-protractor.d.ts",
+        "client/test_typings/assertion-error/assertion-error.d.ts",
+        "client/test_typings/chai/chai.d.ts",
+        "client/test_typings/mocha/mocha.d.ts",
+        "client/test_typings/selenium-webdriver/selenium-webdriver.d.ts",
+        "client/test_typings/sinon-chai/sinon-chai.d.ts",
+        "client/test_typings/sinon/sinon.d.ts",
+        "client/test_typings/tsd.d.ts"
+    ]
+}

@@ -1,0 +1,136 @@
+<navbar></navbar>
+
+<header class="hero-unit" id="banner">
+  <div class="container">
+    <h1>Admin Portal</h1>
+    <p class="lead">Edit, delete calendar information and/or member list from here.</p>
+  </div>
+</header>
+
+<div class="container" id="calBox" >
+<!-- form to display the calendar -->
+<div id="calView" ng-show="calEditor.editCal">
+<div class="row">
+  <div class="col-md-12">
+    <h2>{{calEditor.calendar.name}}</h2>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <p><span class="calLbl">Created on: </span> {{calEditor.convertDate(calEditor.calendar.dateCreated)}}</p>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <p><span class="calLbl">Description: </span> {{calEditor.calendar.description}}</p>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+   <p><span class="calLbl">Members: </span></p>
+   <ol>
+    <li ng-repeat="mem in calEditor.calendar.members | orderBy:'name'">
+      {{ mem.name }} ( <span style="color:blue">{{mem.email}}</span> )
+    </li>
+  </ol>  
+ </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+ 	<button type="submit" class="btn btn-primary" ng-click="calEditor.editCalendar()">Edit Calendar</button>
+  </div>
+</div>
+</div>
+<!-- form to display view the calendar END -->
+
+
+<!-- form to edit and delete the calendar -->
+<div  id="calEdit" ng-hide="calEditor.editCal">
+<div id="beforeDelete" ng-show="calEditor.deleteFalse">
+<form name="newCal" class="calendar-form" role="form" >
+<div class="row">
+     
+      <div class="col-sm-9">
+    <h2>Update calendar details below:</h2>
+    </div>
+     <div class="col-sm-3">
+        <span class="input-group-btn">
+          <button type="submit" class="btn btn-primary" ng-click="calEditor.deleteCalendar()">Delete Calendar</button>
+        </span>
+      </div>
+       </div>
+  <fieldset class="form-group">
+    <label for="inputEmail">Email address</label>
+    <input name="email" type="email" class="form-control" id="inputEmail" placeholder="{{calEditor.adminEmail}}" ng-model="calEditor.adminEmail" required>
+    <small class="invalidInput" ng-show="newCal.email.$touched&&newCal.email.$invalid">*Email is required.</small>
+  </fieldset>
+  <fieldset class="form-group">
+    <label for="inputName">Name</label>
+    <input name="name" type="text" class="form-control" id="inputName" placeholder="{{calEditor.calName}}" ng-model="calEditor.calName" required>
+        <small class="invalidInput" ng-show="newCal.name.$touched&&newCal.name.$invalid">*Name is required.</small>
+  </fieldset>
+  <fieldset class="form-group">
+    <label for="inputDescription">Description</label>
+    <textarea class="form-control" id="inputDescription" rows="3"  placeholder="{{calEditor.calDescription}}" ng-model="calEditor.calDescription"></textarea>
+  </fieldset>
+
+<!-- scrollable view of current memebrs -->
+<div class="row">
+    <div class="col-lg-12">
+      <label  class="page-header">Current Group Members:</label> {{calEditor.memCounter}}
+      <div class="scroll">
+      <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="member in calEditor.membersTemp| orderBy:'name'">
+        <li>{{member.name}} ( <span style="color:blue">{{member.email}}</span> )<button type="button" class="close" ng-click="calEditor.deleteMember(member)">&times;</button></a></li>
+      </ul>
+      </div>
+    </div>
+  </div>
+
+<!-- collapsable box for members -->
+<p>
+ <button  class="btn btn-primary collapsed"   ng-click="calEditor.changeCollapseBtn()" type="button" data-toggle="collapse" data-target="#memberBox" aria-expanded="false" aria-controls="memberBox">{{calEditor.collapseText}}
+    <span class="caret" id="collapseCaret"></span>
+</button>
+</p>
+<div class="collapse" id="memberBox">
+   <form class="member-form">
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="form-group">
+          <label class="sr-only" for="memberName">Name</label>
+          <input type="text" class="form-control" id="memberName" placeholder="Name of member" ng-model="calEditor.memberName">
+        </div>
+      </div>
+      <div class="col-sm-5">
+        <div class="form-group">
+          <label class="sr-only" for="memberEmail">Email</label>
+          <input type="text" class="form-control" id="memberEmail" placeholder="Email address" ng-model="calEditor.memberEmail">
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <span class="input-group-btn">
+          <button type="submit" class="btn btn-primary" ng-click="calEditor.addMember()">Add Member</button>
+        </span>
+      </div>
+  </div>
+</form>
+
+  </div>
+
+  <!-- buttons -->
+  <button type="submit" class="btn btn-primary" ng-click="calEditor.updateCalendar()">Update Calendar</button>
+   <button type="button" class="btn btn-primary" ng-click="calEditor.cancelUpdate()">Cancel</button>
+</form>
+</div>
+<!-- form to edit and delete the calendar END -->
+
+<!-- form to edit and delete the calendar END -->
+<div id="afterDelete" ng-hide="calEditor.deleteFalse">
+<pre><h4>{{calEditor.message}}</h4></pre>
+</div>
+<!-- form to edit and delete the calendar END -->
+
+</div>
+</div>
+
+<footer></footer>

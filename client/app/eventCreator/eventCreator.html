@@ -1,0 +1,108 @@
+<navbar></navbar>
+
+<header class="hero-unit" id="banner">
+    <div class="container">
+        <h1>Event Creator</h1>
+        <p class="lead">Here you can create event.</p>
+    </div>
+</header>
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">{{eventCreator.calendar.name}}:</h1>
+            <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="event in eventCreator.calendar.events">
+                <li><a href="#" ng-click="eventCreator.editEvent()" tooltip="{{event.host}}">{{event.title}}<button type="button" class="close" ng-click="eventCreator.deleteEvent(event)">&times;</button></a></li>
+            </ul>
+        </div>
+    </div>
+
+
+    <form class="event-form">
+        <label>Syncs in realtime across clients</label>
+        <p class="input-group">
+            <input type="text" class="form-control" placeholder="Add a new event here." ng-model="eventCreator.newEvent">
+            <span class="input-group-btn">
+        <button type="submit" class="btn btn-primary" ng-click="eventCreator.addEvent()">Add Event</button>
+      </span>
+        </p>
+    </form>
+
+
+    <!--Add event form view-->
+    <div id="addEvent">
+        <div class="col-lg-12">
+            <h2>ADD EVENT</h2>
+            <form action="">
+                <fieldset class="form-group">
+                    <label for="">EVENT NAME:</label>
+                    <input type="text" class="form-control" ng-model="eventCreator.eventTitle" placeholder="Event Name">
+                </fieldset>
+                <fieldset class="form-group">
+                    <label for="">DATE:</label>
+                    <input type="date" class="form-control" ng-model="eventCreator.eventDate">
+                </fieldset>
+                <fieldset class="form-group">
+                    <label for="">START TIME:</label>
+                    <input type="time" class="form-control" ng-model="eventCreator.eventStartTime" placeholder="Event StartTime">
+                </fieldset>
+                <fieldset class="form-group">
+                    <label for="">END TIME:</label>
+                    <input type="time" class="form-control" ng-model="eventCreator.eventEndTime" placeholder="Event EndTime">
+                </fieldset>
+                <fieldset class="form-group">
+                    <label for="">HOST NAME:</label>
+                    <input type="text" class="form-control" ng-model="eventCreator.eventHost" placeholder="Event Host Name">
+                </fieldset>
+                <fieldset class="form-group">
+                    <label for="">REMINDER DATE:</label>
+                    <input type="datetime-local" class="form-control" ng-model="eventCreator.eventReminder">
+                </fieldset>
+                <fieldset class="form-group">
+                    <label for="">DESCRIPTION:</label>
+                    <textarea class="form-control" ng-model="eventCreator.eventInfo" name="" id="" cols="30" rows="10" placeholder="Description of the event goes here ..."></textarea>
+                </fieldset>
+                
+                <!--Add Members to events-->
+                <p>
+                    <button class="btn btn-primary collapsed" ng-click="main.changeCollapseBtn()" type="button" data-toggle="collapse" data-target="#memberBox"
+                    aria-expanded="false" aria-controls="memberBox">ADD Members
+                        <span class="caret" id="collapseCaret"></span>
+                    </button>
+                </p>
+                <fieldset class="collapse" id="memberBox">
+                    <form class="member-form">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label class="sr-only" for="memName">Name</label>
+                                    <input type="text" class="form-control" id="memName" placeholder="Name of member" ng-model="main.memName">
+                                </div>
+                            </div>
+                            <div class="col-sm-5">
+                                <div class="form-group">
+                                    <label class="sr-only" for="memEmail">Email</label>
+                                    <input type="text" class="form-control" id="memEmail" placeholder="Email address" ng-model="main.memEmail">
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <span class="input-group-btn">
+                                    <button type="submit" class="btn btn-primary" ng-click="main.addMember()">Add Member</button>
+                                </span>
+                            </div>
+                        </div>
+                    </form>
+                </fieldset>
+                
+                <!--Ends the Add Member-->
+                <fieldset class="form-group">
+                    <button type="submit" class="btn btn-primary" ng-click="eventCreator.addEvent()">ADD</button>
+                    <button type="submit" class="btn btn-primary">CANCEL</button>
+                </fieldset>
+            </form>
+        </div>
+
+    </div>
+</div>
+<footer></footer>
