@@ -36,6 +36,7 @@
             //send request to BE to get user and then call method to get calendar------------------------------------
             $http.get('/api/users/' + $rootScope.userIDglobal).then(response => {
                 this.user = response.data;
+                console.log(this.user);
                 this.getCalendar();
                 socket.syncUpdates('calendar', this.calendar);
             });
@@ -59,7 +60,7 @@
 
                 this.assignEventValue();
                 
-                this.$http.post('/api/events', { events: this.userEvent }).then(response => {
+                this.$http.post('/api/calendars', { events: this.userEvent }).then(response => {
                     
                 });
 
