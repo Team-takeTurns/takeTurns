@@ -1,0 +1,18 @@
+  #container{
+                margin-top: 100px;
+                margin-left:400px;
+            }
+            #to,#subject,#content{
+                font-family: "Arial";
+                font-size:20px;
+                width:600px;
+            }
+            h1{
+                font-family: "Arial";
+                font-size:40px;
+            }
+            #send_email{
+                font-family: "Arial";
+                font-size:15px;
+            }
+            #mesage{font-size: 16px;}

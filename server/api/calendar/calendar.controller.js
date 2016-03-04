@@ -19,7 +19,6 @@ function respondWithResult(res, statusCode) {
     if (entity) {
       console.log("2" + entity);
       res.status(statusCode).json(entity);
-
     }
   };
 }
@@ -224,7 +223,7 @@ Calendar.updateAsync({_id: calId}, {$addToSet: {members: {$each:  addMembers }}}
 //event triggered by time to delete extra records in the database
 var events = {};
 var calendarIds = [];
-var intervalPeriod = 10000;//3600000
+var intervalPeriod = 10000;//3600000 - 10000 is 30 seconds - update this if you want more time
 var deleteOldEventsInterval = setInterval(myTimer, intervalPeriod);
 var counter = 0;
 var day;
