@@ -18,7 +18,7 @@
                 <!--example of retrieved calenda data
                 <h2>Name of calendar: {{eventViewer.calendar.name}}</h2>-->
                 
-                <h2 class="text-center">{{ calendarTitle }}</h2>
+                <h2 class="text-center">{{ calendarTitleMonth }}</h2>
                 <div class="text-center">
                     <div class="btn-group">
                         <button class="btn btn-primary" mwl-date-modifier date="calendarDateMonth" decrement="calendarViewMonth">
@@ -57,7 +57,7 @@
                     view="calendarViewMonth" 
                     view-date="calendarDateMonth" 
                     events="events" 
-                    view-title="calendarTitle" 
+                    view-title="calendarTitleMonth" 
                     on-event-click="eventViewer.eventClicked(calendarEvent)"
                     on-event-times-changed="calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
                     edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'" 
