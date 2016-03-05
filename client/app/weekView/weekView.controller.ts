@@ -92,11 +92,6 @@
         }
     }
     
-    //     } // End The for loop
-    // } // End dayEvents method
-
-
-    // }
 
     angular.module('takeTurnsApp')
         .controller('weekViewController', weekViewController);
