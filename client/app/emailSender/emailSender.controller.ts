@@ -16,7 +16,7 @@
             this.emailBody;
             this.result;
             this.message;
-/get calendar id from user ----------------------------
+//get calendar id from user ----------------------------
   paramSerializer: '$httpParamSerializerJQLike';
 if (!this.userIDtemp){
   console.log("do nothing" );
