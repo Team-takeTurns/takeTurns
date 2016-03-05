@@ -67,14 +67,15 @@
         
  /**Month View Start */ 
         monthEvents(){
-            this.$scope.calendarView = 'month';
-            this.$scope.calendarDate = new Date();
-            this.$scope.d = this.$scope.calendarDate.getDate();
-            this.$scope.m = this.$scope.calendarDate.getMonth();
-            this.$scope.y = this.$scope.calendarDate.getFullYear();
-            this.$scope.h = this.$scope.calendarDate.getHours();
-            this.$scope.min = this.$scope.calendarDate.getMinutes();
-            this.$scope.sec = this.$scope.calendarDate.getSeconds();
+            this.$scope.calendarViewMonth = 'month';
+            this.$scope.calendarDateMonth = new Date();
+            this.$scope.d = this.$scope.calendarDateMonth.getDate();
+            this.$scope.m = this.$scope.calendarDateMonth.getMonth();
+            this.$scope.y = this.$scope.calendarDateMonth.getFullYear();
+            this.$scope.h = this.$scope.calendarDateMonth.getHours();
+            this.$scope.min = this.$scope.calendarDateMonth.getMinutes();
+            this.$scope.sec = this.$scope.calendarDateMonth.getSeconds();
+            
             console.log("Month view created at:" + this.$scope.d + "/" + this.$scope.m + "/" + this.$scope.y + " " + 
                             this.$scope.h + ":" + this.$scope.min + ":" + this.$scope.sec);
                             
@@ -94,7 +95,6 @@
             }
         
         }
-         
  /**Month View End */     
 
         // dayEvents() {
@@ -116,6 +116,37 @@
         //             };
         //     } // End The for loop
         // } // End dayEvents method
+        
+        dayEvents() {
+            if (this.calendar.events.length == 0) {
+                //this.$scope.calendarView = 'month';
+                this.$scope.calendarView = 'day';
+                this.$scope.calendarDateDay = new Date();
+                console.log("HELLO ITS ME");
+            }
+            else {
+                for (var i in this.calendar.events) {
+                    var calEvent = this.calendar.events[i].date;
+                    var startTime = new Date(calEvent.substring(0, 10) + "T" + this.calendar.events[i].startTime);
+                    var endTime = new Date(calEvent.substring(0, 10) + "T" + this.calendar.events[i].endTime);
+                
+                    // Required to set the calendar months or day
+                    //this.$scope.calendarView = 'month';
+                    this.$scope.calendarView = 'day';
+                    this.$scope.calendarDateDay = new Date();
+
+                    console.log("ID:" + this.calendar.events[i]._id);
+                    this.$scope.events[i] =
+                        {
+                            title: this.calendar.events[i].title,
+                            startsAt: new Date(moment(startTime).format()),
+                            endsAt: new Date(moment(endTime).format()),
+                            eventId: this.calendar.events[i]._id
+                        };
+                }
+            } // End The for loop
+        } // End dayEvents method
+        
         
         // detailsEvents methods
         private detailsEvent(dayTitle) {
@@ -166,36 +197,6 @@
                 });
             }
 
-
-        dayEvents() {
-            if (this.calendar.events.length == 0) {
-                this.$scope.calendarView = 'month';
-                //this.$scope.calendarView = 'day';
-                this.$scope.calendarDate = new Date();
-                console.log("HELLO ITS ME");
-            }
-            else {
-                for (var i in this.calendar.events) {
-                    var calEvent = this.calendar.events[i].date;
-                    var startTime = new Date(calEvent.substring(0, 10) + "T" + this.calendar.events[i].startTime);
-                    var endTime = new Date(calEvent.substring(0, 10) + "T" + this.calendar.events[i].endTime);
-                
-                    // Required to set the calendar months or day
-                    this.$scope.calendarView = 'month';
-                    //this.$scope.calendarView = 'day';
-                    this.$scope.calendarDate = new Date();
-
-                    console.log("ID:" + this.calendar.events[i]._id);
-                    this.$scope.events[i] =
-                        {
-                            title: this.calendar.events[i].title,
-                            startsAt: new Date(moment(startTime).format()),
-                            endsAt: new Date(moment(endTime).format()),
-                            eventId: this.calendar.events[i]._id
-                        };
-                }
-            } // End The for loop
-        } // End dayEvents method
     }
 
 
