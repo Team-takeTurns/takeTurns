@@ -132,7 +132,7 @@ export function show(req, res) {
 // Creates a new Calendar in the DB
 export function create(req, res) {
   console.log("req.body from create = " + JSON.stringify(req.body));
-  Calendar.saveAsync({_id: req.params.calId, events}, req.body)
+  Calendar.createAsync(req.body)
     .then(respondWithResult(res, 201))
     .catch(handleError(res));
 }
@@ -166,6 +166,18 @@ export function deleteEvent(req, res) {
   }
   sendResult = 1;
    removeEvent( req.params.calId, req.params.eventId, res, sendResult);
+}
+
+//Adding Events
+export function addEvent(req, res){
+    console.log("req.body from create = " + JSON.stringify(req.body));
+    if (req.body._id) {
+        delete req.body._id;
+    }
+    Calendar.updateAsync({_id: req.params.calId},
+    {$push:{events: req.body}})
+    .then(respondWithResult(res, 201))
+    .catch(handleError(res));
 }
 
 //Updateing event START---------------------------------------------------

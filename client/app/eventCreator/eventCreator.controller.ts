@@ -10,7 +10,6 @@
             this.calendar;
             this.userIDtemp;
             this.user;
-            this.userEvent = [];
             this.eventID;
             this.eventTitle;
             this.eventHost;
@@ -57,12 +56,12 @@
         //send request to create new event - code is not working yet ------------------------------------------
         addEvent() {
 
-                this.assignEventValue();
+                var startTime = this.formatTime("" +this.eventStartTime);
+                var endTime = this.formatTime("" + this.eventEndTime);
+                
+                this.$http.put('/api/calendars/addEvent/' + this.calendar._id, {title:this.eventTitle, host: this.eventHost, date: this.eventDate,
+                startTime:startTime, endTime:endTime, info: this.eventInfo, reminder:this.eventReminder});
 
-                this.$http.post('/api/calendars/' + this.calendar._id, this.userEvent);//.then(response => {
-                // });
-
-                this.userEvent = [];
                 this.eventID = '';
                 this.eventTitle = '';
                 this.eventHost = '';
@@ -74,21 +73,19 @@
                 this.eventGuestList = [];
         }
         
-        // Assign events value to array Userevent
-        private assignEventValue() {
-            //Call the assignGuestList before assigning the list
-            //this.assignGuestList();
-            
-            // Push the data the userEvents array
-            this.userEvent.push({title:this.eventTitle, host: this.eventHost, date: this.eventDate,
-                startTime:this.eventStartTime, info: this.eventInfo, reminder:this.eventReminder, guestList:this.eventGuestList});
-        }
-        
         // Add guest to a list;
         private assignGuestList(){
             
             /* Implement later */
-            //this.eventGuestList({});
+            // Push the data the userEvents array
+            // this.userEvent.push({title:this.eventTitle, host: this.eventHost, date: this.eventDate,
+            //     startTime:this.eventStartTime, info: this.eventInfo, reminder:this.eventReminder, guestList:this.eventGuestList});
+        }
+        
+        // Format the time
+        private formatTime(timeValue){
+            var subTime = timeValue.substring(16, 24) + "-05:00";
+            return subTime;
         }
   
 
