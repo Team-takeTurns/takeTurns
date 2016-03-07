@@ -14,5 +14,6 @@ router.delete('/:id', controller.destroy);
 router.patch('/:calId/deleteEvent/:eventId', controller.deleteEvent);
 router.patch('/updateMembers/:calId', controller.updateMembers);
 router.put('/updateEvent/:calId', controller.updateEvent);
+router.put('/addEvent/:calId', controller.addEvent);
 
 module.exports = router;
