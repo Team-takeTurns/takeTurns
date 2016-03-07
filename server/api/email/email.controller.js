@@ -48,34 +48,18 @@ export function sendEmail(req, res) {
   }
   console.log("888888888888888888888888888888 inside BE controller 888888888888888");
 
-   console.log(" req.body " + JSON.stringify(req.body));
-<<<<<<< HEAD
-      console.log(" req.body.to " + JSON.stringify(req.body.to));
-         console.log(" req.body.emailBody " + JSON.stringify(req.body.emailBody));
-            console.log(" req.body.subject " + JSON.stringify(req.body.subject));
-     console.log(" req.query.to " + JSON.stringify(req.body.to));
+        console.log(" req.body " + JSON.stringify(req.body));
+
+        console.log(" req.body.to " + JSON.stringify(req.body.to));
+        console.log(" req.body.emailBody " + JSON.stringify(req.body.emailBody));
+        console.log(" req.body.subject " + JSON.stringify(req.body.subject));
+        console.log(" req.query.to " + JSON.stringify(req.body.to));
  var mailOptions={
         from:'takeTurns Web App <testact0123@gmail.com>',
         to :req.body.to,
         subject: req.body.subject,
-        text:req.body.emailBody
-        
-=======
-   console.log(" req.body.to " + JSON.stringify(req.body.to));
-   console.log(" req.body.emailBody " + JSON.stringify(req.body.emailBody));
-   console.log(" req.body.subject " + JSON.stringify(req.body.subject));
-   console.log(" req.query.to " + JSON.stringify(req.query.to));
- var mailOptions={
-        from:'takeTurns Web App <testact0123@gmail.com>',
-        // to :req.query.to,
-        // subject: req.body.subject,
-        // text:req.body.emailBody
-        to : "liliya0artyukh@gmail.com",
-        subject: "Testing from server side",
-        text:"Hi User. \n\nTesting multyline message \n\ntakeTurns Web App \n\n\n*This email address is not monitored. Please do not respond to it. However, you may respond to the users included in this email.*"
->>>>>>> upstream/master
-    }
-    console.log(mailOptions);
+        text:req.body.emailBody }
+       console.log(mailOptions);
 
     transporter.sendMail(mailOptions,function(error,response){
         if (error){
