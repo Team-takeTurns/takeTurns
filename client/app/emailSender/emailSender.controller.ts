@@ -31,11 +31,12 @@
         	console.log("-------- this.to -----------" + this.to);
         	console.log("-------- this.emailBody -----------" + this.emailBody);
         	console.log("-------- this.subject -----------" + this.subject);
-            this.$http.get('/api/emails', {to: this.to, emailBody: this.emailBody, subject: this.subject}).then(response => {
+            this.$http.post('/api/emails', {to: this.to, emailBody: this.emailBody, subject: this.subject}).then(response => {
                 this.result = response.data;
                         	console.log("-------- request was sent and succeeded-----------");
                 if(this.result == "sent") {
                     window.alert("Message Sent");
+                    window.close();
                 }
             });
         }

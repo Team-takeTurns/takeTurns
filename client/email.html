@@ -13,7 +13,8 @@
 		$.get("http://localhost:3000/send",{to:to,subject:subject,text:text},function(data){
 		if(data=="sent")
 		{
-                            window.location.href="alert.message('message sent')";
+                            window.location.href="alert.message('message sent')"
+                            window.close();
                         }
                     });
                 });

@@ -5,6 +5,6 @@ var controller = require('./email.controller');
 
 var router = express.Router();
 
-router.get('/', controller.sendEmail);
+router.post('/', controller.sendEmail);
 
 module.exports = router;

@@ -52,15 +52,13 @@ export function sendEmail(req, res) {
       console.log(" req.body.to " + JSON.stringify(req.body.to));
          console.log(" req.body.emailBody " + JSON.stringify(req.body.emailBody));
             console.log(" req.body.subject " + JSON.stringify(req.body.subject));
-     console.log(" req.query.to " + JSON.stringify(req.query.to));
+     console.log(" req.query.to " + JSON.stringify(req.body.to));
  var mailOptions={
         from:'takeTurns Web App <testact0123@gmail.com>',
-        // to :req.query.to,
-        // subject: req.body.subject,
-        // text:req.body.emailBody
-        to : " Liliya0artyukh@gmail.com",
-        subject: "Testing from server side",
-        text:"req.body.emailBody"
+        to :req.body.to,
+        subject: req.body.subject,
+        text:req.body.emailBody
+        
     }
     console.log(mailOptions);
 

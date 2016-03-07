@@ -77,7 +77,7 @@
 <!-- checkbox for sending email to members if it is checked-->
   <div class="checkbox">
     <label>
-      <input type="checkbox" id="sendEmail" ng-model="main.sendEmail"> Send calendar link to all members
+      <!--<input type="checkbox" id="sendEmail" ng-model="main.sendEmail"> Send calendar link to all members-->
     </label>
   </div>
   <button type="submit" class="btn btn-primary" ng-click="main.addCalendar()">Create Calendar</button>
@@ -85,18 +85,25 @@
 </form>
 </div>
 
-<!-- this is the view that appears after user creates a calendar. it displays links to the user -->
+ <!--this is the view that appears after user creates a calendar. it displays links to the user -->
 <div class="container" id="waitScreenBox"  ng-hide="main.mainDiv">
-<h2>Your calendar <u><b>{{main.calendar.name}}</b></u> was created.</h2>
-<br />
-<h5>Follow the link below for admin view where you can update or delete your calendar.</h5>
-<a href="{{main.adminLink}}" target="_blank">{{main.adminLink}}</a>
-<br />
-<br />
-<h5>Send the link below to other users so they can create and view events.</h5>
-<a href="{{main.activeLink}}" target="_blank">{{main.activeLink}}</a>
-<br />
-<br />
+            
+                <h2>Your calendar <u><b>{{main.calendar.name}}</b></u> was created.</h2>
+                <br />
+                
+                <h3>Copy both links then paste <a href="/emailSender">here</a>  to send links via email.</h3><br/>
+                
+                <h5>Follow the link below for admin view where you can update or delete your calendar.</h5>
+                <a href="{{main.adminLink}}" target="_blank">{{main.adminLink}}</a>
+                <br />
+                <br />
+                <h5>Use the link below for other users so they can create and view events.</h5>
+                <a href="{{main.activeLink}}" target="_blank">{{main.activeLink}}</a>
+                
+                <br />
+                <br />
+                <!--Click <a href="/emailSender">here</a> to send the email <br />-->
+
 </div>
 
 <footer></footer>
