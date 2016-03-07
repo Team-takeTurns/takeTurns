@@ -42,7 +42,7 @@ class MainController {
   this.collapseText = "Would you like to add a group?";
   }
   }
-
+//go to email 
   addCalendar() {
   this.adminEmail = this.Email;
  if (this.Email && this.Name) {
@@ -51,12 +51,17 @@ class MainController {
       this.createAdminUser();
       this.createActiveUser();
     });
+    
       if(this.sendEmail){
+        console.log("going to email page");
+        window.location="/emailSender";
+        // document.getElementById('emailBody').value = 'send link to other members {{main.activeLink}}';
         console.log("checked" + this.sendEmail);
         console.log("main.controller from client. function name = addCalendar()" );
         console.log("add method here to send email to all members. Also will need the list of members to whome send the email.");
         console.log(" array that holds all emails is called this.membersTemp" + this.membersTemp);
       }
+      else
     this.resetAddCalFields();
     this.mainDiv=false;
     }
