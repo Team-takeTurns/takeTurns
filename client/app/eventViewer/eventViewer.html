@@ -129,13 +129,13 @@
                 <h4 class="titleLbl">Event Details</h4>
                 <h1>{{eventViewer.selectedEvent.title}}</h1>
                 <div>
-                    <label>DATE: </label> {{eventViewer.selectedEvent.date}}
+                    <label>DATE: </label> {{eventViewer.eventDate | date: 'dd/MM/yyyy'}}
                 </div>
                 <div>
-                    <label>START TIME: </label> {{eventViewer.selectedEvent.startTime}}
+                    <label>START TIME: </label> {{eventViewer.eventStartTime | date: 'hh:mm a'}}
                 </div>
                 <div>
-                    <label>END TIME: </label> {{eventViewer.selectedEvent.endTime}}
+                    <label>END TIME: </label> {{eventViewer.eventEndTime | date: 'hh:mm: a'}}
                 </div>
                 <div>
                     <label>HOST: </label> {{eventViewer.selectedEvent.host}}
@@ -166,15 +166,15 @@
                 </fieldset>
                 <fieldset class="form-group">
                     <label>Date: </label>
-                    <input type="date" class="form-control" ng-model="eventViewer.selectedEvent.date">
+                    <input type="date" class="form-control" ng-model="eventViewer.eventDate">
                 </fieldset>
                 <fieldset class="form-group">
                     <label>Start Time: </label>
-                    <input type="time" class="form-control" ng-model="eventViewer.selectedEvent.startTime">
+                    <input type="time" class="form-control" ng-model="eventViewer.eventStartTime">
                 </fieldset>
                 <fieldset class="form-group">
                     <label>End Time: </label>
-                    <input type="time" class="form-control" ng-model="eventViewer.selectedEvent.endTime">
+                    <input type="time" class="form-control" ng-model="eventViewer.eventEndTime">
                 </fieldset>
                 <fieldset class="form-group">
                     <label>Host: </label>

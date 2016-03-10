@@ -14,6 +14,9 @@
             this.showEventDetailView = true;
             this.showEventDetailForm = true;
             this.message;
+            this.eventStartTime = new Date();
+            this.eventEndTime = new Date();
+            this.eventDate = new Date();
 
             //check if $rootScope.userIDglobal is undefined then define it else  
             if (!$rootScope.userIDglobal) {
@@ -92,8 +95,22 @@
             for (var dayEvent in this.calendar.events) {
                 if (this.calendar.events[dayEvent]._id == dayTitle) {
                     this.selectedEvent = this.calendar.events[dayEvent];
+
+                    this.eventStartTime = this.timeFormater(this.selectedEvent.date, this.selectedEvent.startTime);
+                    this.eventEndTime = this.timeFormater(this.selectedEvent.date, this.selectedEvent.endTime);
+                    this.eventDate = new Date(moment(this.selectedEvent.date).format());
                 }
             }
+        }
+        
+        /** Format the Time accepting two parameter
+         * 1. Date of the time
+         * 2. Time to be formated
+         *  */
+        private timeFormater(uDate, uTime) {
+            var fDate = new Date(uDate.substring(0, 10) + "T" + uTime);
+
+            return new Date(moment(fDate).format());
         }
         
         // Perform sort on the Events		
