@@ -9,8 +9,7 @@ import path from 'path';
 
 export default function(app) {
   // Insert routes below
-  app.use('/api/members', require('./api/member'));
-  app.use('/api/events', require('./api/event'));
+  app.use('/api/emails', require('./api/email'));
   app.use('/api/calendars', require('./api/calendar'));
   app.use('/api/users', require('./api/user'));
   // All undefined asset or api routes should return a 404
@@ -38,4 +37,11 @@ export default function(app) {
     .get((req, res) => {
       res.sendFile(path.resolve(app.get('appPath') + '/calendar.html'));
     });
+    app.route('/emailSender')
+    .get((req, res) => {
+      res.sendFile(path.resolve(app.get('appPath') + '/index.html'));
+    });
+    // .get((req, res) => {
+    //   res.sendFile(path.resolve(app.get('appPath') + '../../client/app/emailSender/emailSender.html'));
+    // });
 }

@@ -12,6 +12,7 @@
         "client/app/app.ts",
         "client/app/calEditor/calEditor.controller.ts",
         "client/app/calEditor/calEditor.ts",
+        "client/app/emailSender/emailSender.controller.ts",
         "client/app/eventCreator/eventCreator.controller.ts",
         "client/app/eventCreator/eventCreator.ts",
         "client/app/eventViewer/eventViewer.controller.ts",
