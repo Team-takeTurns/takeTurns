@@ -137,6 +137,7 @@
 =======
 
 <<<<<<< HEAD
+<<<<<<< HEAD
             this.$http.patch('/api/calendars/' + this.calendar._id + "/DeleteEvent/" + this.selectedEvent._id).then(response => {
                 //this.$http.patch('/api/calendars/' + "56b1e6924f07f3840f8ce556" +"/DeleteEvent/"+ "56d2a6889cd26ad42860051e").then(response => {
                 //this.calendar = response.data;
@@ -147,6 +148,8 @@
         }
 >>>>>>> upstream/master
 =======
+=======
+>>>>>>> upstream/master
                this.$http.patch('/api/calendars/' + this.calendar._id +"/DeleteEvent/"+ this.selectedEvent._id).then(response => {
               //this.$http.patch('/api/calendars/' + "56b1e6924f07f3840f8ce556" +"/DeleteEvent/"+ "56d2a6889cd26ad42860051e").then(response => {
                  //this.calendar = response.data;
