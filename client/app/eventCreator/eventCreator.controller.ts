@@ -25,12 +25,12 @@
             //get calendar id from user ----------------------------
             paramSerializer: '$httpParamSerializerJQLike';
 
-            if (!$rootScope.userIDglobal) {
-                console.log("do nothing");
-                //  window.location = window.location + "/" +  $rootScope.userIDglobal;
-            } else {
-                //  $rootScope.userIDglobal  = this.userIDtemp ;
-            }
+            // if (!this.userIDtemp) {
+            //     console.log("do nothing");
+            //      window.location = window.location + "/" +  $rootScope.userIDglobal;
+            // } else {
+            //      $rootScope.userIDglobal  = this.userIDtemp ;
+            // }
 
             //send request to BE to get user and then call method to get calendar------------------------------------
             $http.get('/api/users/' + $rootScope.userIDglobal).then(response => {
