@@ -14,6 +14,9 @@
             this.showEventDetailView = true;
             this.showEventDetailForm = true;
             this.message;
+            this.eventStartTime = new Date();
+            this.eventEndTime = new Date();
+            this.eventDate = new Date();
 
             //check if $rootScope.userIDglobal is undefined then define it else  
             if (!$rootScope.userIDglobal) {
@@ -60,6 +63,7 @@
                 this.calendar = response.data;
                 this.dayEvents();
                 this.monthEvents();
+                this.calendar.events.sort(this.sortByDatesTime);
                 this.detailsEvent(this.calendar.events[0]._id);
             });
         }
@@ -91,9 +95,34 @@
             for (var dayEvent in this.calendar.events) {
                 if (this.calendar.events[dayEvent]._id == dayTitle) {
                     this.selectedEvent = this.calendar.events[dayEvent];
+
+                    this.eventStartTime = this.timeFormater(this.selectedEvent.date, this.selectedEvent.startTime);
+                    this.eventEndTime = this.timeFormater(this.selectedEvent.date, this.selectedEvent.endTime);
+                    this.eventDate = new Date(moment(this.selectedEvent.date).format());
                 }
             }
+        }
+        
+        /** Format the Time accepting two parameter
+         * 1. Date of the time
+         * 2. Time to be formated
+         *  */
+        private timeFormater(uDate, uTime) {
+            var fDate = new Date(uDate.substring(0, 10) + "T" + uTime);
 
+            return new Date(moment(fDate).format());
+        }
+        
+        // Perform sort on the Events		
+        private sortByDatesTime(date1, date2) {
+
+            //Sort by date		
+            if (date1.date > date2.date) return 1;
+            if (date1.date < date2.date) return -1;
+            //Sort By Time		
+            if (date1.startTime > date2.startTime) return 1;
+            if (date1.startTime < date2.startTime) return -1;
+            return 0;
         }
         
         // Listen for the Event Clicked
@@ -125,41 +154,14 @@
             console.log("event Id   " + this.selectedEvent._id);
             console.log("event Id  outside if " + this.calendar._id); 
             //send request to delete event
-<<<<<<< HEAD
-              // this.$http.patch('/api/calendars/' + this.calendar._id +"/DeleteEvent/"+ this.selectedEvent._id).then(response => {
-              this.$http.patch('/api/calendars/' + "56b1e6924f07f3840f8ce514" +"/DeleteEvent/"+ "56c931132a65e1c81f986c14").then(response => {
-                 //this.calendar = response.data;
-                 // this.message('Event deleted');
-                  alert('Event successfully deleted from calendar at ' + Date());
-                  //window.location.reload(true);
-                });
-            }
-=======
 
-<<<<<<< HEAD
-<<<<<<< HEAD
             this.$http.patch('/api/calendars/' + this.calendar._id + "/DeleteEvent/" + this.selectedEvent._id).then(response => {
-                //this.$http.patch('/api/calendars/' + "56b1e6924f07f3840f8ce556" +"/DeleteEvent/"+ "56d2a6889cd26ad42860051e").then(response => {
                 //this.calendar = response.data;
-                // this.message('Event deleted');
                 alert('Event successfully deleted from calendar at ' + new Date());
                 //window.location.reload(true);
             });
         }
->>>>>>> upstream/master
-=======
-=======
->>>>>>> upstream/master
-               this.$http.patch('/api/calendars/' + this.calendar._id +"/DeleteEvent/"+ this.selectedEvent._id).then(response => {
-              //this.$http.patch('/api/calendars/' + "56b1e6924f07f3840f8ce556" +"/DeleteEvent/"+ "56d2a6889cd26ad42860051e").then(response => {
-                 //this.calendar = response.data;
-                 // this.message('Event deleted');
-                  alert('Event successfully deleted from calendar at ' + new Date());
-                  //window.location.reload(true);
-                });
-            }
 
->>>>>>> upstream/master
 
         dayEvents() {
             if (this.calendar.events.length == 0) {
@@ -189,27 +191,27 @@
             } // End The for loop
         } // End dayEvents method
 
-        updateEvent(){
-         this.$http.put('/api/calendars/updateEvent/' + this.calendar._id, { eventId: this.selectedEvent._id, title: this.selectedEvent.title, host: this.selectedEvent.host, date: this.selectedEvent.date, startTime: this.selectedEvent.startTime, endTime: this.selectedEvent.endTime, info: this.selectedEvent.info, paramSerializer: '$httpParamSerializerJQLike'}).then(response => {
-               console.log("9999999999999999999999999999999");
-              this.calendar = response.data;
+        updateEvent() {
+            this.$http.put('/api/calendars/updateEvent/' + this.calendar._id, { eventId: this.selectedEvent._id, title: this.selectedEvent.title, host: this.selectedEvent.host, date: this.selectedEvent.date, startTime: this.selectedEvent.startTime, endTime: this.selectedEvent.endTime, info: this.selectedEvent.info, paramSerializer: '$httpParamSerializerJQLike' }).then(response => {
+                console.log("9999999999999999999999999999999");
+                this.calendar = response.data;
 
-              this.message = "You have successfully edited the event.";
-              alert(this.message);
+                this.message = "You have successfully edited the event.";
+                alert(this.message);
                 this.showEventDetailView = true;
                 this.showEventDetailForm = true;
             });
         }
-    
 
 
-            cancelEdit(){
-                    this.showEventDetailView = true;
-                    this.showEventDetailForm = true;
+
+        cancelEdit() {
+            this.showEventDetailView = true;
+            this.showEventDetailForm = true;
         }
-    
-      
-        
+
+
+
         monthEvents() {
             if (this.calendar.events.length == 0) {
                 this.$scope.calendarViewMonth = 'month';

@@ -7,10 +7,10 @@
 
         constructor($http, $scope, socket, $rootScope) {
             this.$http = $http;
-  //check if $rootScope.userIDglobal is defined else define it
- if(! $rootScope.userIDglobal ){
-  $rootScope.userIDglobal ;
-    }
+            //check if $rootScope.userIDglobal is defined else define it
+            if (!$rootScope.userIDglobal) {
+                $rootScope.userIDglobal;
+            }
             this.to;
             this.subject;
             this.emailBody;
@@ -34,10 +34,11 @@
 //                 socket.unsyncUpdates('calendar');
 //             });
 //         }
-
         }
         //send request to BE to send email -------------------------------this is working
         sendEmail() {
+
+
         	this.message="Sending E-mail...Please wait";
         	console.log("-------- in click send -----------");
         	console.log("-------- this.to -----------" + this.to);
