@@ -61,13 +61,13 @@
                 <div class="text-center">
                     <div class="btn-group">
 
-                        <button class="btn btn-primary" mwl-date-modifier date="calendarDateDay" decrement="calendarView">
+                        <button class="btn btn-primary" mwl-date-modifier date="calendarDateDay" decrement="calendarView" ng-click="eventViewer.dayNavButtonClicked(-1)" >
                             <span class="glyphicon glyphicon-chevron-left"></span>
                         </button>
                         <button class="btn btn-primary" mwl-date-modifier date="calendarDateDay" set-to-today>
                             Today
                         </button>
-                        <button class="btn btn-primary" mwl-date-modifier date="calendarDateDay" increment="calendarView">
+                        <button class="btn btn-primary" mwl-date-modifier date="calendarDateDay" increment="calendarView" ng-click="eventViewer.dayNavButtonClicked(1)" >
                             <span class="glyphicon glyphicon-chevron-right"></span>
                         </button>
                     </div>

@@ -17,7 +17,7 @@
             this.eventStartTime = new Date();
             this.eventEndTime = new Date();
             this.eventDate = new Date();
-
+            this.nxtDay = 0;
 
             //check if $rootScope.userIDglobal is undefined then define it else  
             if (!$rootScope.userIDglobal) {
@@ -120,7 +120,7 @@
             var count = 0;
             var currentDate = new Date();
             var month = "" + (currentDate.getMonth() + 1);
-            var day = "" + (currentDate.getDate() + 0);
+            var day = "" + (currentDate.getDate() + this.nxtDay);
             var uEvents = this.calendar.events;
             
              if (month.length < 2) {
@@ -146,6 +146,13 @@
         // Listen for the Event Clicked
         eventClicked(events) {
             this.detailsEvent(events.eventId);
+        }
+        
+        // On the view button < or > clicked
+        dayNavButtonClicked(clickedArrow){
+            this.nxtDay  += clickedArrow;
+            console.log("The increment: " + this.nxtDay);
+            this.detailsEvent(this.calendar.events[this.getIndexOfFirstEventByDay()]._id);
         }
         
         // Change the view of the event details
