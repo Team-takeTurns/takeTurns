@@ -151,7 +151,6 @@
         // On the view button < or > clicked
         dayNavButtonClicked(clickedArrow){
             this.nxtDay  += clickedArrow;
-            console.log("The increment: " + this.nxtDay);
             this.detailsEvent(this.calendar.events[this.getIndexOfFirstEventByDay()]._id);
         }
         
