@@ -43,8 +43,8 @@
                     on-event-times-changed="calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
                     edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'" 
                     delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
-                    on-edit-event-click="eventEdited(calendarEvent)" 
-                    on-delete-event-click="eventDeleted(calendarEvent)"
+                    on-edit-event-click="eventViewer.switchEventDetailView(0);eventViewer.eventClicked(calendarEvent)" 
+                    on-delete-event-click="eventViewer.deleteEvent()"
                     </mwl-calendar>
                 </div>
             </div>
@@ -61,13 +61,13 @@
                 <div class="text-center">
                     <div class="btn-group">
 
-                        <button class="btn btn-primary" mwl-date-modifier date="calendarDateDay" decrement="calendarView">
+                        <button class="btn btn-primary" mwl-date-modifier date="calendarDateDay" decrement="calendarView" ng-click="eventViewer.dayNavButtonClicked(-1)" >
                             <span class="glyphicon glyphicon-chevron-left"></span>
                         </button>
                         <button class="btn btn-primary" mwl-date-modifier date="calendarDateDay" set-to-today>
                             Today
                         </button>
-                        <button class="btn btn-primary" mwl-date-modifier date="calendarDateDay" increment="calendarView">
+                        <button class="btn btn-primary" mwl-date-modifier date="calendarDateDay" increment="calendarView" ng-click="eventViewer.dayNavButtonClicked(1)" >
                             <span class="glyphicon glyphicon-chevron-right"></span>
                         </button>
                     </div>
@@ -150,7 +150,7 @@
             </section>
 
             <!--This section is the Form to edit the event details-->
-            <section ng-hide="eventViewer.showEventDetailForm">
+            <section id="edEvntView" ng-hide="eventViewer.showEventDetailForm">
                 <form name="newCal" class="calendar-form" role="form">
                     <h1>{{eventViewer.calendar.name}}</h1>
                     <br>
