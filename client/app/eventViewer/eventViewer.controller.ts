@@ -18,6 +18,7 @@
             this.eventEndTime = new Date();
             this.eventDate = new Date();
 
+
             //check if $rootScope.userIDglobal is undefined then define it else  
             if (!$rootScope.userIDglobal) {
                 $rootScope.userIDglobal;
@@ -63,8 +64,7 @@
                 this.calendar = response.data;
                 this.dayEvents();
                 this.monthEvents();
-                this.calendar.events.sort(this.sortByDatesTime);
-                this.detailsEvent(this.calendar.events[0]._id);
+                this.detailsEvent(this.calendar.events[this.getIndexOfFirstEventByDay()]._id);
             });
         }
         
@@ -112,17 +112,35 @@
 
             return new Date(moment(fDate).format());
         }
-        
-        // Perform sort on the Events		
-        private sortByDatesTime(date1, date2) {
 
-            //Sort by date		
-            if (date1.date > date2.date) return 1;
-            if (date1.date < date2.date) return -1;
-            //Sort By Time		
-            if (date1.startTime > date2.startTime) return 1;
-            if (date1.startTime < date2.startTime) return -1;
-            return 0;
+        // Return the index of the first event
+        private getIndexOfFirstEventByDay() {
+            var myIndex = 0;
+            var firstTime = 24;
+            var count = 0;
+            var currentDate = new Date();
+            var month = "" + (currentDate.getMonth() + 1);
+            var day = "" + (currentDate.getDate() + 0);
+            var uEvents = this.calendar.events;
+            
+             if (month.length < 2) {
+                month = "0" + month;
+            }
+            if (day.length < 2) {
+                day = "0" + day;
+            }
+            
+            uEvents.forEach(element => {
+                // Check if the element is of current month and date
+                if(element.date.substring(5, 7) == month && element.date.substring(8, 10) == day){
+                        if(element.startTime.substring(0,2) < firstTime){
+                            firstTime = element.startTime.substring(0,2);
+                            myIndex = count;
+                        }
+                }
+                count ++;
+            });
+            return myIndex;
         }
         
         // Listen for the Event Clicked
