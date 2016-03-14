@@ -149,8 +149,13 @@
         }
         
         // On the view button < or > clicked
-        dayNavButtonClicked(clickedArrow){
-            this.nxtDay  += clickedArrow;
+        dayNavButtonClicked(clickedArrow: number){
+            if(clickedArrow != 0){
+                this.nxtDay  += clickedArrow;
+            }else{
+                this.nxtDay  *= clickedArrow;
+            }
+            
             this.detailsEvent(this.calendar.events[this.getIndexOfFirstEventByDay()]._id);
         }
         
