@@ -64,7 +64,7 @@
                         <button class="btn btn-primary" mwl-date-modifier date="calendarDateDay" decrement="calendarView" ng-click="eventViewer.dayNavButtonClicked(-1)" >
                             <span class="glyphicon glyphicon-chevron-left"></span>
                         </button>
-                        <button class="btn btn-primary" mwl-date-modifier date="calendarDateDay" set-to-today>
+                        <button class="btn btn-primary" mwl-date-modifier date="calendarDateDay" ng-click="eventViewer.dayNavButtonClicked(0)" set-to-today >
                             Today
                         </button>
                         <button class="btn btn-primary" mwl-date-modifier date="calendarDateDay" increment="calendarView" ng-click="eventViewer.dayNavButtonClicked(1)" >
@@ -135,7 +135,7 @@
                     <label>START TIME: </label> {{eventViewer.eventStartTime | date: 'hh:mm a'}}
                 </div>
                 <div>
-                    <label>END TIME: </label> {{eventViewer.eventEndTime | date: 'hh:mm: a'}}
+                    <label>END TIME: </label> {{eventViewer.eventEndTime | date: 'hh:mm a'}}
                 </div>
                 <div>
                     <label>HOST: </label> {{eventViewer.selectedEvent.host}}
