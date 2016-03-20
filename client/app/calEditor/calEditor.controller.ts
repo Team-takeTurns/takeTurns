@@ -4,14 +4,9 @@
 
 class CalEditorController {
 
-  constructor($http, $scope, socket,  $rootScope) {
+  constructor($http, $scope, socket,  $cookies) {
     this.$http = $http;
-    //check if $rootScope.userIDglobal is defined else define it
- if(! $rootScope.userIDglobal ){
-  $rootScope.userIDglobal ;
-    }
-    $rootScope.adminLink;
-    $rootScope.userRole;
+    this.lengthsOfUrl = 52;
     this.calendar;
     this.message;
     this.adminEmail;
@@ -21,9 +16,8 @@ class CalEditorController {
     this.memberName;
     this.memberEmail;
     this.url = window.location;
-    this.collapseText = "Would you like to add a member?";
+    this.collapseText = "Would you like to add a user?";
     this.user ;
-    this.userIDtemp = this.url.toString().substr(28, 24);
     this.editCal = true;
     this.deleteFalse = true;
     this.memCounter;
@@ -31,29 +25,42 @@ class CalEditorController {
     this.delMembers=[];
     this.goodDate = new Date();
 
-//get calendar id from user ----------------------------
-  paramSerializer: '$httpParamSerializerJQLike';
-if (!this.userIDtemp){
-  console.log("do nothing" );
-  window.location = window.location + "/" +  $rootScope.userIDglobal;
-}else{
-      $rootScope.userIDglobal  = this.userIDtemp ;
-      console.log("$rootScope.userIDglobal 555 = " + $rootScope.userIDglobal);
-}
+//get user id from url or from cookies ----------------------------
+    paramSerializer: '$httpParamSerializerJQLike';
+
+    if (this.url.toString().length ==  this.lengthsOfUrl ){
+      console.log(" Setting userId in cookies in admin page " + this.url.toString().substr(28, 24));
+      $cookies.put("userId", this.url.toString().substr(28, 24));
+    } else {
+    //  window.location = window.location + "/" +  $cookies.get("userId");
+      console.log("In ADMIN page and url is less or greater than 52");
+      console.log("this.url.toString().length " + this.url.toString().length);
+      console.log("$cookies.get(userId) " + $cookies.get("userId"));
+    }
 
 //send request to BE to get user and then call function to get calendar 
-    $http.get('/api/users/'+ $rootScope.userIDglobal).then(response => {
-      this.user = response.data;
-      if(this.user.role === "admin"){
-      $rootScope.userRole = "admin";
-      $rootScope.adminLink = this.user.link.toString().substr(31, 31);
-      //get calendar from BE
-      this.getCalendar();
-      }else{
-      console.log("display ERROR here search for: Liliya1111 in calEditor.controller");
-      }
-      socket.syncUpdates('calendar', this.calendar);
+    if ($cookies.get("userId")) {
+        $http.get('/api/users/'+ $cookies.get("userId")).then(response => {
+          this.user = response.data;
+          if(this.user.role === "admin"){
+            //Setting userRole and adminLink in cookies 
+            console.log(" Setting userRole and adminLink in cookies in admin page " );
+            $cookies.userRole = "admin";
+            $cookies.adminLink = this.user.link.toString().substr(31, 31);
+            //get calendar from BE
+            this.getCalendar();
+
+                  }else{
+          console.log("display ERROR here search for: Liliya1111 in calEditor.controller");
+          console.log("perhaps user is not admin!?");
+          }
+                      socket.syncUpdates('calendar', this.calendar);
     });
+              }else {
+          console.log("ERROR - userID is undefined. please use the link that was provided to you when the calendar was created.");
+      }
+
+
 
 
 //---------------------- auto generated start ----------------------------------
@@ -97,7 +104,7 @@ editCalendar(){
 //send request to BE to delete calendar
   deleteCalendar() {
     this.$http.delete('/api/calendars/' + this.user.calID);
-     this.message = "You have successfully deleted the calendar. \n\nPlease disregard the links that were given to you.";
+    this.message = "You have successfully deleted the calendar. \n\nPlease disregard the links that were given to you. \n\nTo create a new calendar click on the logo above to go to home page.";
     this.deleteFalse = false;
   }
 
@@ -167,25 +174,25 @@ this.delMembers.add();
 //adding new members
  addMember(){
   if(this.memberEmail && this.memberName){
-   this.membersTemp.push({name: this.memberName, email: this.memberEmail});
-   console.log("this.addMembers.length " + this.addMembers.length)
-   for(var i = 0; i < this.addMembers.length; i++){
+    this.membersTemp.push({name: this.memberName, email: this.memberEmail});
+    console.log("this.addMembers.length " + this.addMembers.length)
+    for(var i = 0; i < this.addMembers.length; i++){
       this.addMembers.push({name: this.memberName, email: this.memberEmail});
-   }
+    }
    if(this.firstEntry==0){
-   this.firstEntry = 1;
+    this.firstEntry = 1;
    }
     this.memCounter ++;
-   this.memberName='';
-   this.memberEmail='';
+    this.memberName='';
+    this.memberEmail='';
     this.currentGroup = this.memCounter;
     }
   }
 
-convertDate(isoDate){
-  this.goodDate = Date(isoDate);
-  return this.goodDate;
-}
+  convertDate(isoDate){
+    this.goodDate = Date(isoDate);
+    return this.goodDate;
+  }
 
 }
 

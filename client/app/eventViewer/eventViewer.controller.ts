@@ -4,11 +4,12 @@
 
     class EventViewerController {
 
-        constructor($http, $scope, socket, $rootScope) {
+        constructor($http, $scope, socket, $cookies) {
             this.$http = $http;
             //----------------- Global vars ---------------------
             this.calendar;
             this.url = window.location;
+            this.urlLength = 55;
             this.user;
             this.selectedEvent;
             this.showEventDetailView = true;
@@ -19,15 +20,13 @@
             this.eventDate = new Date();
             this.nxtDay = 0;
 
-            //check if $rootScope.userIDglobal is undefined then define it else  
-            if (!$rootScope.userIDglobal) {
-                $rootScope.userIDglobal;
+
+            //check if userId is already set in cookies. if not and url has userId then set userId in cookies 
+            if (this.url.toString().length == this.urlLength) {
+                $cookies.put("userId",  this.url.toString().substr(31, 24));
+                console.log("setting userId in cookies " + $cookies.get("userId"));
             }
-            if (!$rootScope.userRole) {
-                this.userIDtemp = this.url.toString().substr(31, 24);
-            } else if ($rootScope.userRole === "admin") {
-                this.userIDtemp = this.url.toString().substr(32, 24);
-            }
+              console.log("reading userId from cookies " + $cookies.get("userId"));
             this.$scope = $scope;
             this.$scope.slot = this.calendar;
             $scope.events = [];
@@ -37,18 +36,23 @@
             
             //get calendar id from user ----------------------------
             paramSerializer: '$httpParamSerializerJQLike';
-
+/*
             if (!this.userIDtemp) {
                 console.log("do nothing");
                 window.location = window.location + "/" + $rootScope.userIDglobal;
             } else {
                 $rootScope.userIDglobal = this.userIDtemp;
             }
-            $http.get('/api/users/' + $rootScope.userIDglobal).then(response => {
-                this.user = response.data;
-                this.getCalendar();
-                socket.syncUpdates('calendar', this.calendar);
-            });
+            */
+            if ($cookies.get("userId")) {
+                $http.get('/api/users/' + $cookies.get("userId")).then(response => {
+                    this.user = response.data;
+                    this.getCalendar();
+                    socket.syncUpdates('calendar', this.calendar);
+                });
+            } else {
+                console.log("ERROR - userID is undefined. please use the link that was provided to you when the calendar was created.");
+            }
            
 
             //auto generated start ----------------------------------
