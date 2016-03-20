@@ -145,7 +145,7 @@
                     <br> {{eventViewer.selectedEvent.info}}
                 </div>
                 <div>
-                    <button class="btn btn-primary" ng-click="eventViewer.switchEventDetailView(0)">EDIT</button>
+                    <button class="btn btn-primary" ng-click="eventViewer.hideEventView(0)">EDIT</button>
                 </div>
             </section>
 
@@ -157,7 +157,7 @@
 
 
                 <div class="col-md col-md-offset-11">
-                    <button class="btn btn-primary" ng-click="eventViewer.deleteEvent()">DELETE</button>
+                    <button class="btn btn-primary" ng-click="eventViewer.deleteEvent(1)">DELETE</button>
                 </div>
                 <!--Start of the Edit section-->
                 <fieldset class="form-group">
@@ -186,8 +186,8 @@
                 </fieldset>
                 <br>
                 <div ng-init="updBttn=true">
-                    <button class="btn btn-primary"  ng-click="eventViewer.updateEvent()" ng-click="eventViewer.switchEventDetailView(1)">UPDATE</button>
-                    <button class="btn btn-primary"  ng-click="eventViewer.cancelEdit()" ng-click="eventViewer.switchEventDetailView(1)">CANCEL</button>
+                    <button class="btn btn-primary"  ng-click="eventViewer.updateEvent(1)">UPDATE</button>
+                    <button class="btn btn-primary"  ng-click="eventViewer.cancelEdit(1)">CANCEL</button>
                 </div>
 
                 </form>
