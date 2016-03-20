@@ -5,12 +5,8 @@
 
     class EmailSenderCtrl {
 
-        constructor($http, $scope, socket, $rootScope) {
+        constructor($http, $scope, socket, $cookies) {
             this.$http = $http;
-            //check if $rootScope.userIDglobal is defined else define it
-            if (!$rootScope.userIDglobal) {
-                $rootScope.userIDglobal;
-            }
             this.to;
             this.subject;
             this.emailBody;
