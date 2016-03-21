@@ -35,7 +35,7 @@
 <!-- scrollable view of current memebrs -->
 <div class="row">
     <div class="col-lg-12">
-      <h4 class="page-header">Current Group Members: {{main.currentGroup}}</h4>
+      <label class="page-header">Current Users: {{main.currentGroup}}</label>
       <div class="scroll">
       <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="member in main.membersTemp">
         <li>{{member.name}} - {{member.email}}<button type="button" class="close" ng-click="main.deleteMember(member)">&times;</button></a></li>
@@ -44,7 +44,7 @@
     </div>
   </div>
 
-<!-- collapsable box for members -->
+ <!--collapsable box for members -->
 <p>
  <button  class="btn btn-primary collapsed"   ng-click="main.changeCollapseBtn()" type="button" data-toggle="collapse" data-target="#memberBox" aria-expanded="false" aria-controls="memberBox">{{main.collapseText}}
     <span class="caret" id="collapseCaret"></span>
@@ -67,7 +67,7 @@
       </div>
       <div class="col-sm-4">
         <span class="input-group-btn">
-          <button type="submit" class="btn btn-primary" ng-click="main.addMember()">Add Member</button>
+          <button type="submit" class="btn btn-primary" ng-click="main.addMember()">Add User</button>
         </span>
       </div>
   </div>
@@ -77,8 +77,12 @@
 <!-- checkbox for sending email to members if it is checked-->
   <div class="checkbox">
     <label>
+
       <input type="checkbox" id="sendEmail" ng-model="main.sendEmail"> Send calendar link to all members<br/>
       <input id="agreeWithRules" type="checkbox" onclick="agreeWithRules()"> I acknowedge that I have read and agree with <a onclick="readRules()">the rules</a>
+
+      <!--<input type="checkbox" id="sendEmail" ng-model="main.sendEmail"> Send calendar link to all members-->
+
     </label>
   </div>
   <button id="createCalendar" type="submit" class="btn btn-primary" ng-click="main.addCalendar()" disabled>Create Calendar</button>
@@ -108,18 +112,25 @@
     }
 </script>
 
-<!-- this is the view that appears after user creates a calendar. it displays links to the user -->
+ <!--this is the view that appears after user creates a calendar. it displays links to the user -->
 <div class="container" id="waitScreenBox"  ng-hide="main.mainDiv">
-<h2>Your calendar <u><b>{{main.calendar.name}}</b></u> was created.</h2>
-<br />
-<h5>Follow the link below for admin view where you can update or delete your calendar.</h5>
-<a href="{{main.adminLink}}" target="_blank">{{main.adminLink}}</a>
-<br />
-<br />
-<h5>Send the link below to other users so they can create and view events.</h5>
-<a href="{{main.activeLink}}" target="_blank">{{main.activeLink}}</a>
-<br />
-<br />
+            
+                <h2>Your calendar <u><b>{{main.calendar.name}}</b></u> was created.</h2>
+                <br />
+                
+                <h3>Copy both links then paste <a href="/emailSender">here</a>  to send links via email.</h3><br/>
+                
+                <h5>Follow the link below for admin view where you can update or delete your calendar.</h5>
+                <a href="{{main.adminLink}}" target="_blank">{{main.adminLink}}</a>
+                <br />
+                <br />
+                <h5>Use the link below for other users so they can create and view events.</h5>
+                <a href="{{main.activeLink}}" target="_blank">{{main.activeLink}}</a>
+                
+                <br />
+                <br />
+                <!--Click <a href="/emailSender">here</a> to send the email <br />-->
+
 </div>
 
 <footer></footer>

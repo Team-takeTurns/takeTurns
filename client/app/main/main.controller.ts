@@ -8,7 +8,9 @@ class MainController {
     this.$http = $http;
     this.currentGroup = "None";
     this.memCounter=0;
-    this.collapseText = "Would you like to add a group?";
+    this.btnAddMemberText = "Would you like to add a user?";
+    this.btnCollapseText = "Collapse subform!";
+    this.collapseText =  this.btnAddMemberText;
     this.firstEntry = 0;
     this.Name = '';
     this.Email = '';
@@ -22,6 +24,8 @@ class MainController {
     this.len;
     this.adminLink;
     this.activeLink;
+    this.adminLinkUrl = "http://localhost:9000/admin/";
+    this.activeLinkUrl = "http://localhost:9000/calendar/";
     this.adminUser;
     this.activeUser;
     this.id;
@@ -35,28 +39,33 @@ class MainController {
   }
 
   changeCollapseBtn(){
-  if(this.collapseText == "Would you like to add a group?"){
-  this.collapseText = "Collapse subform!";
+  if(this.collapseText ==  this.btnAddMemberText){
+  this.collapseText = this.btnCollapseText;
   }
- else if( this.collapseText == "Collapse subform!"){
-  this.collapseText = "Would you like to add a group?";
+  else if( this.collapseText == this.btnCollapseText){
+  this.collapseText =  this.btnAddMemberText;
   }
   }
-
+//go to email 
   addCalendar() {
   this.adminEmail = this.Email;
  if (this.Email && this.Name) {
       this.$http.post('/api/calendars', { dateCreated: new Date(), name: this.Name, description: this.Description, members: this.membersTemp,   paramSerializer: '$httpParamSerializerJQLike'}).then(response => {
       this.calendar = response.data;
-      this.createAdminUser();
       this.createActiveUser();
+      this.createAdminUser();
     });
+    
       if(this.sendEmail){
+        console.log("going to email page");
+        window.location="/emailSender";
+        // document.getElementById('emailBody').value = 'send link to other members {{main.activeLink}}';
         console.log("checked" + this.sendEmail);
         console.log("main.controller from client. function name = addCalendar()" );
         console.log("add method here to send email to all members. Also will need the list of members to whome send the email.");
         console.log(" array that holds all emails is called this.membersTemp" + this.membersTemp);
       }
+      else
     this.resetAddCalFields();
     this.mainDiv=false;
     }
@@ -78,11 +87,11 @@ this.$http.post('/api/users' , {role: "active", calID: this.calendar._id }).then
 }
 
 createAdminLink(){
-             this.adminLink = "http://localhost:9000/admin/" + this.adminUser._id;
+             this.adminLink = this.adminLinkUrl  + this.adminUser._id;
              this.adminUserUpdate();
     }
 createActiveLink(){
-             this.activeLink = "http://localhost:9000/calendar/" + this.activeUser._id;
+             this.activeLink = this.activeLinkUrl  + this.activeUser._id;
              this.activeUserUpdate();
         }
 

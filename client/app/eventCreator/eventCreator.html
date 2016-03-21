@@ -40,15 +40,18 @@
                 </fieldset>
                 <fieldset class="form-group">
                     <label for="">DATE:</label>
-                    <input type="date" class="form-control" ng-model="eventCreator.eventDate">
+                    <input type="date" class="form-control" ng-model="eventCreator.eventDate" 
+                    min="2015-01-01T00:00:00" max="2030-12-31T00:00:00" placeholder="MM-dd-yyyy">
                 </fieldset>
                 <fieldset class="form-group">
                     <label for="">START TIME:</label>
-                    <input type="time" class="form-control" ng-model="eventCreator.eventStartTime" placeholder="Event StartTime">
+                    <input type="time" class="form-control" ng-model="eventCreator.eventStartTime" 
+                    min="00:00:00" max="24:00:00">
                 </fieldset>
                 <fieldset class="form-group">
                     <label for="">END TIME:</label>
-                    <input type="time" class="form-control" ng-model="eventCreator.eventEndTime" placeholder="Event EndTime">
+                    <input type="time" class="form-control" ng-model="eventCreator.eventEndTime" 
+                    min="00:00:00" max="24:00:00">
                 </fieldset>
                 <fieldset class="form-group">
                     <label for="">HOST NAME:</label>
@@ -56,7 +59,8 @@
                 </fieldset>
                 <fieldset class="form-group">
                     <label for="">REMINDER DATE:</label>
-                    <input type="datetime-local" class="form-control" ng-model="eventCreator.eventReminder">
+                    <input type="datetime-local" name="input" class="form-control" ng-model="eventCreator.eventReminder" 
+                    min="2015-01-01T00:00:00" max="2030-12-31T00:00:00" placeholder="yyyy-MM-ddTHH:mm:ss">
                 </fieldset>
                 <fieldset class="form-group">
                     <label for="">DESCRIPTION:</label>
