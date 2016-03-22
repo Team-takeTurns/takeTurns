@@ -25,6 +25,10 @@ export default function (app) {
     .get((req, res) => {
       res.sendFile(path.resolve(app.get('appPath') + '/calendar.html'));
     });
+     app.route('/calendar')
+    .get((req, res) => {
+      res.sendFile(path.resolve(app.get('appPath') + '/calendar.html'));
+    });
      app.route('/admin/:id')
     .get((req, res) => {
       res.sendFile(path.resolve(app.get('appPath') + '/calAdmin.html'));
@@ -39,7 +43,7 @@ export default function (app) {
     });
     app.route('/emailSender')
     .get((req, res) => {
-      res.sendFile(path.resolve(app.get('appPath') + '/index.html'));
+      res.sendFile(path.resolve(app.get('appPath') + '/calendar.html'));
     });
     // .get((req, res) => {
     //   res.sendFile(path.resolve(app.get('appPath') + '../../client/app/emailSender/emailSender.html'));

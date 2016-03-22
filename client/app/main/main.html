@@ -31,11 +31,11 @@
     <label for="inputDescription">Description</label>
     <textarea class="form-control" id="inputDescription" rows="3"  placeholder="Description" ng-model="main.Description"></textarea>
   </fieldset>
-<!--
- scrollable view of current memebrs 
+
+<!-- scrollable view of current memebrs -->
 <div class="row">
     <div class="col-lg-12">
-      <h4 class="page-header">Current Group Members: {{main.currentGroup}}</h4>
+      <label class="page-header">Current Users: {{main.currentGroup}}</label>
       <div class="scroll">
       <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="member in main.membersTemp">
         <li>{{member.name}} - {{member.email}}<button type="button" class="close" ng-click="main.deleteMember(member)">&times;</button></a></li>
@@ -44,7 +44,7 @@
     </div>
   </div>
 
- collapsable box for members 
+ <!--collapsable box for members -->
 <p>
  <button  class="btn btn-primary collapsed"   ng-click="main.changeCollapseBtn()" type="button" data-toggle="collapse" data-target="#memberBox" aria-expanded="false" aria-controls="memberBox">{{main.collapseText}}
     <span class="caret" id="collapseCaret"></span>
@@ -67,23 +67,50 @@
       </div>
       <div class="col-sm-4">
         <span class="input-group-btn">
-          <button type="submit" class="btn btn-primary" ng-click="main.addMember()">Add Member</button>
+          <button type="submit" class="btn btn-primary" ng-click="main.addMember()">Add User</button>
         </span>
       </div>
   </div>
 </form>
-  </div>-->
+  </div>
 
 <!-- checkbox for sending email to members if it is checked-->
   <div class="checkbox">
     <label>
+
+      <input type="checkbox" id="sendEmail" ng-model="main.sendEmail"> Send calendar link to all members<br/>
+      <input id="agreeWithRules" type="checkbox" onclick="agreeWithRules()"> I acknowedge that I have read and agree with <a onclick="readRules()">the rules</a>
+
       <!--<input type="checkbox" id="sendEmail" ng-model="main.sendEmail"> Send calendar link to all members-->
+
     </label>
   </div>
-  <button type="submit" class="btn btn-primary" ng-click="main.addCalendar()">Create Calendar</button>
+  <button id="createCalendar" type="submit" class="btn btn-primary" ng-click="main.addCalendar()" disabled>Create Calendar</button>
    <button type="reset" class="btn btn-primary" ng-click="main.resetAddCalFields()">Clear All</button>
 </form>
 </div>
+<script>
+    function readRules(){
+        if(confirm( "1. All event data older than one month will be deleted automatically.\n" +
+                    "2. Empty or unused calendars for over a month will be deleted automatically.\n" +
+                    "3. Users are responsible to keep the links provided to them safe to avoid unwanted interference with their calendars.")==true){
+        
+              document.getElementById("createCalendar").disabled = false;
+              document.getElementById("agreeWithRules").checked = true;            
+        }/*else{
+              document.getElementById("createCalendar").disabled = true;
+              document.getElementById("agreeWithRules").checked = false;            
+        }*/
+    }
+    
+    function agreeWithRules(){
+        if(document.getElementById("agreeWithRules").checked == true){
+            document.getElementById("createCalendar").disabled = false;
+        }else{
+            document.getElementById("createCalendar").disabled = true;
+        }
+    }
+</script>
 
  <!--this is the view that appears after user creates a calendar. it displays links to the user -->
 <div class="container" id="waitScreenBox"  ng-hide="main.mainDiv">
