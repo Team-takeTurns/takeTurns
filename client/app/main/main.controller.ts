@@ -96,7 +96,7 @@ createActiveLink(){
         }
 
 adminUserUpdate(){
-  this.$http.put('/api/users/'+ this.adminUser._id, { link: this.adminLink}).then(response => {
+  this.$http.put('/api/users/'+ this.adminUser._id, { link: this.adminLink, activeUserLink: this.activeLink}).then(response => {
       this.adminUser = response.data;
       });
 }

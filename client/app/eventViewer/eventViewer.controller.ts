@@ -37,17 +37,10 @@
             this.awesomeEvents = [];
 
             //----------------- Global vars END---------------------
-            
+
             //get calendar id from user ----------------------------
             paramSerializer: '$httpParamSerializerJQLike';
-/*
-            if (!this.userIDtemp) {
-                console.log("do nothing");
-                window.location = window.location + "/" + $rootScope.userIDglobal;
-            } else {
-                $rootScope.userIDglobal = this.userIDtemp;
-            }
-            */
+
             if ($cookies.get("userId")) {
                 $http.get('/api/users/' + $cookies.get("userId")).then(response => {
                     this.user = response.data;
