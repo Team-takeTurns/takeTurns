@@ -2,7 +2,6 @@
 
 class NavbarAdminController {
 
-
   constructor($location) {
     this.$location = $location;
     }
@@ -10,7 +9,7 @@ class NavbarAdminController {
   //start-non-standard
   menu = [{
     'title': 'Go to Calendar Events',
-    'link': '/calendar'
+    'link':  '/calendar'
   }];
 
   isCollapsed = true;

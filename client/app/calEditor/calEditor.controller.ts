@@ -4,8 +4,9 @@
 
 class CalEditorController {
 
-  constructor($http, $scope, socket,  $cookies) {
+  constructor($http, $scope, socket, $cookies, $location) {
     this.$http = $http;
+    this.$location = $location;
     this.lengthsOfUrl = 52;
     this.calendar;
     this.message;
@@ -46,7 +47,7 @@ class CalEditorController {
             //Setting userRole and adminLink in cookies 
             console.log(" Setting userRole and adminLink in cookies in admin page " );
             $cookies.userRole = "admin";
-            $cookies.adminLink = this.user.link.toString().substr(31, 31);
+            $cookies.activeLink = this.user.activeUserLink.toString();
             //get calendar from BE
             this.getCalendar();
 
@@ -59,9 +60,6 @@ class CalEditorController {
               }else {
           console.log("ERROR - userID is undefined. please use the link that was provided to you when the calendar was created.");
       }
-
-
-
 
 //---------------------- auto generated start ----------------------------------
     $scope.$on('$destroy', function() {
@@ -78,16 +76,6 @@ class CalEditorController {
        this.memCounter = this.calendar.members.length;
     });
   }
-
-/*
-//send request to BE to create new calendar
-  addCalendar() {
-    if (this.newCalendar) {
-      this.$http.post('/api/calendars', { name: this.newCalendar });
-      this.newCalendar = '';
-    }
-  }
-*/
 
 // assigning and defining some variables 
 editCalendar(){
@@ -128,7 +116,6 @@ cancelUpdate(){
 
 //update admin email
 updateAdminUser(){
-console.log("$rootScope.userIDglobal 888 = " + this.user._id);
 if(this.adminEmail){
       this.$http.put('/api/users/' + this.user._id, {email: this.adminEmail}).then(response => {
       this.user = response.data;
@@ -193,6 +180,14 @@ this.delMembers.add();
     this.goodDate = Date(isoDate);
     return this.goodDate;
   }
+
+shareAdminLink(){
+ this.$location.path('/emailSender');
+}
+
+shareUserLink(){
+ this.$location.path('/emailSender');
+}
 
 }
 
