@@ -296,14 +296,8 @@ return (new Date(dateInMiliseconds)).toISOString();
 }
 // ------------------- 1 - delete old events logic end -----------------------
 // ------------------- 2 - delete old empty calendars logic start -----------------------
-var events = {};
-var calendarIds = [];
-var intervalPeriod = 10000; //3600000 - 10000 is 30 seconds - update this if you want more time
-var deleteOldEventsInterval = setInterval(myTimer, intervalPeriod);
-var counter = 0;
-var day;
-var hour;
-var monthsInput = 1;
+
+var deleteOldCalendarInterval = setInterval(myTimer, intervalPeriod);
 var isoDateToCompare = getIsoDateToDeleteOldCalendars(monthsInput);
 
 function myCalTimer() {

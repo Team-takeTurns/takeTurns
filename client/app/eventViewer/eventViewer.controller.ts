@@ -202,7 +202,6 @@
             this.$http.patch('/api/calendars/' + this.calendar._id + "/DeleteEvent/" + this.selectedEvent._id).then(response => {
                 this.calendar = response.data;
                 this.detailsEvent(this.calendar.events[this.getIndexOfFirstEventByDay()]._id);
-                    //alert('Event successfully deleted from calendar at ' );
             alert('The ' + this.selectedEvent.title + ' Event, Hosted by ' + this.selectedEvent.host + ' has been deleted successfully from this calendar.');
                    
                     //window.location.reload(true);
