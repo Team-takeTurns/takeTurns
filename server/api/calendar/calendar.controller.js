@@ -242,6 +242,7 @@ var day;
 var hour;
 var monthsInput = 1;
 var isoDateToCheckAgainst = getIsoDateToDeleteOldEvents(monthsInput);
+
 function myTimer() {
  var d = new Date();
     var res;
@@ -295,6 +296,67 @@ return (new Date(dateInMiliseconds)).toISOString();
 }
 // ------------------- 1 - delete old events logic end -----------------------
 // ------------------- 2 - delete old empty calendars logic start -----------------------
+var events = {};
+var calendarIds = [];
+var intervalPeriod = 10000; //3600000 - 10000 is 30 seconds - update this if you want more time
+var deleteOldEventsInterval = setInterval(myTimer, intervalPeriod);
+var counter = 0;
+var day;
+var hour;
+var monthsInput = 1;
+var isoDateToCompare = getIsoDateToDeleteOldCalendars(monthsInput);
+
+function myCalTimer() {
+ var d = new Date();
+    var res;
+    counter++;
+    day = d.getDay();
+    hour = d.getHours();
+    if(day === 30){
+      Calendar.find({"calendar.dateCreated": {$lte: isoDateToCompare}}, {$limit: 1})
+       .then(getCalendarId(res))
+       .catch(handleError(res));
+      }
+    }
+
+function getCalendarId(res) {
+  return function(entity) {
+    //populate array of calendar Ids
+    if (entity) {
+        for (var i = 0; i < entity.length; i++) { 
+          calendarIds.push(entity[i]._id);
+    }
+    //loop through calendars and delete unused calendar with no events in the past 30 days
+    for(var i = 0; i < calendarIds.length; i++){
+      Calendar.updateAsync({_id: calendarIds[i]},  {$pull : {calendar: {dateCreated: {$lte: isoDateToCompare}}}} )
+      .then(getCalendars(res))
+      .then(removeEntity(res))
+      .catch(handleError(res));
+    }
+    resetVarsForDeleteOldCalendars();
+    }
+  };
+}
+
+function  resetVarsForDeleteOldCalendars(){
+calendarIds=[];
+
+}
+
+//this method is only for viewing if the response from task to delete calendars is completed with nModified1
+function getCalendars(res) {
+  return function(entity) {
+    if (entity) {
+          //console.log( " ============ events ============ "  + JSON.stringify(entity));//uncomment this line for testing
+    }
+  };
+}
+
+function getIsoDateToDeleteOldCalendars(months){
+var deductMiliseconds = (1000 * 3600 * 24 * (months * 30));
+var dateInMiliseconds = ((new Date().getTime())- deductMiliseconds);
+return (new Date(dateInMiliseconds)).toISOString();
+}
 // ------------------- 2 - delete old empty calendars logic end -----------------------
 // ------------------- 3 - delete old unused calendars logic start -----------------------
 // ------------------- 3 - delete old unused calendars logic end -----------------------
