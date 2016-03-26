@@ -8,4 +8,12 @@ angular.module('takeTurnsApp')
         controller: 'CalEditorController',
         controllerAs: 'calEditor'
       })
+      .when('/calendar', {
+        templateUrl: 'app/eventViewer/eventViewer.html',
+        controller: 'EventViewerController',
+        controllerAs: 'eventViewer'
+      })
+      .otherwise({
+        redirectTo: '/'
+      });
   });

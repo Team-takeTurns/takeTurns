@@ -33,11 +33,11 @@ export default function (app) {
     .get((req, res) => {
       res.sendFile(path.resolve(app.get('appPath') + '/calAdmin.html'));
     });
-         app.route('/week')
+    app.route('/week')
     .get((req, res) => {
       res.sendFile(path.resolve(app.get('appPath') + '/calendar.html'));
     });
-             app.route('/event')
+    app.route('/event')
     .get((req, res) => {
       res.sendFile(path.resolve(app.get('appPath') + '/calendar.html'));
     });

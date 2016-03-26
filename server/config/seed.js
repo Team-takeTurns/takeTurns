@@ -69,7 +69,8 @@ User.find({}).removeAsync()
      role:"admin",
      link: "http://localhost:9000/admin/56b044743ef01300237649cb",
      email:"liliya0artyukh@gmail.com", 
-     calID: "56b1e6924f07f3840f8ce556"
+     calID: "56b1e6924f07f3840f8ce556",
+     activeUserLink: "http://localhost:9000/calendar/56b044743ef01300237649ca"
       }, {
      _id:"56b044743ef0130023764912",
      role:"active",
@@ -81,7 +82,8 @@ User.find({}).removeAsync()
      role:"admin",
      link: "http://localhost:9000/admin/56b044743ef0130023764913",
      email:"liliya0artyukh@gmail.com", 
-     calID: "56b1e6924f07f3840f8ce512"
+     calID: "56b1e6924f07f3840f8ce512",
+     activeUserLink: "http://localhost:9000/calendar/56b044743ef0130023764912"
       }, {
      _id:"56b044743ef0130023764914",
      role:"active",
@@ -93,7 +95,8 @@ User.find({}).removeAsync()
      role:"admin",
      link: "http://localhost:9000/admin/56b044743ef0130023764915",
      email:"liliya0artyukh@gmail.com", 
-     calID: "56b1e6924f07f3840f8ce514"
+     calID: "56b1e6924f07f3840f8ce514",
+     activeUserLink: "http://localhost:9000/calendar/56b044743ef0130023764914"
       });
   });
   
