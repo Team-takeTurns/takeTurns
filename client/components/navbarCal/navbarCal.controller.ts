@@ -12,7 +12,7 @@ class NavbarCalController {
     'title': 'Week View',
     'link': '/week'
   }, {
-  'title': 'Send Email',
+  'title': 'Email',
     'link': '/emailSender'
   }];
 
