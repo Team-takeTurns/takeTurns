@@ -44,13 +44,8 @@ class CalEditorController {
         $http.get('/api/users/'+ $cookies.get("userId")).then(response => {
           this.user = response.data;
           if(this.user.role === "admin"){
-            //Setting userRole and adminLink in cookies 
-            console.log(" Setting userRole and adminLink in cookies in admin page " );
-            $cookies.userRole = "admin";
-            $cookies.activeLink = this.user.activeUserLink.toString();
             //get calendar from BE
             this.getCalendar();
-
                   }else{
           console.log("display ERROR here search for: Liliya1111 in calEditor.controller");
           console.log("perhaps user is not admin!?");

@@ -19,8 +19,17 @@ class NavbarCalController {
   isCollapsed = true;
   //end-non-standard
 
-  constructor($location) {
+  constructor($location, $cookies, $http) {
     this.$location = $location;
+    this.$http = $http;
+     if ($cookies.get("userId")) {
+        $http.get('/api/users/'+ $cookies.get("userId")).then(response => {
+          this.user = response.data;
+          if(this.user.role === "admin"){
+            this.userRole = "admin";
+          } 
+        });
+      }
     }
 
   isActive(route) {
