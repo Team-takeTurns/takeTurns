@@ -37,6 +37,14 @@ export default function (app) {
     .get((req, res) => {
       res.sendFile(path.resolve(app.get('appPath') + '/calendar.html'));
     });
+     app.route('/admin')
+    .get((req, res) => {
+      res.sendFile(path.resolve(app.get('appPath') + '/calAdmin.html'));
+    });
+    app.route('/about')
+    .get((req, res) => {
+      res.sendFile(path.resolve(app.get('appPath') + '/index.html'));
+    });
     app.route('/event')
     .get((req, res) => {
       res.sendFile(path.resolve(app.get('appPath') + '/calendar.html'));
