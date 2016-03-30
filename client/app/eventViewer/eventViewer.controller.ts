@@ -236,11 +236,14 @@
 
                 this.calendar = response.data;
                 this.detailsEvent(this.calendar.events[this.getIndexOfFirstEventByDay()]._id);
-
+                
                 alert("You have successfully edited the event.");
             });
             this.switchEventDetailView(buttonClicked);
         }
+        
+        
+        
         
         // Cancel Update
         cancelEdit(buttonClicked: number) {
