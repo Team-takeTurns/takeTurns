@@ -119,10 +119,10 @@ Calendar.find({}).removeAsync()
                 email:"cccccc@ccccc.ccc"}],
       name:       'My Cal Name - Stephan',
       description: 'This is the description for the event. TEST',
-      dateCreated: "2016-01-24T02:32:12.457Z",
+      dateCreated: "2016-01-23T02:32:12.457Z",
       events: [{  title:"Dinner", 
                   _id:"56c931132a65e1c81f986cbf",
-                  host: "Steve", 
+                  host: "", 
                   date: new Date((new Date().getTime()) + (1000 * 3600 * 24)),
                   startTime: "17:00:00-05:00", 
                   endTime: "20:00:00-05:00",
@@ -226,7 +226,60 @@ Calendar.find({}).removeAsync()
                   reminder: new Date(),
                   guestList: ["email_1@ddd.ca", "david@ddd.ca", "bob@sss.ca"]
                 }]
-      }, {
+      }, 
+      {
+        _id: "56b1e6924f07f3840f8ce595",
+      members: [{name:"Boni", 
+                _id:"56ca72353876946c0c49b561",
+                  email: "ue@ssss.ss"
+                },{name:"Camp", 
+                _id:"56ca72353876946c0c49b334",
+                email:"lil@ll.lll"
+                },  {name:"Chris", 
+                _id:"56ca72353876946c0c49b564",
+                email:"cccccc@ccc.ccc"}],
+      name:       'Karoake with Richi',
+      description: 'This is the description for the event. TEST',
+      dateCreated: "2016-01-24T02:32:12.457Z",
+      events: [ /*{   title:"Camping", 
+                  _id:"56c931132a65e1c81f986c89",
+                  host: "Gracy", 
+                  date: "2016-04-24T02:32:12.457Z",
+                  startTime: "18:00:00-05:00", 
+                  endTime: "20:00:00-05:00",
+                  info: "dinner",
+                  reminder: new Date(),
+                  guestList: ["email_1@ddd.ca", "david@ddd.ca", "bob@sss.ca"]
+                },
+                {  title:"Dave", 
+                   _id:"56c931132a65e1c81f986c23",
+                  host: "Albert", 
+                  date: "2016-05-24T02:32:12.457Z",
+                  startTime: "18:00:00-05:00", 
+                  endTime: "20:00:00-05:00",
+                  info: "dinner",
+                  reminder: new Date(),
+                  guestList: ["email_1@ddd.ca", "david@ddd.ca", "bob@sss.ca"]
+                }*/]
+      },
+       {
+        _id: "56b1e6924f07f3840f8ce545",
+      members: [{name:"Craig To do", 
+                _id:"56ca72353876946c0c49b678",
+                  email: "ue@aaaa.ss"
+                },{name:"Skating", 
+                _id:"56ca72353876946c0c49b356",
+                email:"lil@bb.bbb"
+                },  {name:"Bowman", 
+                _id:"56ca72353876946c0c49b597",
+                email:"ggc@ggg.gg"}],
+      name:       'Swimming with Davelf',
+      description: 'This is the description for the event. TEST',
+      dateCreated: "2016-01-21T02:32:12.457Z",
+      events: [  
+                ]
+      },
+      {
         _id: "56b1e6924f07f3840f8ce514",
       members: [],
       name:       'Sharing Car',
@@ -235,7 +288,7 @@ Calendar.find({}).removeAsync()
       events: [{  title:"Visit", 
                   _id:"56c931132a65e1c81f986c14",
                   host: "Albert", 
-                  date: "2016-02-24T02:32:12.457Z",
+                  date: "2016-03-24T02:32:12.457Z",
                   startTime: "18:00:00-05:00", 
                   endTime: "20:00:00-05:00",
                   info: "dinner",
