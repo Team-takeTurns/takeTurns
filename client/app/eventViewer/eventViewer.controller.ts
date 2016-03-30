@@ -4,7 +4,7 @@
 
     class EventViewerController {
 
-        constructor($http, $scope, socket, $cookies) {
+        constructor($http, $scope, socket, $cookies, emailDataContainer) {
             this.$http = $http;
             //----------------- Global vars ---------------------
             this.calendar;
@@ -23,7 +23,6 @@
             this.backUpEventStartTime;
             this.backUpEventEndTime;
             this.backUpEventDate;
-
 
             //check if userId is already set in cookies. if not and url has userId then set userId in cookies 
             if (this.url.toString().length == this.urlLength) {

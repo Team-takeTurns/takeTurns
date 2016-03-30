@@ -53,7 +53,4 @@ export default function (app) {
     .get((req, res) => {
       res.sendFile(path.resolve(app.get('appPath') + '/calendar.html'));
     });
-    // .get((req, res) => {
-    //   res.sendFile(path.resolve(app.get('appPath') + '../../client/app/emailSender/emailSender.html'));
-    // });
 }

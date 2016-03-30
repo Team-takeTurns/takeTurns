@@ -4,7 +4,7 @@
 
     class weekViewController {
 
-        constructor($http, $scope, socket, $cookies) {
+        constructor($http, $scope, socket, $cookies, emailDataContainer) {
             this.$http = $http;
             this.awesomeEvents = [];
 
@@ -15,7 +15,10 @@
             this.$scope.slot = this.calendar;
             $scope.events = [];
             
-           
+            //this one line of code below is jsut for testing the service for transfering data between controllers
+           emailDataContainer.setBody("tttttttttttttttttttttttt ");
+
+
             //get calendar id from user ----------------------------
             paramSerializer: '$httpParamSerializerJQLike';
 

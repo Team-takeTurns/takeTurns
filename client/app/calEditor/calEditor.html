@@ -30,7 +30,7 @@
     <p><span class="calLbl">Admin Link: </span> <a href="{{calEditor.user.link}}" >{{calEditor.user.link}}</a></p>
   </div>
   <div class="col-md-12 col-sm-12">
-      <button type="button" class="btn btn-primary" ng-click="calEditor.shareAdminLink()">Share Admin Link</button>
+      <a href="/emailSender" target="_top" ><button type="button" class="btn btn-primary" href='/emailSender' ng-click="calEditor.shareAdminLink(calEditor.user.link)">Share Admin Link</button></a>
   </div>
 </div>
 <div class="row">
@@ -38,7 +38,7 @@
     <p><span class="calLbl">User Link: </span> <a href="{{calEditor.user.activeUserLink}}" target="_top">{{calEditor.user.activeUserLink}}</a></p>
   </div>
   <div class="col-md-12 col-sm-12">
-    <button type="button" class="btn btn-primary" ng-click="calEditor.shareUserLink()">Share User Link</button>
+     <a href="/emailSender" target="_top" ><button type="button" class="btn btn-primary" ng-click="calEditor.shareUserLink(calEditor.user.activeUserLink)">Share User Link</button></a>
   </div>
 </div>
 <div class="row">
