@@ -5,6 +5,9 @@ class NavbarController {
   menu = [{
     'title': 'Home',
     'link': '/'
+  }, {
+    'title': 'About',
+    'link': '/about'
   }];
 
   isCollapsed = true;

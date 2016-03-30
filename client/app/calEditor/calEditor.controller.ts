@@ -44,13 +44,8 @@ class CalEditorController {
         $http.get('/api/users/'+ $cookies.get("userId")).then(response => {
           this.user = response.data;
           if(this.user.role === "admin"){
-            //Setting userRole and adminLink in cookies 
-            console.log(" Setting userRole and adminLink in cookies in admin page " );
-            $cookies.userRole = "admin";
-            $cookies.activeLink = this.user.activeUserLink.toString();
             //get calendar from BE
             this.getCalendar();
-
                   }else{
           console.log("display ERROR here search for: Liliya1111 in calEditor.controller");
           console.log("perhaps user is not admin!?");
@@ -101,12 +96,17 @@ cancelUpdate(){
      this.editCal = true;
 }
 
+
+updateCalendarInfo(){
+  this.updateAdminUser();
+  this.updateCalendar();
+}
+
 //send request to BE to update calendar details
  updateCalendar() {
-      this.$http.put('/api/calendars/' + this.user.calID, { name: this.calName, description: this.calDescription, paramSerializer: '$httpParamSerializerJQLike'}).then(response => {
+  console.log(" my temp members from client " + JSON.stringify(this.membersTemp));
+      this.$http.put('/api/calendars/' + this.user.calID, { name: this.calName, description: this.calDescription, members: this.membersTemp, paramSerializer: '$httpParamSerializerJQLike'}).then(response => {
       this.calendar = response.data;
-      this.updateAdminUser();
-      this.updateMembers();
       this.message = "You have successfully edited the calendar.";
       alert(this.message);
       //this.deleteFalse = false; //opens another window to display the message
@@ -116,67 +116,33 @@ cancelUpdate(){
 
 //update admin email
 updateAdminUser(){
-if(this.adminEmail){
+    if(this.adminEmail){
       this.$http.put('/api/users/' + this.user._id, {email: this.adminEmail}).then(response => {
       this.user = response.data;
-  });
-}
-}
-
-
-
-
-//send request to BE to delete multiple events - temporarily here for testing - later code to be used to delete members
-  updateMembers() {
-  console.log(" i am in updateMembers method 1111111");
-   console.log(" i am in updateMembers method 22222");
-      console.log(" i am in updateMembers method this.calendar._id " + this.calendar._id);
-         console.log(" i am in updateMembers method 33333");
-          console.log(" i am in updateMembers method this.delMembers " + JSON.stringify(this.delMembers));
-                   console.log(" i am in updateMembers method 4444444");
-                             console.log(" i am in updateMembers method this.addMembers " + this.addMembers);
-                                  console.log(" i am in updateMembers method 555555555555");
-    this.$http.patch('/api/calendars/updateMembers/' + this.calendar._id , {delMembers: this.delMembers, addMembers: this.addMembers}).then(response => {
-      this.calendar = response.data;
     });
+  }
 }
 
-//delete members from temporary 
+//delete members from temporary array
 deleteMember(member){
-this.delMembers.add();
+      console.log("inside delete members " +  this.membersTemp);
    for (var i =0; i < this.membersTemp.length; i++){
       if (this.membersTemp[i].email === member.email) {
         this.membersTemp.splice(i,1);
-         this.memCounter --;
-         if( this.memCounter === 0){
-           this.currentGroup = "None";
-         }else{
-         this.currentGroup = this.memCounter;
-         }
         break;
       }
     }
 }
 
-//adding new members
+//adding new members to temp array
  addMember(){
+      console.log("inside add members" +  this.membersTemp);
   if(this.memberEmail && this.memberName){
     this.membersTemp.push({name: this.memberName, email: this.memberEmail});
-    console.log("this.addMembers.length " + this.addMembers.length)
-    for(var i = 0; i < this.addMembers.length; i++){
-      this.addMembers.push({name: this.memberName, email: this.memberEmail});
-    }
-   if(this.firstEntry==0){
-    this.firstEntry = 1;
-   }
-    this.memCounter ++;
-    this.memberName='';
-    this.memberEmail='';
-    this.currentGroup = this.memCounter;
     }
   }
 
-  convertDate(isoDate){
+convertDate(isoDate){
     this.goodDate = Date(isoDate);
     return this.goodDate;
   }

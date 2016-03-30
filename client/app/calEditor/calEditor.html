@@ -27,7 +27,7 @@
 </div>
 <div class="row">
   <div class="col-md-12 col-sm-12">
-    <p><span class="calLbl">Admin Link: </span> <a href="{{calEditor.user.link}}">{{calEditor.user.link}}</a></p>
+    <p><span class="calLbl">Admin Link: </span> <a href="{{calEditor.user.link}}" >{{calEditor.user.link}}</a></p>
   </div>
   <div class="col-md-12 col-sm-12">
       <button type="button" class="btn btn-primary" ng-click="calEditor.shareAdminLink()">Share Admin Link</button>
@@ -35,7 +35,7 @@
 </div>
 <div class="row">
   <div class="col-md-12 col-sm-12">
-    <p><span class="calLbl">User Link: </span> <a href="{{calEditor.user.activeUserLink}}">{{calEditor.user.activeUserLink}}</a></p>
+    <p><span class="calLbl">User Link: </span> <a href="{{calEditor.user.activeUserLink}}" target="_top">{{calEditor.user.activeUserLink}}</a></p>
   </div>
   <div class="col-md-12 col-sm-12">
     <button type="button" class="btn btn-primary" ng-click="calEditor.shareUserLink()">Share User Link</button>
@@ -134,7 +134,7 @@
   </div>
 
   <!-- buttons -->
-  <button type="submit" class="btn btn-primary" ng-click="calEditor.updateCalendar()">Update Calendar</button>
+  <button type="submit" class="btn btn-primary" ng-click="calEditor.updateCalendarInfo()">Update Calendar</button>
    <button type="button" class="btn btn-primary" ng-click="calEditor.cancelUpdate()">Cancel</button>
 </form>
 </div>
