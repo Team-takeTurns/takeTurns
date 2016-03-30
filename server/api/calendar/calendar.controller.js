@@ -180,7 +180,7 @@ export function addEvent(req, res){
     .catch(handleError(res));
 }
 
-//Updateing event START---------------------------------------------------
+//Updating event START---------------------------------------------------
 export function updateEvent(req, res){
     if (req.body._id) {
     delete req.body._id;
@@ -234,7 +234,9 @@ Calendar.updateAsync({_id: calId}, {$addToSet: {members: {$each:  addMembers }}}
 // ------------------- 1 - delete old events logic start -----------------------
 //event triggered by time to delete extra records in the database
 var events = {};
+var members = {};
 var calendarIds = [];
+var calendarIdsToDelete = [];
 var intervalPeriod = 10000;//3600000 - 10000 is 30 seconds - update this if you want more time
 var deleteOldEventsInterval = setInterval(myTimer, intervalPeriod);
 var counter = 0;
@@ -249,7 +251,7 @@ function myTimer() {
     counter++;
     day = d.getDay();
     hour = d.getHours();
-    if(day === day){// (day === 7){
+    if(day === 7){// (day === 7){
       if(hour >= hour && hour < hour + 5 ){ //(time > 2 && time < 5 ){
       Calendar.find({"events.date": {$lte: isoDateToCheckAgainst}}, {$limit: 1})
        .then(getCalendarIds(res))
@@ -297,7 +299,7 @@ return (new Date(dateInMiliseconds)).toISOString();
 // ------------------- 1 - delete old events logic end -----------------------
 // ------------------- 2 - delete old empty calendars logic start -----------------------
 
-var deleteOldCalendarInterval = setInterval(myTimer, intervalPeriod);
+var deleteOldCalendarInterval = setInterval(myCalTimer, intervalPeriod);
 var isoDateToCompare = getIsoDateToDeleteOldCalendars(monthsInput);
 
 function myCalTimer() {
@@ -306,51 +308,51 @@ function myCalTimer() {
     counter++;
     day = d.getDay();
     hour = d.getHours();
-    if(day === 30){
-      Calendar.find({"calendar.dateCreated": {$lte: isoDateToCompare}}, {$limit: 1})
-       .then(getCalendarId(res))
-       .catch(handleError(res));
+    if(day === day){
+        //check for calendar older than 30 and has a title name then delete
+         Calendar.find({$and: [ {"dateCreated": {$lte: isoDateToCompare}}, {"events.title": {$exists: false}} ] })
+       .then(getCalendarId(res));
       }
     }
 
-function getCalendarId(res) {
-  return function(entity) {
-    //populate array of calendar Ids
-    if (entity) {
-        for (var i = 0; i < entity.length; i++) { 
-          calendarIds.push(entity[i]._id);
-    }
-    //loop through calendars and delete unused calendar with no events in the past 30 days
-    for(var i = 0; i < calendarIds.length; i++){
-      Calendar.updateAsync({_id: calendarIds[i]},  {$pull : {calendar: {dateCreated: {$lte: isoDateToCompare}}}} )
-      .then(getCalendars(res))
-      .then(removeEntity(res))
-      .catch(handleError(res));
-    }
-    resetVarsForDeleteOldCalendars();
+    function getCalendarId(res) {
+    return function(entity) {
+        //populate array of calendar Ids
+        if (entity) {
+            for (var i = 0; i < entity.length; i++) { 
+            calendarIdsToDelete.push(entity[i]._id);
+            
+        }
+        //Loop through canlendar and delete old empty calendars
+        for(var i = 0; i < calendarIdsToDelete.length; i++){
+            Calendar.findByIdAsync(calendarIdsToDelete[i])
+            .then(removeEmptyCalendars(res));
+            }
+                  resetVarsForDeleteOldCalendars();
+        }
+        };
+        }
+        //reset Id of the dleted calendars
+        function  resetVarsForDeleteOldCalendars(){
+        calendarIdsToDelete=[];
+        }
+        //to remove old empty calendars
+        function removeEmptyCalendars(res) {
+        return function(entity) {
+            if (entity) {
+               console.log( "4 " + entity);
+             return entity.removeAsync()
+              .then(() => {
+             console.log("The following Entity is removed " + entity);
+        });
     }
   };
 }
-
-function  resetVarsForDeleteOldCalendars(){
-calendarIds=[];
-
-}
-
-//this method is only for viewing if the response from task to delete calendars is completed with nModified1
-function getCalendars(res) {
-  return function(entity) {
-    if (entity) {
-          //console.log( " ============ events ============ "  + JSON.stringify(entity));//uncomment this line for testing
+    function getIsoDateToDeleteOldCalendars(months){
+    var deductMiliseconds = (1000 * 3600 * 24 * (months * 30));
+    var dateInMiliseconds = ((new Date().getTime())- deductMiliseconds);
+    return (new Date(dateInMiliseconds)).toISOString();
     }
-  };
-}
-
-function getIsoDateToDeleteOldCalendars(months){
-var deductMiliseconds = (1000 * 3600 * 24 * (months * 30));
-var dateInMiliseconds = ((new Date().getTime())- deductMiliseconds);
-return (new Date(dateInMiliseconds)).toISOString();
-}
 // ------------------- 2 - delete old empty calendars logic end -----------------------
 // ------------------- 3 - delete old unused calendars logic start -----------------------
 // ------------------- 3 - delete old unused calendars logic end -----------------------
