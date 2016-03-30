@@ -6,7 +6,8 @@ var UserSchema = new mongoose.Schema({
      role:String,
      link: String,
      email:String, 
-     calID: String
+     calID: String,
+     activeUserLink: String
 });
 
 export default mongoose.model('User', UserSchema);

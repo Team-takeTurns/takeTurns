@@ -69,7 +69,8 @@ User.find({}).removeAsync()
      role:"admin",
      link: "http://localhost:9000/admin/56b044743ef01300237649cb",
      email:"liliya0artyukh@gmail.com", 
-     calID: "56b1e6924f07f3840f8ce556"
+     calID: "56b1e6924f07f3840f8ce556",
+     activeUserLink: "http://localhost:9000/calendar/56b044743ef01300237649ca"
       }, {
      _id:"56b044743ef0130023764912",
      role:"active",
@@ -81,7 +82,8 @@ User.find({}).removeAsync()
      role:"admin",
      link: "http://localhost:9000/admin/56b044743ef0130023764913",
      email:"liliya0artyukh@gmail.com", 
-     calID: "56b1e6924f07f3840f8ce512"
+     calID: "56b1e6924f07f3840f8ce512",
+     activeUserLink: "http://localhost:9000/calendar/56b044743ef0130023764912"
       }, {
      _id:"56b044743ef0130023764914",
      role:"active",
@@ -93,7 +95,8 @@ User.find({}).removeAsync()
      role:"admin",
      link: "http://localhost:9000/admin/56b044743ef0130023764915",
      email:"liliya0artyukh@gmail.com", 
-     calID: "56b1e6924f07f3840f8ce514"
+     calID: "56b1e6924f07f3840f8ce514",
+     activeUserLink: "http://localhost:9000/calendar/56b044743ef0130023764914"
       });
   });
   
@@ -116,10 +119,10 @@ Calendar.find({}).removeAsync()
                 email:"cccccc@ccccc.ccc"}],
       name:       'My Cal Name - Stephan',
       description: 'This is the description for the event. TEST',
-      dateCreated: new Date(),
+      dateCreated: "2016-01-23T02:32:12.457Z",
       events: [{  title:"Dinner", 
                   _id:"56c931132a65e1c81f986cbf",
-                  host: "Steve", 
+                  host: "", 
                   date: new Date((new Date().getTime()) + (1000 * 3600 * 24)),
                   startTime: "17:00:00-05:00", 
                   endTime: "20:00:00-05:00",
@@ -223,16 +226,69 @@ Calendar.find({}).removeAsync()
                   reminder: new Date(),
                   guestList: ["email_1@ddd.ca", "david@ddd.ca", "bob@sss.ca"]
                 }]
-      }, {
+      }, 
+      {
+        _id: "56b1e6924f07f3840f8ce595",
+      members: [{name:"Boni", 
+                _id:"56ca72353876946c0c49b561",
+                  email: "ue@ssss.ss"
+                },{name:"Camp", 
+                _id:"56ca72353876946c0c49b334",
+                email:"lil@ll.lll"
+                },  {name:"Chris", 
+                _id:"56ca72353876946c0c49b564",
+                email:"cccccc@ccc.ccc"}],
+      name:       'Karoake with Richi',
+      description: 'This is the description for the event. TEST',
+      dateCreated: "2016-01-24T02:32:12.457Z",
+      events: [ /*{   title:"Camping", 
+                  _id:"56c931132a65e1c81f986c89",
+                  host: "Gracy", 
+                  date: "2016-04-24T02:32:12.457Z",
+                  startTime: "18:00:00-05:00", 
+                  endTime: "20:00:00-05:00",
+                  info: "dinner",
+                  reminder: new Date(),
+                  guestList: ["email_1@ddd.ca", "david@ddd.ca", "bob@sss.ca"]
+                },
+                {  title:"Dave", 
+                   _id:"56c931132a65e1c81f986c23",
+                  host: "Albert", 
+                  date: "2016-05-24T02:32:12.457Z",
+                  startTime: "18:00:00-05:00", 
+                  endTime: "20:00:00-05:00",
+                  info: "dinner",
+                  reminder: new Date(),
+                  guestList: ["email_1@ddd.ca", "david@ddd.ca", "bob@sss.ca"]
+                }*/]
+      },
+       {
+        _id: "56b1e6924f07f3840f8ce545",
+      members: [{name:"Craig To do", 
+                _id:"56ca72353876946c0c49b678",
+                  email: "ue@aaaa.ss"
+                },{name:"Skating", 
+                _id:"56ca72353876946c0c49b356",
+                email:"lil@bb.bbb"
+                },  {name:"Bowman", 
+                _id:"56ca72353876946c0c49b597",
+                email:"ggc@ggg.gg"}],
+      name:       'Swimming with Davelf',
+      description: 'This is the description for the event. TEST',
+      dateCreated: "2016-01-21T02:32:12.457Z",
+      events: [  
+                ]
+      },
+      {
         _id: "56b1e6924f07f3840f8ce514",
       members: [],
       name:       'Sharing Car',
       description: 'This is the description for the event. TEST',
-      dateCreated: new Date(),
+      dateCreated: "2016-01-24T02:32:12.457Z",
       events: [{  title:"Visit", 
                   _id:"56c931132a65e1c81f986c14",
                   host: "Albert", 
-                  date: "2016-02-24T02:32:12.457Z",
+                  date: "2016-03-24T02:32:12.457Z",
                   startTime: "18:00:00-05:00", 
                   endTime: "20:00:00-05:00",
                   info: "dinner",

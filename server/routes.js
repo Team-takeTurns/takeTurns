@@ -25,21 +25,33 @@ export default function (app) {
     .get((req, res) => {
       res.sendFile(path.resolve(app.get('appPath') + '/calendar.html'));
     });
+     app.route('/calendar')
+    .get((req, res) => {
+      res.sendFile(path.resolve(app.get('appPath') + '/calendar.html'));
+    });
      app.route('/admin/:id')
     .get((req, res) => {
       res.sendFile(path.resolve(app.get('appPath') + '/calAdmin.html'));
     });
-         app.route('/week')
+    app.route('/week')
     .get((req, res) => {
       res.sendFile(path.resolve(app.get('appPath') + '/calendar.html'));
     });
-             app.route('/event')
+     app.route('/admin')
+    .get((req, res) => {
+      res.sendFile(path.resolve(app.get('appPath') + '/calAdmin.html'));
+    });
+    app.route('/about')
+    .get((req, res) => {
+      res.sendFile(path.resolve(app.get('appPath') + '/index.html'));
+    });
+    app.route('/event')
     .get((req, res) => {
       res.sendFile(path.resolve(app.get('appPath') + '/calendar.html'));
     });
     app.route('/emailSender')
     .get((req, res) => {
-      res.sendFile(path.resolve(app.get('appPath') + '/index.html'));
+      res.sendFile(path.resolve(app.get('appPath') + '/calendar.html'));
     });
     // .get((req, res) => {
     //   res.sendFile(path.resolve(app.get('appPath') + '../../client/app/emailSender/emailSender.html'));

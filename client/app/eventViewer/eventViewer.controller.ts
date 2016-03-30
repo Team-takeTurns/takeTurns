@@ -4,11 +4,12 @@
 
     class EventViewerController {
 
-        constructor($http, $scope, socket, $rootScope) {
+        constructor($http, $scope, socket, $cookies) {
             this.$http = $http;
             //----------------- Global vars ---------------------
             this.calendar;
             this.url = window.location;
+            this.urlLength = 55;
             this.user;
             this.selectedEvent;
             this.showEventDetailView = true;
@@ -23,36 +24,32 @@
             this.backUpEventEndTime;
             this.backUpEventDate;
 
-            //check if $rootScope.userIDglobal is undefined then define it else  
-            if (!$rootScope.userIDglobal) {
-                $rootScope.userIDglobal;
+
+            //check if userId is already set in cookies. if not and url has userId then set userId in cookies 
+            if (this.url.toString().length == this.urlLength) {
+                $cookies.put("userId",  this.url.toString().substr(31, 24));
+                console.log("setting userId in cookies " + $cookies.get("userId"));
             }
-            if (!$rootScope.userRole) {
-                this.userIDtemp = this.url.toString().substr(31, 24);
-            } else if ($rootScope.userRole === "admin") {
-                this.userIDtemp = this.url.toString().substr(32, 24);
-            }
+              console.log("reading userId from cookies " + $cookies.get("userId"));
             this.$scope = $scope;
             this.$scope.slot = this.calendar;
             $scope.events = [];
             this.awesomeEvents = [];
 
             //----------------- Global vars END---------------------
-            
+
             //get calendar id from user ----------------------------
             paramSerializer: '$httpParamSerializerJQLike';
 
-            if (!this.userIDtemp) {
-                console.log("do nothing");
-                window.location = window.location + "/" + $rootScope.userIDglobal;
+            if ($cookies.get("userId")) {
+                $http.get('/api/users/' + $cookies.get("userId")).then(response => {
+                    this.user = response.data;
+                    this.getCalendar();
+                    socket.syncUpdates('calendar', this.calendar);
+                });
             } else {
-                $rootScope.userIDglobal = this.userIDtemp;
+                console.log("ERROR - userID is undefined. please use the link that was provided to you when the calendar was created.");
             }
-            $http.get('/api/users/' + $rootScope.userIDglobal).then(response => {
-                this.user = response.data;
-                this.getCalendar();
-                socket.syncUpdates('calendar', this.calendar);
-            });
            
 
             //auto generated start ----------------------------------
@@ -196,12 +193,11 @@
             
             //send request to delete event
             this.$http.patch('/api/calendars/' + this.calendar._id + "/DeleteEvent/" + this.selectedEvent._id).then(response => {
-                //this.$http.patch('/api/calendars/' + "56b1e6924f07f3840f8ce556" +"/DeleteEvent/"+ "56d2a6889cd26ad42860051e").then(response => {
                 this.calendar = response.data;
                 this.detailsEvent(this.calendar.events[this.getIndexOfFirstEventByDay()]._id);
-
-                alert('Event successfully deleted from calendar at ' + new Date());
-                //window.location.reload(true);
+            alert('The ' + this.selectedEvent.title + ' Event, Hosted by ' + this.selectedEvent.host + ' has been deleted successfully from this calendar.');
+                   
+                    //window.location.reload(true);
             });
 
             this.switchEventDetailView(buttonClicked);
