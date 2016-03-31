@@ -4,9 +4,11 @@
 
 class CalEditorController {
 
-  constructor($http, $scope, socket, $cookies, $location) {
+  constructor($http, $scope, socket, $window, $cookies, $location, emailDataContainer) {
     this.$http = $http;
     this.$location = $location;
+    this.$window = $window;
+    this.emailDataContainer = emailDataContainer;
     this.lengthsOfUrl = 52;
     this.calendar;
     this.message;
@@ -25,6 +27,13 @@ class CalEditorController {
     this.addMembers=[];
     this.delMembers=[];
     this.goodDate = new Date();
+
+
+//just for testing for now
+emailDataContainer.setBody("gggggggggggggggggg ");
+console.log("4444444444444 " + emailDataContainer.getBody());
+//just for testing for now
+
 
 //get user id from url or from cookies ----------------------------
     paramSerializer: '$httpParamSerializerJQLike';
@@ -147,12 +156,20 @@ convertDate(isoDate){
     return this.goodDate;
   }
 
-shareAdminLink(){
- this.$location.path('/emailSender');
+shareAdminLink(link){
+  //before writing values to this service clear all values
+  this.emailDataContainer.clearAll();
+  this.emailDataContainer.setBody("The admin user for the " + this.calendar.name + " calendar Would like to share the following admin link with you: \n" + link + 
+    "\nCalendar Info: " + "\nName: " + this.calendar.name + "\nDescription: " + this.calendar.description );
+  this.emailDataContainer.setSubject("Admin link to the calendar '" + this.calendar.name +"'");
 }
 
-shareUserLink(){
- this.$location.path('/emailSender');
+shareUserLink(link){
+    //before writing values to this service clear all values
+    this.emailDataContainer.clearAll();
+   this.emailDataContainer.setBody("The admin user for the " + this.calendar.name + " calendar Would like to share the following link with you: \n" + link + 
+    "\nCalendar Info: " + "\nName: " + this.calendar.name + "\nDescription: " + this.calendar.description );
+  this.emailDataContainer.setSubject("Link to the calendar '" + this.calendar.name +"'");
 }
 
 }

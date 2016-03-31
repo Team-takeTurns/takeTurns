@@ -5,13 +5,23 @@
 
     class EmailSenderCtrl {
 
-        constructor($http, $scope, socket, $cookies) {
+        constructor($http, $scope, socket, $cookies, emailDataContainer) {
             this.$http = $http;
+            this.emailDataContainer = emailDataContainer;
             this.to;
-            this.subject;
-            this.emailBody;
+            this.subject = this.emailDataContainer.getSubject();
+            this.emailBody = this.emailDataContainer.getBody();
             this.result;
             this.message;
+            //TODO set the who from as the name of the calendar not the name of the app as we have currently
+
+            //after reading from this service clear all values
+            this.emailDataContainer.clearAll();
+
+//this one line of code below is jsut for testing the service for transfering data between controllers
+console.log("22222222222222222 " + this.emailDataContainer.getBody());
+
+
 // //get calendar id from user ----------------------------
 //   paramSerializer: '$httpParamSerializerJQLike';
 // if (!this.userIDtemp){
