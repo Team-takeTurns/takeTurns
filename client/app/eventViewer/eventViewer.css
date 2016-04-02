@@ -61,6 +61,6 @@ font-weight: bold;
 
 div.scrollDayView {
     width: 100%;
-    height: 600px;
+    height: 530px;
     overflow: scroll;
 }
