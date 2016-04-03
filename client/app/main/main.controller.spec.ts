@@ -22,9 +22,4 @@ describe('Controller: MainController', function() {
       $scope: scope
     });
   }));
-
-  //it('should attach a list of users to the controller', function() {
-  //  $httpBackend.flush();
-  //  expect(MainController.awesomeUsers.length).to.equal(0);
- // });
 });
