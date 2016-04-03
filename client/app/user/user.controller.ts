@@ -16,7 +16,6 @@ class UserController {
 
 
     $http.get('/api/users/'+ this.userID).then(response => {
-      console.log(" i  am in user.controller");
       this.user = response.data;
       socket.syncUpdates('user', this.user);
       this.getCalendar();
@@ -36,7 +35,6 @@ class UserController {
 
   getCalendar(){
    this.$http.get('/api/calendars/'+ this.user.calID).then(response => {
-     // window.location = "http://localhost:9000/calendar/admin"
       this.calendar = response.data;
       socket.syncUpdates('calendar', this.calendar);
     });

@@ -3,7 +3,5 @@
 
 angular.module('takeTurnsApp.constants', [])
 
-.constant('appConfig', {userRoles:['guest','user','admin']})
-
-;
+.constant('appConfig', {userRoles:['guest','user','admin']});
 })(angular);
