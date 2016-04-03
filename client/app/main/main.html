@@ -9,17 +9,18 @@
 </header>
 
 <div class="container" id="createCalBox" ng-show="main.mainDiv">
-    <p>links just for testing purposes (users already exist in mongo)</p>
-    <a href="http://localhost:9000/calendar/56b044743ef01300237649ca" target="_blank">http://localhost:9000/calendar/56b044743ef01300237649ca</a>
+    <!--<a href="http://localhost:9000/calendar/56b044743ef01300237649ca" target="_blank">http://localhost:9000/calendar/56b044743ef01300237649ca</a>
     <br />
-    <a href="http://localhost:9000/admin/56b044743ef01300237649cb" target="_blank">http://localhost:9000/admin/56b044743ef01300237649cb</a>
+    <a href="http://localhost:9000/admin/56b044743ef01300237649cb" target="_blank">http://localhost:9000/admin/56b044743ef01300237649cb</a>-->
 
     <!-- form to create a calendar -->
     <form name="newCal" class="calendar-form" role="form">
-        <h2>Enter calendar details below:</h2>
+        <h1>CREATE CALENDAR</h1>
+        <br>
         <fieldset class="form-group">
             <label for="inputEmail">Email address*</label>
-            <input name="email" type="email" class="form-control" id="inputEmail" placeholder="Enter email" ng-model="main.Email" required>
+            <input name="email" type="email" class="form-control" id="inputEmail" placeholder="email@domain.com" ng-model="main.Email"
+            required>
             <small class="invalidInput" ng-show="newCal.email.$touched&&newCal.email.$invalid">*Email is required.</small>
         </fieldset>
         <fieldset class="form-group">
@@ -66,7 +67,7 @@
                     <div class="col-sm-5">
                         <div class="form-group">
                             <label class="sr-only" for="memEmail">Email</label>
-                            <input type="text" class="form-control" id="memEmail" placeholder="Email address" ng-model="main.memEmail">
+                            <input type="text" class="form-control" id="memEmail" placeholder="email@domain.com" ng-model="main.memEmail">
                         </div>
                     </div>
                     <div class="col-sm-4">
@@ -81,13 +82,9 @@
         <!-- checkbox for sending email to members if it is checked-->
         <div class="checkbox">
             <label>
-
                 <input type="checkbox" id="sendEmail" ng-model="main.sendEmail"> Send calendar link to all members
                 <br/>
                 <input id="agreeWithRules" type="checkbox" onclick="agreeWithRules()"> I acknowedge that I have read and agree with <a onclick="readRules()">the rules</a>
-
-                <!--<input type="checkbox" id="sendEmail" ng-model="main.sendEmail"> Send calendar link to all members-->
-
             </label>
         </div>
         <button id="createCalendar" type="submit" class="btn btn-primary" ng-click="main.addCalendar()" disabled>Create Calendar</button>
@@ -102,10 +99,7 @@
         
               document.getElementById("createCalendar").disabled = false;
               document.getElementById("agreeWithRules").checked = true;            
-        }/*else{
-              document.getElementById("createCalendar").disabled = true;
-              document.getElementById("agreeWithRules").checked = false;            
-        }*/
+        }
     }
     
     function agreeWithRules(){
@@ -136,8 +130,6 @@
 
     <br />
     <br />
-    <!--Click <a href="/emailSender">here</a> to send the email <br />-->
-
 </div>
 
 <footer></footer>
