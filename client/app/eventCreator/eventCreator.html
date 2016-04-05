@@ -11,27 +11,32 @@
     <br>
     <div id="addEvent">
         <div class="col-lg-12">
-            <form action="">
+            <form name = "newEvent" class="calendar-form" role = "form">
                 <fieldset class="form-group">
-                    <label for="">EVENT NAME:</label>
-                    <input type="text" class="form-control" ng-model="eventCreator.eventTitle" placeholder="Event Name">
+                    <label for="">EVENT NAME*:</label>
+                    <input name="eventTitle" type="text" class="form-control" ng-model="eventCreator.eventTitle" placeholder="Event Name" required>
+                    <small class="invalidInput" ng-show="newEvent.eventTitle.$touched&&newEvent.eventTitle.$invalid">*Event Name is required.</small>
                 </fieldset>
                 <fieldset class="form-group">
                     <label for="">DATE:</label>
-                    <input type="date" class="form-control" ng-model="eventCreator.eventDate" min="2015-01-01T00:00:00" max="2030-12-31T00:00:00"
-                    placeholder="MM-dd-yyyy">
+                    <input name="eventDate" type="date" class="form-control" ng-model="eventCreator.eventDate" min="2015-01-01T00:00:00" max="2030-12-31T00:00:00"
+                    placeholder="MM-dd-yyyy" required>
+                    <small class="invalidInput" ng-show="newEvent.eventDate.$touched&&newEvent.eventDate.$invalid">*Date is required.</small>
                 </fieldset>
                 <fieldset class="form-group">
-                    <label for="">START TIME:</label>
-                    <input type="time" class="form-control" ng-model="eventCreator.eventStartTime" min="00:00:00" max="24:00:00">
+                    <label for="">START TIME*:</label>
+                    <input name="eventStartTime" type="time" class="form-control" ng-model="eventCreator.eventStartTime" min="00:00:00" max="24:00:00" required>
+                    <small class="invalidInput" ng-show="newEvent.eventStartTime.$touched&&newEvent.eventStartTime.$invalid">*Start Time is required.</small>
                 </fieldset>
                 <fieldset class="form-group">
-                    <label for="">END TIME:</label>
-                    <input type="time" class="form-control" ng-model="eventCreator.eventEndTime" min="00:00:00" max="24:00:00">
+                    <label for="">END TIME*:</label>
+                    <input name="eventEndTime" type="time" class="form-control" ng-model="eventCreator.eventEndTime" min="00:00:00" max="24:00:00" required>
+                    <small class="invalidInput" ng-show="newEvent.eventEndTime.$touched&&newEvent.eventEndTime.$invalid">*End Time is required.</small>
                 </fieldset>
                 <fieldset class="form-group">
-                    <label for="">HOST NAME:</label>
-                    <input type="text" class="form-control" ng-model="eventCreator.eventHost" placeholder="Event Host Name">
+                    <label for="">HOST NAME*:</label>
+                    <input name="eventHost" type="text" class="form-control" ng-model="eventCreator.eventHost" placeholder="Event Host Name" required>
+                    <small class="invalidInput" ng-show="newEvent.eventHost.$touched&&newEvent.eventHost.$invalid">*Host Name is required.</small>
                 </fieldset>
                 <fieldset class="form-group">
                     <label for="">REMINDER DATE:</label>
