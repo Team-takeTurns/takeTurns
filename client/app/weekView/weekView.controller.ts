@@ -48,7 +48,7 @@
 
             if (this.calendar.events.length == 0) {
                 this.$scope.calendarView = 'week';
-                this.$scope.calendarDateDay = new Date();
+                this.$scope.calendarDate = new Date();
             }
             else {
                 for (var i in this.calendar.events) {
@@ -63,7 +63,7 @@
 
                     // Required to set the calendar months or day
                     this.$scope.calendarView = 'week';
-                    this.$scope.calendarDateDay = new Date();
+                    this.$scope.calendarDate = new Date();
                     this.$scope.events[i] =
                         {
                             title: hourStart + "-" + hourEnd + ' ' + this.calendar.events[i].title,
