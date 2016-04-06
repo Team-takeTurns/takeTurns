@@ -289,7 +289,7 @@ function myCalTimer() {
     counter++;
     day = d.getDay();
     hour = d.getHours();
-    if(day === day){
+    if(day === 7){
         //check for calendar older than 30 and has a title name then delete
          Calendar.find({$and: [ {"dateCreated": {$lte: isoDateToCompare}}, {"events.title": {$exists: false}} ] })
        .then(getCalendarId(res));

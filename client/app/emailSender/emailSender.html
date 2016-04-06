@@ -3,18 +3,27 @@
 <header class="hero-unit" id="banner">
   <div class="container">
     <h1>Email</h1>
-    <p class="lead"></p>
+    <p class="lead">Here you can send E-mail to user(s)</p>
   </div>
 </header>
 
-        <div id="container">
-            <h1>Send E-mail to members</h1>
-            <input id="to" type="text" ng-model="emailSender.to"  placeholder="Enter e-mail recpients" />
-            <input id="subject" type="text" ng-model="emailSender.subject"  placeholder="Subject" />
-           
-            <textarea id="emailBody" cols="82" ng-model="emailSender.emailBody"  rows="7"></textarea>
-            <button id="send_email" ng-click="emailSender.sendEmail()">Send</button>
-            <span id="message" >{{emailSender.message}}</span>
+        <div id="container" >
+            
+                <div class="col-lg-11" >
+                <h2>Send E-mail to members</h2>
+                
+                <label for="">TO:</label>
+                <input id="to" type="text" class="form-control" ng-model="emailSender.to" placeholder="Enter e-mail recpients">
+                
+                <label for="">SUBJECT:</label>
+                <input id="subject" type="text" class="form-control" ng-model="emailSender.subject" placeholder="Subject">
+                
+                <label for="">BODY:</label>
+                <textarea id="emailBody" class="form-control" ng-model="emailSender.emailBody" name="" cols="60" rows="7" placeholder="Email body"></textarea>
+                
+                <button id="send_email" type="submit" class="btn btn-primary" ng-click="emailSender.sendEmail()">SEND</button>
+                <span id="message" >{{emailSender.message}}</span>
+             
           </div>  
         
 <footer></footer>
