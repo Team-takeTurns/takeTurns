@@ -4,7 +4,7 @@
 
     class EventViewerController {
 
-        constructor($http, $scope, socket, $cookies) {
+        constructor($http, $scope, socket, $cookies, emailDataContainer) {
             this.$http = $http;
             //----------------- Global vars ---------------------
             this.calendar;
@@ -23,22 +23,18 @@
             this.backUpEventStartTime;
             this.backUpEventEndTime;
             this.backUpEventDate;
-
-
-            //check if userId is already set in cookies. if not and url has userId then set userId in cookies 
-            if (this.url.toString().length == this.urlLength) {
-                $cookies.put("userId",  this.url.toString().substr(31, 24));
-                console.log("setting userId in cookies " + $cookies.get("userId"));
-            }
-              console.log("reading userId from cookies " + $cookies.get("userId"));
             this.$scope = $scope;
             this.$scope.slot = this.calendar;
             $scope.events = [];
             this.awesomeEvents = [];
 
+            //check if userId is already set in cookies. if not and url has userId then set userId in cookies 
+            if (this.url.toString().length == this.urlLength) {
+                $cookies.put("userId", this.url.toString().substr(31, 24));
+            }
             //----------------- Global vars END---------------------
 
-            //get calendar id from user ----------------------------
+            //get calendar id from user
             paramSerializer: '$httpParamSerializerJQLike';
 
             if ($cookies.get("userId")) {
@@ -50,16 +46,16 @@
             } else {
                 console.log("ERROR - userID is undefined. please use the link that was provided to you when the calendar was created.");
             }
-           
 
-            //auto generated start ----------------------------------
+
+            //auto generated start
             $scope.$on('$destroy', function() {
                 socket.unsyncUpdates('calendar');
             });
-            //auto generated end ----------------------------------
+            //auto generated end
         }
 
-        // get calendar details -------------------------------
+        // get calendar details
         getCalendar() {
             this.$http.get('/api/calendars/' + this.user.calID).then(response => {
                 this.calendar = response.data;
@@ -68,28 +64,7 @@
                 this.detailsEvent(this.calendar.events[this.getIndexOfFirstEventByDay()]._id);
             });
         }
-        
 
-        // dayEvents() {
-        //     for (var i in this.calendar.events) {
-        //         var calEvent = this.calendar.events[i].date;
-        //         var startTime = new Date(calEvent.substring(0, 10) + "T" + this.calendar.events[i].startTime);
-        //         var endTime = new Date(calEvent.substring(0, 10) + "T" + this.calendar.events[i].endTime);
-        //         // Required to set the calenday months or day
-        //         this.$scope.calendarView = 'day';
-        //         this.$scope.calendarDate = new Date();
-
-        //         console.log("ID:" + this.calendar.events[i]._id);
-        //         this.$scope.events[i] =
-        //             {
-        //                 title: this.calendar.events[i].title,
-        //                 startsAt: new Date(moment(startTime).format()),
-        //                 endsAt: new Date(moment(endTime).format()),
-        //                 eventId: this.calendar.events[i]._id
-        //             };
-        //     } // End The for loop
-        // } // End dayEvents method
-        
         // detailsEvents methods
         private detailsEvent(eventId) {
 
@@ -103,7 +78,7 @@
                 }
             }
         }
-        
+
         /** Format the Time accepting two parameter
          * 1. Date of the time
          * 2. Time to be formated
@@ -143,12 +118,12 @@
             });
             return myIndex;
         }
-        
+
         // Listen for the Event Clicked
         eventClicked(events) {
             this.detailsEvent(events.eventId);
         }
-        
+
         // On the view button < or > clicked
         dayNavButtonClicked(clickedArrow: number) {
             if (clickedArrow != 0) {
@@ -159,20 +134,19 @@
 
             this.detailsEvent(this.calendar.events[this.getIndexOfFirstEventByDay()]._id);
         }
-        
+
         //Hide Event Detail View
         public hideEventView(buttonClicked: number) {
             this.backUpEventSelected = angular.copy(this.selectedEvent);
             this.backUpEventStartTime = angular.copy(this.eventStartTime);
             this.backUpEventEndTime = angular.copy(this.eventEndTime);
             this.backUpEventDate = angular.copy(this.eventDate);
-            
+
             this.switchEventDetailView(buttonClicked);
         }
-        
+
         // Change the view of the event details
         private switchEventDetailView(buttonClicked: number) {
-
             switch (buttonClicked) {
                 case 0:
                     this.showEventDetailView = false;
@@ -187,23 +161,17 @@
 
         //code to delete an event
         deleteEvent(buttonClicked: number) {
-            
-            // console.log("event Id   " + this.selectedEvent._id);
-            // console.log("event Id  outside if " + this.calendar._id); 
-            
             //send request to delete event
             this.$http.patch('/api/calendars/' + this.calendar._id + "/DeleteEvent/" + this.selectedEvent._id).then(response => {
                 this.calendar = response.data;
                 this.detailsEvent(this.calendar.events[this.getIndexOfFirstEventByDay()]._id);
-            alert('The ' + this.selectedEvent.title + ' Event, Hosted by ' + this.selectedEvent.host + ' has been deleted successfully from this calendar.');
-                   
-                    //window.location.reload(true);
+                alert('The ' + this.selectedEvent.title + ' Event, Hosted by ' + this.selectedEvent.host + ' has been deleted successfully from this calendar.');
+                window.location.reload();
             });
-
             this.switchEventDetailView(buttonClicked);
         }
-
-
+        
+        // Day Event
         dayEvents() {
             if (this.calendar.events.length == 0) {
                 this.$scope.calendarView = 'day';
@@ -214,7 +182,7 @@
                     var calEvent = this.calendar.events[i].date;
                     var startTime = new Date(calEvent.substring(0, 10) + "T" + this.calendar.events[i].startTime);
                     var endTime = new Date(calEvent.substring(0, 10) + "T" + this.calendar.events[i].endTime);
-                
+
                     // Required to set the calendar months or day
                     this.$scope.calendarView = 'day';
                     this.$scope.calendarDateDay = new Date();
@@ -229,7 +197,7 @@
                 }
             } // End The for loop
         } // End dayEvents method
-        
+
         // Update Events
         updateEvent(buttonClicked: number) {
             this.$http.put('/api/calendars/updateEvent/' + this.calendar._id, { eventId: this.selectedEvent._id, title: this.selectedEvent.title, host: this.selectedEvent.host, date: this.selectedEvent.date, startTime: this.selectedEvent.startTime, endTime: this.selectedEvent.endTime, info: this.selectedEvent.info, paramSerializer: '$httpParamSerializerJQLike' }).then(response => {
@@ -238,10 +206,11 @@
                 this.detailsEvent(this.calendar.events[this.getIndexOfFirstEventByDay()]._id);
 
                 alert("You have successfully edited the event.");
+                window.location.reload();
             });
             this.switchEventDetailView(buttonClicked);
         }
-        
+
         // Cancel Update
         cancelEdit(buttonClicked: number) {
             this.selectedEvent = this.backUpEventSelected;
@@ -249,12 +218,11 @@
             this.eventStartTime = this.backUpEventStartTime;
             this.eventEndTime = this.backUpEventEndTime;
             this.eventDate = this.backUpEventDate;
-            
+
             this.switchEventDetailView(buttonClicked);
         }
-
-
-
+        
+        // Month Event
         monthEvents() {
             if (this.calendar.events.length == 0) {
                 this.$scope.calendarViewMonth = 'month';
@@ -265,7 +233,7 @@
                     var calEvent = this.calendar.events[i].date;
                     var startTime = new Date(calEvent.substring(0, 10) + "T" + this.calendar.events[i].startTime);
                     var endTime = new Date(calEvent.substring(0, 10) + "T" + this.calendar.events[i].endTime);
-                
+
                     // Required to set the calendar months or day
                     this.$scope.calendarViewMonth = 'month';
                     this.$scope.calendarDateMonth = new Date();

@@ -4,7 +4,7 @@
 
     class EventCreatorController {
 
-        constructor($http, $scope, socket, $rootScope, $cookies) {
+        constructor($http, $scope, socket, $rootScope, $cookies, emailDataContainer) {
             this.$http = $http;
             this.awesomeCalendars = [];
             this.calendar;

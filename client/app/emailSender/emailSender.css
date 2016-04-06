@@ -1,4 +1,4 @@
-.member-form {
+.email-form {
   margin: 20px 0;
 }
 
@@ -13,6 +13,16 @@
   letter-spacing: -1px;
 }
 
+#emailBox, #waitScreenBox{
+  border: solid 1px black;
+  margin-top: 10px;
+  padding-bottom: 10px;
+}
+
+#memberBox{
+  padding: 10px;
+  border: solid 1px grey;
+}
 .hero-unit {
   position: relative;
   padding: 30px 15px;
