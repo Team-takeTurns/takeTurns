@@ -47,41 +47,8 @@
                     <label for="">DESCRIPTION:</label>
                     <textarea class="form-control" ng-model="eventCreator.eventInfo" name="" id="" cols="30" rows="10" placeholder="Description of the event goes here ..."></textarea>
                 </fieldset>
-
-                <!--Add Members to events-->
-                <p>
-                    <button class="btn btn-primary collapsed" ng-click="main.changeCollapseBtn()" type="button" data-toggle="collapse" data-target="#memberBox"
-                    aria-expanded="false" aria-controls="memberBox">ADD Members
-                        <span class="caret" id="collapseCaret"></span>
-                    </button>
-                </p>
-                <fieldset class="collapse" id="memberBox">
-                    <form class="member-form">
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <div class="form-group">
-                                    <label class="sr-only" for="memName">Name</label>
-                                    <input type="text" class="form-control" id="memName" placeholder="Name of member" ng-model="main.memName">
-                                </div>
-                            </div>
-                            <div class="col-sm-5">
-                                <div class="form-group">
-                                    <label class="sr-only" for="memEmail">Email</label>
-                                    <input type="text" class="form-control" id="memEmail" placeholder="Email address" ng-model="main.memEmail">
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <span class="input-group-btn">
-                                    <button type="submit" class="btn btn-primary" ng-click="main.addMember()">Add Member</button>
-                                </span>
-                            </div>
-                        </div>
-                    </form>
-                </fieldset>
-
-                <!--Ends the Add Member-->
                 <fieldset class="form-group">
-                    <button type="submit" class="btn btn-primary" ng-click="eventCreator.addEvent()">ADD</button>
+                    <button type="submit" class="btn btn-primary" ng-click="eventCreator.addEvent()">CREATE EVENT</button>
                     <button type="submit" class="btn btn-primary">CANCEL</button>
                 </fieldset>
             </form>
