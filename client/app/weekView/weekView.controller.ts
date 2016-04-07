@@ -13,6 +13,8 @@
             this.$scope = $scope;
             this.$scope.slot = this.calendar;
             $scope.events = [];
+            this.$scope.calendarView = 'week';
+            this.$scope.calendarDate = new Date();
 
             //get calendar id from user ----------------------------
             paramSerializer: '$httpParamSerializerJQLike';
