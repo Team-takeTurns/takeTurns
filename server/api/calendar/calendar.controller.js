@@ -67,7 +67,6 @@ function getRemovedEventCal(calId, eventId, res){
 function saveUpdates(updates) {
   return function(entity) {
     var updated = _.merge(entity, updates);
-    console.log("entity -----------ffffffffff------------ " + entity);
     return updated.saveAsync()
       .spread(updated => {
         return updated;
@@ -89,7 +88,6 @@ function removeEntity(res) {
 
 function handleEntityNotFound(res) {
   return function(entity) {
-    console.log("entity found ----------- " + entity);
     if (!entity) {
       res.status(404).end();
       return null;
@@ -130,7 +128,6 @@ export function create(req, res) {
 
 // Deletes a Calendar from the DB
 export function destroy(req, res) {
- console.log("Calendar find from delete "+ JSON.stringify(Calendar.findByIdAsync(req.params.id)));
   Calendar.findByIdAsync(req.params.id)
     .then(handleEntityNotFound(res))
     .then(removeEntity(res))
@@ -158,7 +155,7 @@ export function addEvent(req, res){
     .catch(handleError(res));
 }
 
-//Updating event START---------------------------------------------------
+//Updating event START
 export function updateEvent(req, res){
     if (req.body._id) {
     delete req.body._id;
@@ -175,9 +172,7 @@ Calendar.updateAsync( { _id: req.params.calId,
     .then(checkIfModified(req.params.calId, req.body.eventId, res, sendResult));
 }
 
-//Updating event END ----------------------------------------
-
-// Updates an existing Calendar in the DB ---- START --------------------
+// Updates an existing Calendar in the DB START
 export function update(req, res) {
   if (req.body._id) {
     delete req.body._id;
@@ -232,8 +227,8 @@ function myTimer() {
     counter++;
     day = d.getDay();
     hour = d.getHours();
-    if(day === 7){// (day === 7){
-      if(hour >= hour && hour < hour + 5 ){ //(time > 2 && time < 5 ){
+    if(day === 7){
+      if(hour >= hour && hour < hour + 5 ){
       Calendar.find({"events.date": {$lte: isoDateToCheckAgainst}}, {$limit: 1})
        .then(getCalendarIds(res))
        .catch(handleError(res));
@@ -267,7 +262,6 @@ calendarIds=[];
 function getEvents(res) {
   return function(entity) {
     if (entity) {
-          //console.log( " ============ events ============ "  + JSON.stringify(entity));//uncomment this line for testing
     }
   };
 }
@@ -321,10 +315,8 @@ function myCalTimer() {
         function removeEmptyCalendars(res) {
         return function(entity) {
             if (entity) {
-               console.log( "4 " + entity);
              return entity.removeAsync()
               .then(() => {
-             console.log("The following Entity is removed " + entity);
         });
     }
   };
