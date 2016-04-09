@@ -28,4 +28,3 @@ describe('Controller: weekViewController', function() {
     expect(weekViewController.awesomeEvents.length).to.equal(4);
   });
 });
-           console.log(" i  am in weekViewController.controller specs");

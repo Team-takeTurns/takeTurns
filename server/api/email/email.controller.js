@@ -34,6 +34,7 @@ function respondWithResult(res, statusCode) {
   };
 }
 
+// Error Handler
 function handleError(res, statusCode) {
   statusCode = statusCode || 500;
   return function(err) {
@@ -41,37 +42,23 @@ function handleError(res, statusCode) {
   };
 }
 
-// sends Email --------------------------------------------this is not parsing data in request - request is empty for some reason
+// sends Email. This is not parsing data in request - request is empty for some reason
 export function sendEmail(req, res) {
     if (req.body._id) {
     delete req.body._id;
   }
-  console.log("888888888888888888888888888888 inside BE controller 888888888888888");
-
-        console.log(" req.body " + JSON.stringify(req.body));
-
-        console.log(" req.body.to " + JSON.stringify(req.body.to));
-        console.log(" req.body.emailBody " + JSON.stringify(req.body.emailBody));
-        console.log(" req.body.subject " + JSON.stringify(req.body.subject));
-        console.log(" req.query.to " + JSON.stringify(req.body.to));
  var mailOptions={
         from:'takeTurns Web App <testact0123@gmail.com>',
         to :req.body.to,
         subject: req.body.subject,
         text:req.body.emailBody }
-       console.log(mailOptions);
 
     transporter.sendMail(mailOptions,function(error,response){
         if (error){
-            console.log(error);
             res.end("error");
         }else{
-            console.log("Message sent: "+response.message);
             res.end("sent");    
         }
     });
-  // Email.findAsync()
-  //   .then(respondWithResult(res))
-  //   .catch(handleError(res));
 }
 

@@ -273,7 +273,7 @@ Calendar.find({}).removeAsync()
                 },  {name:"Bowman", 
                 _id:"56ca72353876946c0c49b597",
                 email:"ggc@ggg.gg"}],
-      name:       'Swimming with Davelf',
+      name:       'Swimming with Davelendi',
       description: 'This is the description for the event. TEST',
       dateCreated: "2016-01-21T02:32:12.457Z",
       events: [  

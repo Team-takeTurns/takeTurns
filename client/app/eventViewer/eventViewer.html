@@ -3,7 +3,6 @@
 <header class="hero-unit" id="banner">
     <div class="container">
         <h1> {{eventViewer.calendar.name}}</h1>
-        <p class="lead">Here you can view events in a month view, day view and details about the event.</p>
     </div>
 </header>
 
@@ -12,9 +11,6 @@
     <div class="row">
         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
             <div id="monthView">
-                <h4 class="titleLbl">Month View</h4>
-                <p>This div is for the month view. Alex is going to work on this view</p>
-
                 <h2 class="text-center">{{ calendarTitleMonth }}</h2>
                 <div class="text-center">
                     <div class="btn-group">
@@ -39,6 +35,7 @@
                     on-event-times-changed="calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
                     edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'" delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
                     on-edit-event-click="eventViewer.switchEventDetailView(0);eventViewer.eventClicked(calendarEvent)" on-delete-event-click="eventViewer.deleteEvent()"
+                    on-view-change-click="false"
                     </mwl-calendar>
                 </div>
             </div>
@@ -47,10 +44,6 @@
 
         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
             <div id="dayView">
-                <h4 class="titleLbl">Day View</h4>
-                <p>This div is for the day view. Christine is going to work on this view </p>
-
-
                 <h2 class="text-center">{{ calendarTitle }}</h2>
                 <div class="text-center">
                     <div class="btn-group">
@@ -71,57 +64,20 @@
                     <mwl-calendar view="calendarView" view-date="calendarDateDay" events="events" view-title="calendarTitle" on-event-click="eventViewer.eventClicked(calendarEvent)"
                     on-event-times-changed="calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
                     edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'" delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
-                    on-edit-event-click="eventEdited(calendarEvent)" on-delete-event-click="eventDeleted(calendarEvent)" day-view-start="08:00"
-                    </mwl-calendar>
+                    on-edit-event-click="eventEdited(calendarEvent)" on-delete-event-click="eventDeleted(calendarEvent)"
+                    day-view-start="08:00" </mwl-calendar>
                 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             </div>
         </div>
         <!--end of column for day view -->
     </div>
 
-    <!--Event Details Form -->
+    <!--Event Details-->
     <div id="detailsView" class="row">
         <div id="evenDet" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <!--Event Detail View section-->
             <section ng-show="eventViewer.showEventDetailView">
-                <h4 class="titleLbl">Event Details</h4>
-                <h1>{{eventViewer.selectedEvent.title}}</h1>
+                <h1>Event: {{eventViewer.selectedEvent.title}}</h1>
                 <div>
                     <label>DATE: </label> {{eventViewer.eventDate | date: 'dd/MM/yyyy'}}
                 </div>
@@ -148,31 +104,33 @@
                 <form name="newCal" class="calendar-form" role="form">
                     <h1>{{eventViewer.calendar.name}}</h1>
                     <br>
-
-
                     <div class="col-md col-md-offset-11">
                         <button class="btn btn-primary" ng-click="eventViewer.deleteEvent(1)">DELETE</button>
                     </div>
-                    <!--Start of the Edit section-->
                     <fieldset class="form-group">
                         <label>Title: </label>
-                        <input class="form-control" ng-model="eventViewer.selectedEvent.title">
+                        <input name = "title" class="form-control" ng-model="eventViewer.selectedEvent.title" required>
+                        <small class="invalidInput" ng-show="newCal.title.$touched&&newCal.title.$invalid">*Event Title is required.</small>
                     </fieldset>
                     <fieldset class="form-group">
                         <label>Date: </label>
-                        <input type="date" class="form-control" ng-model="eventViewer.eventDate">
+                        <input name = "eventDate" type="date" class="form-control" ng-model="eventViewer.eventDate" required>
+                        <small class="invalidInput" ng-show="newCal.eventDate.$touched&&newCal.eventDate.$invalid">*Date is required.</small>
                     </fieldset>
                     <fieldset class="form-group">
                         <label>Start Time: </label>
-                        <input type="time" class="form-control" ng-model="eventViewer.eventStartTime">
+                        <input name = "eventStartTime" type="time" class="form-control" ng-model="eventViewer.eventStartTime" required>
+                        <small class="invalidInput" ng-show="newCal.eventStartTime.$touched&&newCal.eventStartTime.$invalid">*Start Time is required.</small>
                     </fieldset>
                     <fieldset class="form-group">
                         <label>End Time: </label>
-                        <input type="time" class="form-control" ng-model="eventViewer.eventEndTime">
+                        <input name = "eventEndTime" type="time" class="form-control" ng-model="eventViewer.eventEndTime" required>
+                        <small class="invalidInput" ng-show="newCal.eventEndTime.$touched&&newCal.eventEndTime.$invalid">*End Time is required.</small>
                     </fieldset>
                     <fieldset class="form-group">
                         <label>Host: </label>
-                        <input class="form-control" ng-model="eventViewer.selectedEvent.host">
+                        <input name = "host" class="form-control" ng-model="eventViewer.selectedEvent.host" required>
+                        <small class="invalidInput" ng-show="newCal.host.$touched&&newCal.host.$invalid">*Host is required.</small>
                     </fieldset>
                     <fieldset class="form-group">
                         <label>Description: </label>
@@ -180,10 +138,9 @@
                     </fieldset>
                     <br>
                     <div ng-init="updBttn=true">
-                        <button id="refresh" class="btn btn-primary" ng-click="eventViewer.updateEvent(1)">UPDATE</button>
+                        <button class="btn btn-primary" ng-click="eventViewer.updateEvent(1)">UPDATE</button>
                         <button class="btn btn-primary" ng-click="eventViewer.cancelEdit(1)">CANCEL</button>
                     </div>
-
                 </form>
             </section>
             <!--end of column for event details view -->
@@ -194,10 +151,3 @@
 <footer>
 
 </footer>
-
-<script>
-      $('#refresh').click(function(event){ 
-   location.reload();
-   console.log('app/eventViewer/eventViewer.html' + ' #dayView');
-}); 
-    </script>

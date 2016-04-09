@@ -7,17 +7,14 @@
         constructor($http, $scope, socket, $cookies, emailDataContainer) {
             this.$http = $http;
             this.awesomeEvents = [];
-
             this.calendar;
             this.url = window.location;
             this.user;
             this.$scope = $scope;
             this.$scope.slot = this.calendar;
             $scope.events = [];
-            
-            //this one line of code below is jsut for testing the service for transfering data between controllers
-           emailDataContainer.setBody("tttttttttttttttttttttttt ");
-
+            this.$scope.calendarView = 'week';
+            this.$scope.calendarDate = new Date();
 
             //get calendar id from user ----------------------------
             paramSerializer: '$httpParamSerializerJQLike';
@@ -29,7 +26,7 @@
                     this.getCalendar();
                     socket.syncUpdates('calendar', this.calendar);
                 });
-                } else {
+            } else {
                 console.log("ERROR - userID is undefined. please use the link that was provided to you when the calendar was created.");
             }
 
@@ -53,8 +50,7 @@
 
             if (this.calendar.events.length == 0) {
                 this.$scope.calendarView = 'week';
-                this.$scope.calendarDateDay = new Date();
-                console.log("HELLO ITS ME");
+                this.$scope.calendarDate = new Date();
             }
             else {
                 for (var i in this.calendar.events) {
@@ -66,12 +62,10 @@
                     var shortEndDate = this.calendar.events[i].endTime + "";
                     var hourStart = shortStartDate.substring(0, 5);
                     var hourEnd = shortEndDate.substring(0, 5);
-                
+
                     // Required to set the calendar months or day
                     this.$scope.calendarView = 'week';
-                    this.$scope.calendarDateDay = new Date();
-
-                    console.log("ID:" + this.calendar.events[i]._id);
+                    this.$scope.calendarDate = new Date();
                     this.$scope.events[i] =
                         {
                             title: hourStart + "-" + hourEnd + ' ' + this.calendar.events[i].title,
@@ -83,7 +77,7 @@
             }
         }
 
-        private sortTime(date1, date2): any {		
+        private sortTime(date1, date2): any {
 
             //Sort By Time		
             if (date1.startTime > date2.startTime) return 1;
@@ -91,7 +85,7 @@
             return 0;
         }
     }
-    
+
 
     angular.module('takeTurnsApp')
         .controller('weekViewController', weekViewController);

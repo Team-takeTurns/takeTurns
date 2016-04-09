@@ -2,15 +2,6 @@
 
 var mongoose = require('bluebird').promisifyAll(require('mongoose'));
 
-/*
-var CalendarSchema = new mongoose.Schema({
-  email: String,
-  dateCreated: Date,
-  title: String,
-  description: String,
-  members: String
-});
-*/
 var CalendarSchema = new mongoose.Schema({
   members: [{   name: String, 
                 email: String

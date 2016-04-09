@@ -2,8 +2,11 @@
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-  <head>
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+
+<head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <base href="/">
@@ -12,28 +15,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(client) app/vendor.css -->
-      <!-- bower:css -->
-      <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-      <link rel="stylesheet" href="bower_components/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.css" />
-      <!-- endbower -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.css" />
+    <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css({.tmp,client}) app/app.css -->
-      <link rel="stylesheet" href="app/app.css">
-      <!-- injector:css -->
-      <link rel="stylesheet" href="app/about/about.css">
-      <link rel="stylesheet" href="app/app.css">
-      <link rel="stylesheet" href="app/calEditor/calEditor.css">
-      <link rel="stylesheet" href="app/emailSender/emailSender.css">
-      <link rel="stylesheet" href="app/eventCreator/eventCreator.css">
-      <link rel="stylesheet" href="app/eventViewer/eventViewer.css">
-      <link rel="stylesheet" href="app/main/main.css">
-      <link rel="stylesheet" href="app/weekView/weekView.css">
-      <link rel="stylesheet" href="components/footer/footer.css">
-      <link rel="stylesheet" href="components/modal/modal.css">
-      <!-- endinjector -->
+    <link rel="stylesheet" href="app/app.css">
+    <!-- injector:css -->
+    <link rel="stylesheet" href="app/about/about.css">
+    <link rel="stylesheet" href="app/app.css">
+    <link rel="stylesheet" href="app/calEditor/calEditor.css">
+    <link rel="stylesheet" href="app/emailSender/emailSender.css">
+    <link rel="stylesheet" href="app/eventCreator/eventCreator.css">
+    <link rel="stylesheet" href="app/eventViewer/eventViewer.css">
+    <link rel="stylesheet" href="app/main/main.css">
+    <link rel="stylesheet" href="app/weekView/weekView.css">
+    <link rel="stylesheet" href="components/footer/footer.css">
+    <link rel="stylesheet" href="components/modal/modal.css">
+    <!-- endinjector -->
     <!-- endbuild -->
-  </head>
-  <body ng-app="takeTurnsApp">
+</head>
+
+<body ng-app="takeTurnsApp">
     <!--[if lt IE 7]>
       <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -43,7 +47,7 @@
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
     <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
       })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
@@ -58,49 +62,51 @@
     <![endif]-->
     <!-- build:js({client,node_modules}) app/vendor.js -->
     <!-- Liliya scripts -->
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-      <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-      <!-- bower:js -->
-      <script src="bower_components/jquery/dist/jquery.js"></script>
-      <script src="bower_components/angular/angular.js"></script>
-      <script src="bower_components/angular-resource/angular-resource.js"></script>
-      <script src="bower_components/angular-cookies/angular-cookies.js"></script>
-      <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-      <script src="bower_components/angular-route/angular-route.js"></script>
-      <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-      <script src="bower_components/lodash/dist/lodash.compat.js"></script>
-      <script src="bower_components/angular-socket-io/socket.js"></script>
-      <script src="bower_components/moment/moment.js"></script>
-      <script src="bower_components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.js"></script>
-      <!-- endbower -->
-      <script src="socket.io-client/socket.io.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/lodash/dist/lodash.compat.js"></script>
+    <script src="bower_components/angular-socket-io/socket.js"></script>
+    <script src="bower_components/moment/moment.js"></script>
+    <script src="bower_components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.js"></script>
+    <!-- endbower -->
+    <script src="socket.io-client/socket.io.js"></script>
     <!-- endbuild -->
     <!-- build:js({.tmp,client}) app/app.js -->
-      <script src="app/app.js"></script>
-      <script src="components/footer/footer.directive.js"></script>
-      <script src="app/calEditor/calEditor.controller.js"></script>
-      <script src="app/eventCreator/eventCreator.controller.js"></script>
-      <script src="app/eventCreator/eventCreator.js"></script>
-      <script src="app/eventViewer/eventViewer.controller.js"></script>
-      <script src="app/eventViewer/eventViewer.js"></script>
-      <script src="app/main/main.controller.js"></script>
-      <script src="app/main/main.js"></script>
-      <script src="app/about/about.controller.js"></script>
-      <script src="app/about/about.js"></script>
-      <script src="app/user/user.controller.js"></script>
-      <script src="app/user/user.js"></script>
-      <script src="app/weekView/weekView.controller.js"></script>
-      <script src="app/weekView/weekView.js"></script>
-      <script src="app/calEditor/calEditor.js"></script>
-      <script src="app/emailSender/emailSender.js"></script>
-      <script src="app/emailSender/emailSender.controller.js"></script>
-      <script src="components/modal/modal.service.js"></script>
-      <script src="components/navbar/navbar.controller.js"></script>
-      <script src="components/navbar/navbar.directive.js"></script>
-      <script src="components/socket/socket.service.js"></script>
-      <script src="components/util/util.module.js"></script>
-      <script src="components/util/util.service.js"></script>
-      <script src="app/app.constant.js"></script>
+    <script src="app/app.js"></script>
+    <script src="app/emailDataContainer/emailDataContainer.service.js"></script>
+    <script src="components/footer/footer.directive.js"></script>
+    <script src="app/calEditor/calEditor.controller.js"></script>
+    <script src="app/eventCreator/eventCreator.controller.js"></script>
+    <script src="app/eventCreator/eventCreator.js"></script>
+    <script src="app/eventViewer/eventViewer.controller.js"></script>
+    <script src="app/eventViewer/eventViewer.js"></script>
+    <script src="app/main/main.controller.js"></script>
+    <script src="app/main/main.js"></script>
+    <script src="app/about/about.controller.js"></script>
+    <script src="app/about/about.js"></script>
+    <script src="app/user/user.controller.js"></script>
+    <script src="app/user/user.js"></script>
+    <script src="app/weekView/weekView.controller.js"></script>
+    <script src="app/weekView/weekView.js"></script>
+    <script src="app/calEditor/calEditor.js"></script>
+    <script src="app/emailSender/emailSender.js"></script>
+    <script src="app/emailSender/emailSender.controller.js"></script>
+    <script src="components/modal/modal.service.js"></script>
+    <script src="components/navbar/navbar.controller.js"></script>
+    <script src="components/navbar/navbar.directive.js"></script>
+    <script src="components/socket/socket.service.js"></script>
+    <script src="components/util/util.module.js"></script>
+    <script src="components/util/util.service.js"></script>
+    <script src="app/app.constant.js"></script>
     <!-- endbuild -->
-  </body>
+</body>
+
 </html>

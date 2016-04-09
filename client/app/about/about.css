@@ -1,0 +1,43 @@
+
+    
+    .wrapper {
+        width: 100%;
+    }
+    
+    /*div columns*/
+    #col-left {
+        width: 10%;
+        float:left;
+    }
+    
+    #col-middle {
+        width: 70%;
+        float:left;
+    }
+    
+    #col-right {
+        width: 10%;
+        float:left;
+    }
+    
+    table {
+        border-collapse: collapse;
+        width:100%
+    }
+
+    table, th, td {
+        text-align:center;
+        border: 1px solid black;
+    }
+    
+    th{
+        background-color:lightskyblue;
+    }
+    
+    tr:hover {
+        background-color: lightskyblue;
+    }
+    
+    #double{
+        background-color: #f5f5f5;
+    }
