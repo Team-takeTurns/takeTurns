@@ -26,6 +26,10 @@
             this.$scope = $scope;
             this.$scope.slot = this.calendar;
             $scope.events = [];
+            this.$scope.calendarView = 'day';
+            this.$scope.calendarDateDay = new Date();
+            this.$scope.calendarViewMonth = 'month';
+            this.$scope.calendarDateMonth = new Date();
             this.awesomeEvents = [];
 
             //check if userId is already set in cookies. if not and url has userId then set userId in cookies 
@@ -170,7 +174,7 @@
             });
             this.switchEventDetailView(buttonClicked);
         }
-        
+
         // Day Event
         dayEvents() {
             if (this.calendar.events.length == 0) {
@@ -221,12 +225,12 @@
 
             this.switchEventDetailView(buttonClicked);
         }
-        
+
         // Month Event
         monthEvents() {
             if (this.calendar.events.length == 0) {
                 this.$scope.calendarViewMonth = 'month';
-                this.$scope.calendarDateMonth = new Date();
+                this.$scope.calendarDateMonth = new Date().getUTCMonth;
             }
             else {
                 for (var i in this.calendar.events) {

@@ -1,32 +1,36 @@
 <navbar></navbar>
 
 <header class="hero-unit" id="banner">
+
     <div class="container">
         <h1>Email</h1>
     </div>
 </header>
 
-<div class="container">
-    <div class="row">
-        <div class="col-xs-7 col-sm-7 col-md-8 col-lg-7">
-            <h1>Send E-mail to members</h1>
-            <form class="calendar-form" role="form">
-                <fieldset class="form-group">
-                    <input class="form-control" id="to" type="text" ng-model="emailSender.to" placeholder="Enter e-mail recpients" />
-                </fieldset>
-                <fieldset class="form-group">
-                    <input class="form-control" id="subject" type="text" ng-model="emailSender.subject" placeholder="Subject" />
-                </fieldset>
-                <fieldset class="form-group">
-                    <textarea class="form-control" id="emailBody" cols="82" ng-model="emailSender.emailBody" rows="7"></textarea>
-                </fieldset>
-                <fieldset class="form-group">
-                    <button class="btn btn-primary" id="send_email" ng-click="emailSender.sendEmail()">Send</button>
-                </fieldset>
-            </form>
-            <span id="message">{{emailSender.message}}</span>
-        </div>
+<div class="container" id="emailBox">
+
+    <div class="col-lg-12">
+        <h2>Send E-mail</h2>
+
+        <form name="sendemail" class="email-form" role="form" novalidate>
+
+            <fieldset class="form-group">
+                <label for="">TO:</label>
+                <input name="email" id="to" type="text" class="form-control" ng-model="emailSender.to" placeholder="Enter e-mail recpients" required/>
+            </fieldset>
+            <fieldset class="form-group">
+                <label for="">SUBJECT:</label>
+                <input id="subject" type="text" class="form-control" ng-model="emailSender.subject" placeholder="Subject" />
+            </fieldset>
+            <fieldset class="form-group">
+                <label for="">BODY:</label>
+                <textarea id="emailBody" class="form-control" ng-model="emailSender.emailBody" name="" cols="60" rows="7" placeholder="Email body"></textarea>
+            </fieldset>
+            <fieldset class="form-group">
+                <button id="send_email" type="submit" class="btn btn-primary" ng-click="emailSender.sendEmail()" ng-disabled="sendemail.$invalid">SEND</button>
+                <span id="message">{{emailSender.message}}</span>
+            </fieldset>
+        </form>
     </div>
 </div>
-
 <footer></footer>

@@ -35,6 +35,7 @@
                     on-event-times-changed="calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
                     edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'" delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
                     on-edit-event-click="eventViewer.switchEventDetailView(0);eventViewer.eventClicked(calendarEvent)" on-delete-event-click="eventViewer.deleteEvent()"
+                    on-view-change-click="false"
                     </mwl-calendar>
                 </div>
             </div>
@@ -108,23 +109,28 @@
                     </div>
                     <fieldset class="form-group">
                         <label>Title: </label>
-                        <input class="form-control" ng-model="eventViewer.selectedEvent.title">
+                        <input name = "title" class="form-control" ng-model="eventViewer.selectedEvent.title" required>
+                        <small class="invalidInput" ng-show="newCal.title.$touched&&newCal.title.$invalid">*Event Title is required.</small>
                     </fieldset>
                     <fieldset class="form-group">
                         <label>Date: </label>
-                        <input type="date" class="form-control" ng-model="eventViewer.eventDate">
+                        <input name = "eventDate" type="date" class="form-control" ng-model="eventViewer.eventDate" required>
+                        <small class="invalidInput" ng-show="newCal.eventDate.$touched&&newCal.eventDate.$invalid">*Date is required.</small>
                     </fieldset>
                     <fieldset class="form-group">
                         <label>Start Time: </label>
-                        <input type="time" class="form-control" ng-model="eventViewer.eventStartTime">
+                        <input name = "eventStartTime" type="time" class="form-control" ng-model="eventViewer.eventStartTime" required>
+                        <small class="invalidInput" ng-show="newCal.eventStartTime.$touched&&newCal.eventStartTime.$invalid">*Start Time is required.</small>
                     </fieldset>
                     <fieldset class="form-group">
                         <label>End Time: </label>
-                        <input type="time" class="form-control" ng-model="eventViewer.eventEndTime">
+                        <input name = "eventEndTime" type="time" class="form-control" ng-model="eventViewer.eventEndTime" required>
+                        <small class="invalidInput" ng-show="newCal.eventEndTime.$touched&&newCal.eventEndTime.$invalid">*End Time is required.</small>
                     </fieldset>
                     <fieldset class="form-group">
                         <label>Host: </label>
-                        <input class="form-control" ng-model="eventViewer.selectedEvent.host">
+                        <input name = "host" class="form-control" ng-model="eventViewer.selectedEvent.host" required>
+                        <small class="invalidInput" ng-show="newCal.host.$touched&&newCal.host.$invalid">*Host is required.</small>
                     </fieldset>
                     <fieldset class="form-group">
                         <label>Description: </label>
