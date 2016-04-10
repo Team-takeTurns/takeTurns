@@ -195,7 +195,7 @@ function checkIfCalendarModified(calId, res){
         }
         return entity;
       }
-  };
+  }
 
 function getCalendar(calId, res){
       Calendar.findByIdAsync(calId)
@@ -244,8 +244,8 @@ function getCalendarIds(res) {
           calendarIds.push(entity[i]._id);
     }
     //loop through calendars and delete events older than set date
-    for(var i = 0; i < calendarIds.length; i++){
-      Calendar.updateAsync({_id: calendarIds[i]},  {$pull : {events: {date: {$lte: isoDateToCheckAgainst}}}} )
+    for(var t = 0; t < calendarIds.length; t++){
+      Calendar.updateAsync({_id: calendarIds[t]},  {$pull : {events: {date: {$lte: isoDateToCheckAgainst}}}} )
       .then(getEvents(res))
       .catch(handleError(res));
     }
@@ -299,8 +299,8 @@ function myCalTimer() {
             
         }
         //Loop through canlendar and delete old empty calendars
-        for(var i = 0; i < calendarIdsToDelete.length; i++){
-            Calendar.findByIdAsync(calendarIdsToDelete[i])
+        for(var r = 0; r < calendarIdsToDelete.length; r++){
+            Calendar.findByIdAsync(calendarIdsToDelete[r])
             .then(removeEmptyCalendars(res));
             }
                   resetVarsForDeleteOldCalendars();
