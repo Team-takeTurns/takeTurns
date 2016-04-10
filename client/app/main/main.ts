@@ -7,5 +7,10 @@ angular.module('takeTurnsApp')
         templateUrl: 'app/main/main.html',
         controller: 'MainController',
         controllerAs: 'main'
+      })
+      .when('/unknown', {
+        templateUrl: 'app/errors/unknown.html',
+        controller: 'MainController',
+        controllerAs: 'main'
       });
   });

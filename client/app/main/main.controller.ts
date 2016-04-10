@@ -120,17 +120,11 @@
             });
             
         this.sendEmailtoAdmin();   
-        console.log(this.sendEmail+" test ....");
-        console.log(this)
         if (this.sendEmail) {
-                     
-                    this.sendEmailtoMembers();
-                }
-                
+            this.sendEmailtoMembers();
+        }
         this.resetAddCalFields();
-        this.mainDiv = false;
-                
-        
+        this.mainDiv = false;          
         }
         
         activeUserUpdate() {
