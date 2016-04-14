@@ -84,6 +84,10 @@
             <label>
                 <input type="checkbox" id="sendEmail" ng-model="main.sendEmail"> Send calendar link to all members
                 <br/>
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
                 <input id="agreeWithRules" type="checkbox" onclick="agreeWithRules()"> I acknowedge that I have read and agree with <a onclick="readRules()">the rules</a>
             </label>
         </div>
@@ -118,8 +122,7 @@
     <h2>Your calendar <u><b>{{main.calendar.name}}</b></u> was created.</h2>
     <br />
 
-    <h3>Copy both links then paste <a href="/emailSender">here</a>  to send links via email.</h3>
-    <br/>
+   <h3> Check your email for the admin and user link. User links have been sent to the members </h3><br/>
 
     <h5>Follow the link below for admin view where you can update or delete your calendar.</h5>
     <a href="{{main.adminLink}}" target="_blank">{{main.adminLink}}</a>

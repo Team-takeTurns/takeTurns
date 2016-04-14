@@ -9,7 +9,8 @@
             this.$location = $location;
             this.$window = $window;
             this.emailDataContainer = emailDataContainer;
-            this.lengthsOfUrl = 52;
+            this.lengthsOfUrlWithID = 52;
+            this.lengthsOfUrlWithID = 52;
             this.calendar;
             this.message;
             this.adminEmail;
@@ -32,26 +33,38 @@
             //get user id from url or from cookies ----------------------------
             paramSerializer: '$httpParamSerializerJQLike';
 
-            if (this.url.toString().length == this.lengthsOfUrl) {
+            if (this.url.toString().length == this.lengthsOfUrlWithID) {
                 $cookies.put("userId", this.url.toString().substr(28, 24));
-            }
+            } 
 
             //send request to BE to get user and then call function to get calendar 
             if ($cookies.get("userId")) {
-                $http.get('/api/users/' + $cookies.get("userId")).then(response => {
-                    this.user = response.data;
-                    if (this.user.role === "admin") {
-                        //get calendar from BE
-                        this.getCalendar();
-                    } else {
-                        console.log("display ERROR here search for: Liliya1111 in calEditor.controller");
-                        console.log("perhaps user is not admin!?");
+                $http.get('/api/users/' + $cookies.get("userId")
+                    ).then(response => {
+                    if(response.status == 200){
+                        this.user = response.data;
+                        if (this.user.role === "admin") {
+                            //get calendar from BE
+                            this.getCalendar();
+                        } else {
+                        //display error
+                        this.$window.location.href='/userError';
                     }
+                }
                     socket.syncUpdates('calendar', this.calendar);
-                });
+                }).catch(response => {
+                    if(response.status == 404){
+                        this.$window.location.href='/userError';
+                    } else if (response.status == 500){
+                        this.$window.location.href='/app/errors/500.html';
+                    } else {
+                       this.$window.location.href='/unknown';
+                    }
+                    });
             } else {
-                console.log("ERROR - userID is undefined. please use the link that was provided to you when the calendar was created.");
-            }
+                        //display error
+                this.$window.location.href='/userError';
+             }
 
             //---------------------- auto generated start ----------------------------------
             $scope.$on('$destroy', function() {
@@ -63,9 +76,22 @@
 
         // send request to get calendar from BE -------------------------------
         getCalendar() {
-            this.$http.get('/api/calendars/' + this.user.calID).then(response => {
-                this.calendar = response.data;
-                this.memCounter = this.calendar.members.length;
+            this.$http.get('/api/calendars/' + this.user.calID
+                ).then(response => {
+                    if(response.status == 200) {
+                        this.calendar = response.data;
+                        this.memCounter = this.calendar.members.length;
+                    } else {
+                       this.$window.location.path('/unknown');
+                    }
+                }).catch( response => {
+                    if(response.status == 404){
+                        this.$window.location.href='/404';
+                    } else if (response.status == 500){
+                        this.$window.location.href='/app/errors/500.html';
+                    } else {
+                        this.$window.location.href='/unknown';
+                    }
             });
         }
 
@@ -83,9 +109,24 @@
 
         //send request to BE to delete calendar
         deleteCalendar() {
-            this.$http.delete('/api/calendars/' + this.user.calID);
-            this.message = "You have successfully deleted the calendar. \n\nPlease disregard the links that were given to you. \n\nTo create a new calendar click on the logo above to go to home page.";
-            this.deleteFalse = false;
+            this.$http.delete('/api/calendars/' + this.user.calID).then(response => {
+                if(response.status == 204) {
+                    this.message = "You have successfully deleted the calendar. \n\nPlease disregard the links that were given to you. \n\nTo create a new calendar click on the logo above to go to home page.";
+                    this.deleteFalse = false;
+                } else if(response.result == 404){
+                        this.$window.location.href='/404';
+                    } else {
+                    this.$window.location.href = '/unknown';
+                }
+            }).catch( response => {
+                    if(response.status == 404){
+                        this.$window.location.href='/404';
+                    } else if (response.status == 500){
+                        this.$window.location.href='/app/errors/500.html';
+                    } else {
+                        this.$window.location.href='/unknown';
+                    }
+                });
         }
 
         //cancel update - go back to view calendar

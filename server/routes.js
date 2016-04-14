@@ -53,4 +53,16 @@ export default function (app) {
     .get((req, res) => {
       res.sendFile(path.resolve(app.get('appPath') + '/calendar.html'));
     });
+    app.route('/unknown')
+    .get((req, res) => {
+      res.sendFile(path.resolve(app.get('appPath') + '/app/errors/unknown.html'));
+    });
+    app.route('/404')
+    .get((req, res) => {
+      res.sendFile(path.resolve(app.get('appPath') + '/app/errors/404.html'));
+    });
+    app.route('/userError')
+    .get((req, res) => {
+      res.sendFile(path.resolve(app.get('appPath') + '/app/errors/userError.html'));
+    });
 }
