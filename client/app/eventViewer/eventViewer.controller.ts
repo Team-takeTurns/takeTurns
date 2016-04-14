@@ -65,21 +65,32 @@
                 this.calendar = response.data;
                 this.dayEvents();
                 this.monthEvents();
-                this.detailsEvent(this.calendar.events[this.getIndexOfFirstEventByDay()]._id);
+                if (this.getIndexOfFirstEventByDay() != -1) {
+                    this.detailsEvent(this.calendar.events[this.getIndexOfFirstEventByDay()]._id);
+                } else {
+                    this.detailsEvent(null);
+                }
             });
         }
 
         // detailsEvents methods
         private detailsEvent(eventId) {
+            if (eventId != null) {
+                for (var dayEvent in this.calendar.events) {
+                    if (this.calendar.events[dayEvent]._id == eventId) {
+                        this.selectedEvent = this.calendar.events[dayEvent];
 
-            for (var dayEvent in this.calendar.events) {
-                if (this.calendar.events[dayEvent]._id == eventId) {
-                    this.selectedEvent = this.calendar.events[dayEvent];
-
-                    this.eventStartTime = this.timeFormater(this.selectedEvent.date, this.selectedEvent.startTime);
-                    this.eventEndTime = this.timeFormater(this.selectedEvent.date, this.selectedEvent.endTime);
-                    this.eventDate = new Date(moment(this.selectedEvent.date).format());
+                        this.eventStartTime = this.timeFormater(this.selectedEvent.date, this.selectedEvent.startTime);
+                        this.eventEndTime = this.timeFormater(this.selectedEvent.date, this.selectedEvent.endTime);
+                        this.eventDate = new Date(moment(this.selectedEvent.date).format());
+                    }
                 }
+            } else {
+                this.selectedEvent = null;
+
+                this.eventStartTime = new Date();
+                this.eventEndTime = new Date();
+                this.eventDate = new Date();
             }
         }
 
@@ -95,7 +106,7 @@
 
         // Return the index of the first event
         private getIndexOfFirstEventByDay() {
-            var myIndex = 0;
+            var myIndex = -1;
             var firstTime = 24;
             var count = 0;
             var currentDate = new Date();
@@ -135,8 +146,11 @@
             } else {
                 this.nxtDay *= clickedArrow;
             }
-
-            this.detailsEvent(this.calendar.events[this.getIndexOfFirstEventByDay()]._id);
+            if (this.getIndexOfFirstEventByDay() != -1) {
+                this.detailsEvent(this.calendar.events[this.getIndexOfFirstEventByDay()]._id);
+            } else {
+                this.detailsEvent(null);
+            }
         }
 
         //Hide Event Detail View
@@ -168,7 +182,11 @@
             //send request to delete event
             this.$http.patch('/api/calendars/' + this.calendar._id + "/DeleteEvent/" + this.selectedEvent._id).then(response => {
                 this.calendar = response.data;
-                this.detailsEvent(this.calendar.events[this.getIndexOfFirstEventByDay()]._id);
+                if (this.getIndexOfFirstEventByDay() != -1) {
+                    this.detailsEvent(this.calendar.events[this.getIndexOfFirstEventByDay()]._id);
+                } else {
+                    this.detailsEvent(null);
+                }
                 alert('The ' + this.selectedEvent.title + ' Event, Hosted by ' + this.selectedEvent.host + ' has been deleted successfully from this calendar.');
                 window.location.reload();
             });
@@ -230,7 +248,7 @@
         monthEvents() {
             if (this.calendar.events.length == 0) {
                 this.$scope.calendarViewMonth = 'month';
-                this.$scope.calendarDateMonth = new Date().getUTCMonth;
+                this.$scope.calendarDateMonth = new Date();
             }
             else {
                 for (var i in this.calendar.events) {
